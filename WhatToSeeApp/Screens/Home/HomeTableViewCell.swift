@@ -9,7 +9,7 @@ import UIKit
 
 class HomeTableViewCell: UITableViewCell {
   
-  //MARK: Properties
+  //MARK: - Properties
   static let reuseId = "HomeTableViewCell"
   static func nib() -> UINib {
     return UINib(nibName: "HomeTableViewCell", bundle: nil)
@@ -30,7 +30,7 @@ class HomeTableViewCell: UITableViewCell {
   
   
   //MARK: - Methods
-  private func setupcollectionView() {
+  private func setupCollectionView() {
     collectionView.dataSource = self
     collectionView.delegate = self
   }

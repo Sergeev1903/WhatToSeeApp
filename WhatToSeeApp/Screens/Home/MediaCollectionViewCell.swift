@@ -16,8 +16,8 @@ class MediaCollectionViewCell: UICollectionViewCell {
   }
   let posterImageView = UIImageView()
   
+  
   // MARK: - Methods
-  private func setupPosterImageView() {
-    
-  }
+  private func setupPosterImageView() {}
+  
 }

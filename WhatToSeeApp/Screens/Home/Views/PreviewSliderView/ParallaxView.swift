@@ -64,6 +64,8 @@ class ParallaxView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
+  
+  // MARK: -
   override func layoutSubviews() {
     super.layoutSubviews()
     topGradientLayer.frame = CGRect(
@@ -76,6 +78,7 @@ class ParallaxView: UIView {
       width: bounds.width,
       height: 60)
   }
+  
   
   // MARK: - Methods
   private func setupImageView() {

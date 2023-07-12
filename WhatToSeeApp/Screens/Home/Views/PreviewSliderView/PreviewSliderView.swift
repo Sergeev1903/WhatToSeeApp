@@ -22,6 +22,7 @@ class PreviewSliderView: UIView {
     }
   }
 
+  
   // MARK: - Methods
   func setImages(images: [UIImage]) {
     self.images = images
@@ -99,6 +100,7 @@ class PreviewSliderView: UIView {
     scrollView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
   }
   
+  
   // MARK: setupImageParallax
   private func setupImageParallax(_ scrollView: UIScrollView) {
     let tempo = 200 / scrollView.frame.width
@@ -120,6 +122,7 @@ class PreviewSliderView: UIView {
   }
   
 }
+
 
 // MARK: - UIScrollViewDelegate
 extension PreviewSliderView: UIScrollViewDelegate {

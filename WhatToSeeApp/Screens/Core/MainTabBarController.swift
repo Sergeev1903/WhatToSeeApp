@@ -49,7 +49,6 @@ class MainTabBarController: UITabBarController {
   // MARK: - Appearance methods
   private func setupAppearance() {
     UITabBar.appearance().backgroundColor = .systemBackground
-//    UITabBar.appearance().isTranslucent = false
   }
 }
 

@@ -11,27 +11,24 @@ class ProfileViewController: UIViewController {
   
   // MARK: - Properties
   let profileImageView = UIImageView()
-
+  
   
   // MARK: - Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      title = "Profile"
-      view.backgroundColor = .systemBackground
-      
-      setupNavigationBar()
-      setupProfileImageView()
-    }
-
-
-  // MARK: - Methods
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    title = "Profile"
+    view.backgroundColor = .systemBackground
+    
+    setupNavigationBar()
+    setupProfileImageView()
+  }
   
-  // MARK: Setup NavigationBar
+  
+  // MARK: - Methods
   private func setupNavigationBar() {
     navigationController?.navigationBar.prefersLargeTitles = true
   }
   
-  // MARK: Setup ProfileImageView
   private func setupProfileImageView() {
     profileImageView.image = UIImage(named: "user")
     profileImageView.translatesAutoresizingMaskIntoConstraints = false

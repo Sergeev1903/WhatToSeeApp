@@ -33,21 +33,16 @@ class HomeViewController: UIViewController {
     setupTableView()
   }
   
-  // MARK: - Methods
   
-  // MARK: Setup NavigationBar
+  // MARK: - Methods
   private func setupNavigationBar() {
-    
-//    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     navigationController?.navigationBar.shadowImage = UIImage()
-//    navigationController?.navigationBar.isTranslucent = true
-//    navigationController?.navigationBar.backgroundColor = .clear
     
     let profileButton = createCustomBarButton(
       customImage: UIImage(named: "user")!,
       size: 32,
       selector: #selector(profileRightButtonTapped))
-
+    
     navigationItem.rightBarButtonItems = [profileButton]
     navigationItem.titleView = customSegmentedControl
   }
@@ -57,10 +52,9 @@ class HomeViewController: UIViewController {
     present(vc, animated: true)
   }
   
-  
-  // MARK: Setup CustomSegmentedControl
   private func setupCustomSegmentedControl() {
-    customSegmentedControl.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 40)
+    customSegmentedControl.frame = CGRect(
+      x: 0, y: 0, width: self.view.frame.width, height: 40)
     customSegmentedControl.segments = ["Movies", "TV Shows"]
     customSegmentedControl.segmentTintColor = .clear
     customSegmentedControl.underlineColor = .systemBlue
@@ -70,7 +64,7 @@ class HomeViewController: UIViewController {
   }
   
   @objc func segmentValueChanged(_ sender: CustomSegmentedControl) {
-    print("Debug# Selected segment index: \(sender.selectedSegmentIndex)")
+    print("#Debug Selected segment index: \(sender.selectedSegmentIndex)")
   }
   
   private func createTableHeaderView() -> UIView {
@@ -106,6 +100,7 @@ class HomeViewController: UIViewController {
 
 // MARK: - UITableViewDataSource
 extension HomeViewController: UITableViewDataSource {
+  
   func tableView(
     _ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       return 20
@@ -121,6 +116,7 @@ extension HomeViewController: UITableViewDataSource {
   
 }
 
+
 // MARK: - UITableViewDelegate
 extension HomeViewController: UITableViewDelegate {
   
@@ -132,19 +128,4 @@ extension HomeViewController: UITableViewDelegate {
   
 }
 
-extension HomeViewController: UIScrollViewDelegate {
-  
-//  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//    let offsetY = scrollView.contentOffset.y
-//
-//    if offsetY < 0 {
-//      navigationController?.setNavigationBarHidden(false, animated: true)
-//      customSegmentedControl.isHidden = false
-//    } else {
-//      navigationController?.setNavigationBarHidden(true, animated: true)
-//      customSegmentedControl.isHidden = true
-//    }
-//  }
-  
-}
 

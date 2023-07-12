@@ -53,6 +53,7 @@ class CustomSegmentedControl: UIControl {
     }
   }
   
+  
   // MARK: - Init
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -65,6 +66,7 @@ class CustomSegmentedControl: UIControl {
     setupScrollView()
     setupSegmentedControl()
   }
+  
   
   // MARK: - Methods
   private func setupScrollView() {
