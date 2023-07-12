@@ -10,24 +10,37 @@ import UIKit
 class HomeViewController: UIViewController {
   
   // MARK: - Properties
-  let customSegmentedControl = CustomSegmentedControl()
-  let tableView = UITableView(frame: .zero, style: .grouped)
-  let scrollView = UIScrollView()
+  private let customSegmentedControl = CustomSegmentedControl()
+  private let tableView = UITableView(frame: .zero, style: .grouped)
+  private let scrollView = UIScrollView()
   
-  var images = [UIImage(named: "1")!, UIImage(named: "2")!,
-                UIImage(named: "3")!, UIImage(named: "4")!,
-                UIImage(named: "5")!, UIImage(named: "6")!,
-                UIImage(named: "7")!, UIImage(named: "8")!,
-                UIImage(named: "9")!, UIImage(named: "10")!,
-                UIImage(named: "11")!]
+  var images = [
+    UIImage(named: "1")!, UIImage(named: "2")!,
+    UIImage(named: "3")!, UIImage(named: "4")!,
+    UIImage(named: "5")!, UIImage(named: "6")!,
+    UIImage(named: "7")!, UIImage(named: "8")!,
+    UIImage(named: "9")!, UIImage(named: "10")!,
+    UIImage(named: "11")!
+  ]
+  
+  // MARK: - ViewModel
+ private var viewModel: HomeViewModelProtocol! {
+    didSet {
+      viewModel.getMedia(completion: {
+        // #Debug
+        print(self.viewModel.mediaItems.forEach({ media in
+          print(media.title)
+        }))
+      })
+    }
+  }
   
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     view.backgroundColor = .systemBackground
-    scrollView.delegate = self
+    viewModel = HomeViewModel()
     setupCustomSegmentedControl()
     setupNavigationBar()
     setupTableView()
@@ -75,12 +88,12 @@ class HomeViewController: UIViewController {
   }
   
   private func setupTableView() {
-    tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.translatesAutoresizingMaskIntoConstraints = false
+    tableView.tableHeaderView = createTableHeaderView()
     tableView.register(
       UITableViewCell.self, forCellReuseIdentifier: "cell")
-    tableView.tableHeaderView = createTableHeaderView()
     
     view.addSubview(tableView)
     
@@ -127,5 +140,4 @@ extension HomeViewController: UITableViewDelegate {
     }
   
 }
-
 

@@ -16,12 +16,14 @@ class MainTabBarController: UITabBarController {
     setupAppearance()
   }
   
+  
   // MARK: - Setup methods
   private func setupTabBarItem() {
     viewControllers = [
-      createTabBarItem(HomeViewController(),
-                       titleName: "Home",
-                       imageName: "house"),
+      createTabBarItem(
+        HomeViewController(),
+        titleName: "Home",
+        imageName: "house"),
       createTabBarItem(SearchViewController(),
                        titleName: "Search",
                        imageName: "magnifyingglass"),

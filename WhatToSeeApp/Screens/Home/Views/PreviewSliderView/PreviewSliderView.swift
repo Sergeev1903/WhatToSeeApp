@@ -11,7 +11,6 @@ class PreviewSliderView: UIView {
   
   // MARK: - Properties
   static  let reuseId = "PreviewSliderView"
-  
   private let scrollView = UIScrollView()
   private let pageControl = UIPageControl()
   private var currentPageIndex = 0
@@ -64,7 +63,6 @@ class PreviewSliderView: UIView {
         width:frame.width,
         height: frame.height)
       view.imageView.image = image
-      view.backgroundColor = image.averageColor
       view.tag = index + 10
       scrollView.addSubview(view)
     }

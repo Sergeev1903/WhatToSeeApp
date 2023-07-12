@@ -14,7 +14,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
   static func nib() -> UINib {
     return UINib(nibName: "MediaCollectionViewCell", bundle: nil)
   }
-  let posterImageView = UIImageView()
+  private let posterImageView = UIImageView()
   
   
   // MARK: - Methods

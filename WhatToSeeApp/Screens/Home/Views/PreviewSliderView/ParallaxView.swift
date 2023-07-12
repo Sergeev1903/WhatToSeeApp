@@ -54,7 +54,6 @@ class ParallaxView: UIView {
   // MARK: - Init
   override init(frame: CGRect) {
     super.init(frame: frame)
-
     setupImageView()
     setupTopGradientView()
     setupBottomGradientView()

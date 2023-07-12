@@ -14,7 +14,7 @@ class HomeTableViewCell: UITableViewCell {
   static func nib() -> UINib {
     return UINib(nibName: "HomeTableViewCell", bundle: nil)
   }
-  let collectionView = UICollectionView()
+  private let collectionView = UICollectionView()
   
   
   // MARK: -
