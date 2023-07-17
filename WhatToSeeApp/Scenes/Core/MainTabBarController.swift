@@ -54,7 +54,7 @@ class MainTabBarController: UITabBarController {
   }
 }
 
-
+/*
 // MARK: - ViewControllerRepresentable
 import SwiftUI
 
@@ -76,3 +76,4 @@ struct ViewController_Previews: PreviewProvider {
     ViewControllerRepresentable()
   }
 }
+*/

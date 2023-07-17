@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class PreviewSliderView: UIView {
   
   // MARK: - Properties
@@ -20,7 +21,7 @@ class PreviewSliderView: UIView {
       setupPageControl()
     }
   }
-
+  
   
   // MARK: - Methods
   func setImages(images: [UIImage]) {
@@ -134,3 +135,4 @@ extension PreviewSliderView: UIScrollViewDelegate {
   }
   
 }
+

@@ -14,18 +14,24 @@ protocol HomeViewModelProtocol: AnyObject {
 
 
 class HomeViewModel: HomeViewModelProtocol {
-  
+  private let service: MoviesServiceable
   var mediaItems: [TMDBMovieResult] = []
-
+  
+  init(service: MoviesServiceable) {
+    self.service = service
+  }
+  
   func getMedia(completion: @escaping () -> Void) {
-    let urlPath = "https://api.themoviedb.org/3/movie/upcoming?api_key=4f586e20aeada54a820a56ba58751747"
-    guard let url = URL(string: urlPath) else { return}
-    
-    NetworkFetchData.shared.fetchData(from: url) { [weak self] (result: TMDBMovieResponse) in
+    service.getUpcoming {[weak self] result in
       guard let strongSelf = self else { return }
-      strongSelf.mediaItems = result.results
+      switch result {
+      case .success(let movieResponse):
+        strongSelf.mediaItems = movieResponse.results
+      case .failure(let error):
+        print(error)
+      }
       completion()
     }
   }
-
+  
 }

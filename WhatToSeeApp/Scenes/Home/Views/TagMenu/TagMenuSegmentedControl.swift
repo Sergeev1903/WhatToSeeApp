@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomSegmentedControl: UIControl {
+class TagMenuSegmentedControl: UIControl {
   
   // MARK: - Properties
   private var buttons = [UIButton]()

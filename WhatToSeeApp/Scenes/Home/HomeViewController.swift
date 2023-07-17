@@ -10,9 +10,8 @@ import UIKit
 class HomeViewController: UIViewController {
   
   // MARK: - Properties
-  private let customSegmentedControl = CustomSegmentedControl()
+  private let tagMenuSegmentedControl = TagMenuSegmentedControl()
   private let tableView = UITableView(frame: .zero, style: .grouped)
-  private let scrollView = UIScrollView()
   
   var images = [
     UIImage(named: "1")!, UIImage(named: "2")!,
@@ -24,14 +23,11 @@ class HomeViewController: UIViewController {
   ]
   
   // MARK: - ViewModel
- private var viewModel: HomeViewModelProtocol! {
+  private var viewModel: HomeViewModelProtocol! {
     didSet {
-      viewModel.getMedia(completion: {
-        // #Debug
-        print(self.viewModel.mediaItems.forEach({ media in
-          print(media.title)
-        }))
-      })
+      viewModel.getMedia {
+        self.tableView.reloadData()
+      }
     }
   }
   
@@ -40,8 +36,8 @@ class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
-    viewModel = HomeViewModel()
-    setupCustomSegmentedControl()
+    viewModel = HomeViewModel(service: MoviesService())
+    setupTagMenuSegmentedControl()
     setupNavigationBar()
     setupTableView()
   }
@@ -52,12 +48,12 @@ class HomeViewController: UIViewController {
     navigationController?.navigationBar.shadowImage = UIImage()
     
     let profileButton = createCustomBarButton(
-      customImage: UIImage(named: "user")!,
+      image: UIImage(named: "user")!,
       size: 32,
       selector: #selector(profileRightButtonTapped))
     
     navigationItem.rightBarButtonItems = [profileButton]
-    navigationItem.titleView = customSegmentedControl
+    navigationItem.titleView = tagMenuSegmentedControl
   }
   
   @objc private func profileRightButtonTapped() {
@@ -65,18 +61,19 @@ class HomeViewController: UIViewController {
     present(vc, animated: true)
   }
   
-  private func setupCustomSegmentedControl() {
-    customSegmentedControl.frame = CGRect(
-      x: 0, y: 0, width: self.view.frame.width, height: 40)
-    customSegmentedControl.segments = ["Movies", "TV Shows"]
-    customSegmentedControl.segmentTintColor = .clear
-    customSegmentedControl.underlineColor = .systemBlue
-    customSegmentedControl.underlineHeight = 2.0
-    customSegmentedControl.addTarget(
+  private func setupTagMenuSegmentedControl() {
+    tagMenuSegmentedControl.frame = CGRect(
+      x: 0, y: 0,
+      width: self.view.frame.width, height: 40)
+    tagMenuSegmentedControl.segments = ["Movies", "TV Shows"]
+    tagMenuSegmentedControl.segmentTintColor = .clear
+    tagMenuSegmentedControl.underlineColor = .systemBlue
+    tagMenuSegmentedControl.underlineHeight = 2.0
+    tagMenuSegmentedControl.addTarget(
       self, action: #selector(segmentValueChanged(_:)), for: .valueChanged)
   }
   
-  @objc func segmentValueChanged(_ sender: CustomSegmentedControl) {
+  @objc func segmentValueChanged(_ sender: TagMenuSegmentedControl) {
     print("#Debug Selected segment index: \(sender.selectedSegmentIndex)")
   }
   
@@ -111,19 +108,21 @@ class HomeViewController: UIViewController {
   
 }
 
+
 // MARK: - UITableViewDataSource
 extension HomeViewController: UITableViewDataSource {
   
   func tableView(
-    _ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return 20
+    _ tableView: UITableView,
+    numberOfRowsInSection section: Int) -> Int {
+      viewModel.mediaItems.count
     }
   
   func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-      cell?.textLabel?.text = "\(indexPath.row)"
+      cell?.textLabel?.text = viewModel.mediaItems[indexPath.row].title
       return cell!
     }
   
@@ -140,4 +139,3 @@ extension HomeViewController: UITableViewDelegate {
     }
   
 }
-

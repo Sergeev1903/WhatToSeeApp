@@ -29,11 +29,11 @@ struct TMDBMovieResult: Codable {
   
   
   var backdropURL: URL {
-    return URL(string: "https://image.tmdb.org/t/p/original\(backdropPath)")!
+    return URL(string: "https://image.tmdb.org/t/p/original\(String(describing: backdropPath))")!
       }
   
   var posterURL: URL {
-          return URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")!
+    return URL(string: "https://image.tmdb.org/t/p/w500\(String(describing: posterPath))")!
       }
 }
 

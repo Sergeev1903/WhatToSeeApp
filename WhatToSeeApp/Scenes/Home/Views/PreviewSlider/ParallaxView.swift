@@ -1,10 +1,10 @@
 //
 //  ParallaxView.swift
-//  ParallaxDemo
+//  WhatToSeeApp
 //
-//  Created by Алексей Пархоменко on 29/04/2019.
-//  Copyright © 2019 Алексей Пархоменко. All rights reserved.
+//  Created by Артем Сергеев on 11.07.2023.
 //
+
 
 import UIKit
 
@@ -20,14 +20,6 @@ class ParallaxView: UIView {
     return imageView
   }()
   
-  let topGradientLayer: CAGradientLayer = {
-    let gradientLayer = CAGradientLayer()
-    gradientLayer.colors = [UIColor.systemBackground.cgColor,
-                            UIColor.clear.cgColor]
-    gradientLayer.locations = [0.0, 1.0]
-    return gradientLayer
-  }()
-  
   let topGradientView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -35,11 +27,12 @@ class ParallaxView: UIView {
     return view
   }()
   
-  let bottomGradientLayer: CAGradientLayer = {
+  let topGradientLayer: CAGradientLayer = {
     let gradientLayer = CAGradientLayer()
-    gradientLayer.colors = [UIColor.clear.cgColor,
-                            UIColor.systemBackground.cgColor]
-    gradientLayer.locations = [0.0, 1.0]
+    gradientLayer.colors = [UIColor.systemBackground.cgColor,
+                            UIColor.clear.cgColor]
+    gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+    gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
     return gradientLayer
   }()
   
@@ -49,6 +42,16 @@ class ParallaxView: UIView {
     view.backgroundColor = .clear
     return view
   }()
+  
+  let bottomGradientLayer: CAGradientLayer = {
+    let gradientLayer = CAGradientLayer()
+    gradientLayer.colors = [UIColor.systemBackground.cgColor,
+                            UIColor.clear.cgColor]
+    gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
+    gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
+    return gradientLayer
+  }()
+  
   
   
   // MARK: - Init
@@ -68,7 +71,7 @@ class ParallaxView: UIView {
   override func layoutSubviews() {
     super.layoutSubviews()
     topGradientLayer.frame = CGRect(
-      x: 0, y: -2,
+      x: 0, y: 0,
       width: bounds.width,
       height: 60)
 
@@ -90,6 +93,7 @@ class ParallaxView: UIView {
       imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
       imageView.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
+
   }
   
   private func setupTopGradientView() {
