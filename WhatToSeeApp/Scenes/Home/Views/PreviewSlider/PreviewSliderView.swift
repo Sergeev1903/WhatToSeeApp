@@ -8,7 +8,7 @@
 import UIKit
 
 
-class PreviewSliderView: UIView {
+class PreviewSliderView: UITableViewHeaderFooterView {
   
   // MARK: - Properties
   static  let reuseId = "PreviewSliderView"

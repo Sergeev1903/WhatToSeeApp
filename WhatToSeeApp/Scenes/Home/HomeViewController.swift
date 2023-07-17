@@ -77,20 +77,15 @@ class HomeViewController: UIViewController {
     print("#Debug Selected segment index: \(sender.selectedSegmentIndex)")
   }
   
-  private func createTableHeaderView() -> UIView {
-    let headerView = PreviewSliderView(
-      frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 600))
-    headerView.setImages(images: images)
-    return headerView
-  }
-  
   private func setupTableView() {
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
-    tableView.tableHeaderView = createTableHeaderView()
     tableView.register(
       UITableViewCell.self, forCellReuseIdentifier: "cell")
+    tableView.register(
+      PreviewSliderView.self,
+      forHeaderFooterViewReuseIdentifier: PreviewSliderView.reuseId)
     
     view.addSubview(tableView)
     
@@ -126,6 +121,16 @@ extension HomeViewController: UITableViewDataSource {
       return cell!
     }
   
+  func tableView(
+    _ tableView: UITableView,
+    viewForHeaderInSection section: Int) -> UIView? {
+      print("header start")
+      let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: PreviewSliderView.reuseId) as! PreviewSliderView
+      header.setImages(images: viewModel.mediaImages)
+      print("header end")
+      return header
+    }
+  
 }
 
 
@@ -136,6 +141,12 @@ extension HomeViewController: UITableViewDelegate {
     _ tableView: UITableView,
     heightForRowAt indexPath: IndexPath) -> CGFloat {
       return 40
+    }
+  
+  func tableView(
+    _ tableView: UITableView,
+    heightForHeaderInSection section: Int) -> CGFloat {
+      return 600
     }
   
 }

@@ -13,10 +13,12 @@ protocol MoviesServiceable {
   func getMovieDetail(
     id: Int,
     completion: @escaping (Result<TMDBMovieResult, RequestError>) -> Void)
+  
+  func loadData(url: URL) -> Data?
 }
 
 struct MoviesService: HTTPClient, MoviesServiceable {
-  
+
   func getUpcoming(
     completion: @escaping (Result<TMDBMovieResponse, RequestError>) -> Void) {
       DispatchQueue.global().async {
@@ -29,7 +31,7 @@ struct MoviesService: HTTPClient, MoviesServiceable {
           }
       }
     }
-
+  
   func getMovieDetail(
     id: Int,
     completion: @escaping (Result<TMDBMovieResult, RequestError>) -> Void) {
@@ -39,5 +41,9 @@ struct MoviesService: HTTPClient, MoviesServiceable {
       }
     }
   
+  func loadData(url: URL) -> Data? {
+    return fetchData(from: url)
+  }
+ 
 }
 
