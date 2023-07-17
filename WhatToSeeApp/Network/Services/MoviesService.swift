@@ -29,8 +29,7 @@ struct MoviesService: HTTPClient, MoviesServiceable {
           }
       }
     }
-  
-  
+
   func getMovieDetail(
     id: Int,
     completion: @escaping (Result<TMDBMovieResult, RequestError>) -> Void) {

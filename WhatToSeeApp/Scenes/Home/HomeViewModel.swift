@@ -28,7 +28,7 @@ class HomeViewModel: HomeViewModelProtocol {
       case .success(let movieResponse):
         strongSelf.mediaItems = movieResponse.results
       case .failure(let error):
-        print(error)
+        print(error.customMessage)
       }
       completion()
     }

@@ -12,7 +12,7 @@ enum MoviesEndpoint {
   case popular
   case topRated
   case upcoming
-  case trendingMovieWeek
+  case trending
   case movieDetail(id: Int)
 }
 
@@ -27,7 +27,7 @@ extension MoviesEndpoint: Endpoint {
       return "/3/movie/top_rated"
     case .upcoming:
       return "/3/movie/upcoming"
-    case .trendingMovieWeek:
+    case .trending:
       return "/3/trending/movie/week"
     case .movieDetail(id: let id):
       return "/3/movie/\(id)"
@@ -37,7 +37,7 @@ extension MoviesEndpoint: Endpoint {
   var method: RequestMethod {
     switch self {
     case .nowPlaying, .popular, .topRated, .upcoming,
-         .trendingMovieWeek,.movieDetail:
+         .trending,.movieDetail:
       return .get
     }
   }
@@ -45,7 +45,7 @@ extension MoviesEndpoint: Endpoint {
   var header: [String: String]? {
     switch self {
     case .nowPlaying, .popular, .topRated, .upcoming,
-         .trendingMovieWeek, .movieDetail:
+         .trending, .movieDetail:
       return [
         "Authorization": "Bearer \(accessToken)",
         "Content-Type": "application/json;charset=utf-8"

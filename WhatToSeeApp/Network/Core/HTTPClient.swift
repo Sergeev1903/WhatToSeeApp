@@ -14,6 +14,7 @@ protocol HTTPClient {
 }
 
 extension HTTPClient {
+  
   func sendRequest<T: Codable>(
     endpoint: Endpoint, responseModel: T.Type,
     completion: @escaping (Result<T, RequestError>) -> Void) {
@@ -24,42 +25,46 @@ extension HTTPClient {
       urlComponents.path = endpoint.path
       
       guard let url = urlComponents.url else {
-        completion(.failure(.invalidURL))
-        return
+        return completion(.failure(.invalidURL))
       }
       
       var request = URLRequest(url: url)
       request.httpMethod = endpoint.method.rawValue
       request.allHTTPHeaderFields = endpoint.header
       
-      if let body = endpoint.body {
-          request.httpBody = try? JSONSerialization.data(
-            withJSONObject: body, options: [])
+      if endpoint.method == .post,
+         let body = endpoint.body {
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        do {
+          request.httpBody = try encoder.encode(body)
+        } catch {
+          return completion(.failure(.encode))
+        }
       }
       
       let task = URLSession.shared.dataTask(
         with: request) { (data, response, error) in
           if error != nil {
-            completion(.failure(.unknown))
-            return
+            return completion(.failure(.unknown))
           }
           
           guard let data = data,
                 let response = response as? HTTPURLResponse else {
-            completion(.failure(.noResponse))
-            return
+            return completion(.failure(.noResponse))
           }
           
           switch response.statusCode {
           case 200...299:
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
-            guard let decodedResponse = try? decoder.decode(
-              responseModel, from: data) else {
+            do {
+              let decodedResponse = try decoder.decode(
+                responseModel, from: data)
+              completion(.success(decodedResponse))
+            } catch {
               completion(.failure(.decode))
-              return
             }
-            completion(.success(decodedResponse))
           case 401:
             completion(.failure(.unauthorized))
           default:
