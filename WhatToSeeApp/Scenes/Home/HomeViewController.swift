@@ -13,14 +13,14 @@ class HomeViewController: UIViewController {
   private let tabMenu = TabMenu()
   private let tableView = UITableView(frame: .zero, style: .grouped)
   private let slider = Slider()
-
+  
+  
   // MARK: - ViewModel
   private var viewModel: HomeViewModelProtocol! {
     didSet {
       viewModel.getMedia {
         self.tableView.reloadData()
       }
-     
     }
   }
   
@@ -30,7 +30,7 @@ class HomeViewController: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
     viewModel = HomeViewModel(service: MoviesService())
-    setupTagMenuSegmentedControl()
+    setupTabMenu()
     setupNavigationBar()
     setupTableView()
     setupSlider()
@@ -40,6 +40,7 @@ class HomeViewController: UIViewController {
   // MARK: - Methods
   private func setupNavigationBar() {
     navigationController?.navigationBar.shadowImage = UIImage()
+    navigationItem.titleView = tabMenu
     
     let profileButton = createCustomBarButton(
       image: UIImage(named: "user")!,
@@ -47,15 +48,15 @@ class HomeViewController: UIViewController {
       selector: #selector(profileRightButtonTapped))
     
     navigationItem.rightBarButtonItems = [profileButton]
-    navigationItem.titleView = tabMenu
   }
   
+  // Action for profile right button
   @objc private func profileRightButtonTapped() {
     let vc = ProfileViewController()
     present(vc, animated: true)
   }
   
-  private func setupTagMenuSegmentedControl() {
+  private func setupTabMenu() {
     tabMenu.frame = CGRect(
       x: 0, y: 0,
       width: self.view.frame.width,
@@ -65,10 +66,11 @@ class HomeViewController: UIViewController {
     tabMenu.underlineColor = .systemBlue
     tabMenu.underlineHeight = 2.0
     tabMenu.addTarget(
-      self, action: #selector(segmentValueChanged(_:)), for: .valueChanged)
+      self, action: #selector(tabMenuValueChanged(_:)), for: .valueChanged)
   }
   
-  @objc func segmentValueChanged(_ sender: TabMenu) {
+  // Action for tabMenu
+  @objc func tabMenuValueChanged(_ sender: TabMenu) {
     print("#Debug Selected segment index: \(sender.selectedSegmentIndex)")
   }
   
@@ -79,9 +81,9 @@ class HomeViewController: UIViewController {
     tableView.register(
       UITableViewCell.self, forCellReuseIdentifier: "cell")
     
-    tableView.tableHeaderView = slider
-    
     view.addSubview(tableView)
+    
+    tableView.tableHeaderView = slider
     
     NSLayoutConstraint.activate([
       tableView.topAnchor.constraint(
@@ -120,7 +122,7 @@ extension HomeViewController: UITableViewDataSource {
       cell?.textLabel?.text = viewModel.mediaItems[indexPath.row].title
       return cell!
     }
-
+  
 }
 
 
@@ -132,6 +134,5 @@ extension HomeViewController: UITableViewDelegate {
     heightForRowAt indexPath: IndexPath) -> CGFloat {
       return 80
     }
-
   
 }

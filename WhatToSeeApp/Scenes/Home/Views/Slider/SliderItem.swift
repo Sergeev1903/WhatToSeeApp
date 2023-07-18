@@ -8,43 +8,30 @@
 import UIKit
 
 class SliderItem: UICollectionViewCell {
-    
+  
   // MARK: Properties
   static let reuseId = "SliderItem"
   
   let imageView = UIImageView()
+  let topGradientView = UIView()
+  let topGradientLayer = CAGradientLayer()
+  let bottomGradientView = UIView()
+  let bottomGradientLayer = CAGradientLayer()
   
-  let topGradientView: UIView = {
-    let view = UIView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.backgroundColor = .clear
-    return view
-  }()
   
-  let topGradientLayer: CAGradientLayer = {
-    let gradientLayer = CAGradientLayer()
-    gradientLayer.colors = [UIColor.systemBackground.cgColor,
-                            UIColor.clear.cgColor]
-    gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-    gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-    return gradientLayer
-  }()
-  
-  let bottomGradientView: UIView = {
-    let view = UIView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.backgroundColor = .clear
-    return view
-  }()
-  
-  let bottomGradientLayer: CAGradientLayer = {
-    let gradientLayer = CAGradientLayer()
-    gradientLayer.colors = [UIColor.systemBackground.cgColor,
-                            UIColor.clear.cgColor]
-    gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
-    gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
-    return gradientLayer
-  }()
+  // MARK: - ViewModel
+  var viewModel: SliderItemViewModelProtocol! {
+    didSet {
+      DispatchQueue.global(qos: .userInitiated).async {
+        guard let data = self.viewModel.mediaImage else { return }
+        let image = UIImage(data: data)
+        
+        DispatchQueue.main.async {
+          self.imageView.image = image
+        }
+      }
+    }
+  }
   
   
   // MARK: - Init
@@ -54,20 +41,25 @@ class SliderItem: UICollectionViewCell {
     setupTopGradientView()
     setupBottomGradientView()
   }
-
+  
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     setupImageView()
   }
   
   // MARK: -
+  
+  override func prepareForReuse() {
+    imageView.image = nil
+  }
+  
   override func layoutSubviews() {
     super.layoutSubviews()
     topGradientLayer.frame = CGRect(
       x: 0, y: 0,
       width: bounds.width,
       height: 60)
-
+    
     bottomGradientLayer.frame = CGRect(
       x: 0, y: 0,
       width: bounds.width,
@@ -95,7 +87,18 @@ class SliderItem: UICollectionViewCell {
   }
   
   private func setupTopGradientView() {
+    topGradientView.translatesAutoresizingMaskIntoConstraints = false
+    topGradientView.backgroundColor = .clear
+    
     imageView.addSubview(topGradientView)
+    
+    topGradientLayer.colors = [
+      UIColor.systemBackground.cgColor,
+      UIColor.clear.cgColor
+    ]
+    topGradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+    topGradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+    
     topGradientView.layer.addSublayer(topGradientLayer)
     
     NSLayoutConstraint.activate([
@@ -111,7 +114,18 @@ class SliderItem: UICollectionViewCell {
   }
   
   private func setupBottomGradientView() {
+    bottomGradientView.translatesAutoresizingMaskIntoConstraints = false
+    bottomGradientView.backgroundColor = .clear
+    
     imageView.addSubview(bottomGradientView)
+    
+    bottomGradientLayer.colors = [
+      UIColor.systemBackground.cgColor,
+      UIColor.clear.cgColor
+    ]
+    bottomGradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
+    bottomGradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
+    
     bottomGradientView.layer.addSublayer(bottomGradientLayer)
     
     NSLayoutConstraint.activate([

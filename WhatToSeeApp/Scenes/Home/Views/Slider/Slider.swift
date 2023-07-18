@@ -15,26 +15,35 @@ class Slider: UIView {
   private let pageControl = UIPageControl()
   private var currentPageIndex = 0
   
-  var tempData: [UIImage] = [
-    UIImage(named: "1")!, UIImage(named: "2")!,
-    UIImage(named: "3")!, UIImage(named: "4")!,
-    UIImage(named: "5")!, UIImage(named: "6")!,
-  ]
+  
+    // MARK: - ViewModel
+  private var viewModel: SliderViewModelProtocol!
   
   
   // MARK: - Init
   override init(frame: CGRect) {
     super.init(frame: frame)
+    setupViewModel()
     setupCollectionView()
     setupPageControl()
   }
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
+    print("Sorry only code, no storyboards")
   }
   
   
   // MARK: - Methods
+  
+  private func setupViewModel() {
+    viewModel = SliderViewModel(service: MoviesService())
+    viewModel.getMedia {
+      self.collectionView.reloadData()
+      self.pageControl.numberOfPages = self.viewModel.mediaItems.count
+    }
+  }
+  
   private func setupCollectionView() {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
@@ -63,7 +72,6 @@ class Slider: UIView {
   }
   
   private func setupPageControl() {
-    pageControl.numberOfPages = tempData.count
     pageControl.currentPage = 0
     pageControl.pageIndicatorTintColor = UIColor.lightGray
     pageControl.currentPageIndicatorTintColor = UIColor.darkGray
@@ -93,7 +101,7 @@ class Slider: UIView {
   private func setupParallax(_ collectionView: UICollectionView) {
     let tempo = 200 / collectionView.frame.width
     
-    for index in 0 ..< tempData.count {
+    for index in 0 ..< viewModel.mediaItems.count {
       guard let cell = collectionView.cellForItem(
         at: IndexPath(item: index, section: 0)) as? SliderItem else {
         continue
@@ -106,13 +114,14 @@ class Slider: UIView {
   
 }
 
+
 // MARK: - UICollectionViewDataSource
 extension Slider: UICollectionViewDataSource {
   
   func collectionView(
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int) -> Int {
-      return tempData.count
+      return viewModel.numberOfItemsInSection()
     }
   
   func collectionView(
@@ -121,8 +130,7 @@ extension Slider: UICollectionViewDataSource {
       
       let cell = collectionView.dequeueReusableCell(
         withReuseIdentifier: SliderItem.reuseId, for: indexPath) as! SliderItem
-      let image = tempData[indexPath.item]
-      cell.configureSliderItem(with: image)
+      cell.viewModel = viewModel.cellForItemAt(indexPath: indexPath)
       return cell
     }
   
@@ -138,6 +146,7 @@ extension Slider: UICollectionViewDelegate {
     currentPageIndex = pageIndex
     pageControl.currentPage = currentPageIndex
     
+    // Call parallax
     setupParallax(collectionView)
   }
   
