@@ -79,11 +79,11 @@ class HomeViewController: UIViewController {
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.register(
-      UITableViewCell.self, forCellReuseIdentifier: "cell")
-    
-    view.addSubview(tableView)
+      CategoryCell.self, forCellReuseIdentifier: CategoryCell.reuseId)
     
     tableView.tableHeaderView = slider
+    
+    view.addSubview(tableView)
     
     NSLayoutConstraint.activate([
       tableView.topAnchor.constraint(
@@ -112,15 +112,14 @@ extension HomeViewController: UITableViewDataSource {
   func tableView(
     _ tableView: UITableView,
     numberOfRowsInSection section: Int) -> Int {
-      viewModel.mediaItems.count
+      return 5
     }
   
   func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-      cell?.textLabel?.text = viewModel.mediaItems[indexPath.row].title
-      return cell!
+      let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseId, for: indexPath) as! CategoryCell
+      return cell
     }
   
 }
@@ -132,7 +131,7 @@ extension HomeViewController: UITableViewDelegate {
   func tableView(
     _ tableView: UITableView,
     heightForRowAt indexPath: IndexPath) -> CGFloat {
-      return 80
+      return 300
     }
   
 }

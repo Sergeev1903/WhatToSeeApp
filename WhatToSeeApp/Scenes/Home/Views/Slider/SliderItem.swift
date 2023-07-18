@@ -10,13 +10,13 @@ import UIKit
 class SliderItem: UICollectionViewCell {
   
   // MARK: Properties
-  static let reuseId = "SliderItem"
+  static let reuseId = String(describing: SliderItem.self)
   
   let imageView = UIImageView()
-  let topGradientView = UIView()
-  let topGradientLayer = CAGradientLayer()
-  let bottomGradientView = UIView()
-  let bottomGradientLayer = CAGradientLayer()
+  private let topGradientView = UIView()
+  private let topGradientLayer = CAGradientLayer()
+  private let bottomGradientView = UIView()
+  private let bottomGradientLayer = CAGradientLayer()
   
   
   // MARK: - ViewModel
@@ -44,11 +44,11 @@ class SliderItem: UICollectionViewCell {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-    setupImageView()
+    print("Sorry! only code, no storyboards")
   }
   
-  // MARK: -
   
+  // MARK: -
   override func prepareForReuse() {
     imageView.image = nil
   }

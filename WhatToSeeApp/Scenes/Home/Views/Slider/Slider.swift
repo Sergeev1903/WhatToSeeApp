@@ -30,12 +30,11 @@ class Slider: UIView {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-    print("Sorry only code, no storyboards")
+    print("Sorry! only code, no storyboards")
   }
   
   
   // MARK: - Methods
-  
   private func setupViewModel() {
     viewModel = SliderViewModel(service: MoviesService())
     viewModel.getMedia {
