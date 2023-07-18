@@ -8,8 +8,13 @@
 import Foundation
 
 protocol MoviesServiceable {
+  func getMedia<T: Codable>(
+    endpoint: Endpoint, responseModel: T.Type,
+    completion: @escaping (Result<T, RequestError>) -> Void)
+  
   func getUpcoming(
     completion: @escaping (Result<TMDBMovieResponse, RequestError>) -> Void)
+  
   func getMovieDetail(
     id: Int,
     completion: @escaping (Result<TMDBMovieResult, RequestError>) -> Void)
@@ -18,7 +23,22 @@ protocol MoviesServiceable {
 }
 
 struct MoviesService: HTTPClient, MoviesServiceable {
-
+  
+  func getMedia<T>(endpoint: Endpoint,
+                   responseModel: T.Type,
+                   completion: @escaping (Result<T, RequestError>) -> Void)
+  where T : Decodable, T : Encodable {
+    DispatchQueue.global().async {
+      sendRequest(endpoint: endpoint,
+                  responseModel: responseModel.self) { result in
+        DispatchQueue.main.async {
+          completion(result)
+        }
+      }
+    }
+  }
+  
+  
   func getUpcoming(
     completion: @escaping (Result<TMDBMovieResponse, RequestError>) -> Void) {
       DispatchQueue.global().async {
@@ -32,6 +52,7 @@ struct MoviesService: HTTPClient, MoviesServiceable {
       }
     }
   
+  
   func getMovieDetail(
     id: Int,
     completion: @escaping (Result<TMDBMovieResult, RequestError>) -> Void) {
@@ -44,6 +65,6 @@ struct MoviesService: HTTPClient, MoviesServiceable {
   func loadData(url: URL) -> Data? {
     return fetchData(from: url)
   }
- 
+  
 }
 

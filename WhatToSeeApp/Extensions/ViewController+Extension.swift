@@ -9,7 +9,7 @@ import UIKit
 
 extension UIViewController {
   
-  func createCustomBarButton(
+  func createBarButton(
     image: UIImage, size: Int, selector: Selector) -> UIBarButtonItem {
       
       //    let customButtonImage = image.withTintColor(#colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 0.09775972682), renderingMode: .alwaysOriginal)

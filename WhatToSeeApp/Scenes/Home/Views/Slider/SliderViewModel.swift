@@ -20,17 +20,15 @@ class SliderViewModel: SliderViewModelProtocol {
 
   // MARK: - Properties
   private let service: MoviesServiceable
-  var mediaItems: [TMDBMovieResult] = [] {
-    didSet {
-      mediaItems.count
-    }
-  }
+  var mediaItems: [TMDBMovieResult] = []
 
+  
   // MARK: - Init
   init(service: MoviesServiceable) {
     self.service = service
   }
 
+  
   // MARK: - Networking
   func getMedia(completion: @escaping () -> Void) {
     service.getUpcoming {[weak self] result in
@@ -46,6 +44,7 @@ class SliderViewModel: SliderViewModelProtocol {
       completion()
     }
   }
+  
   
   // MARK: - Configure slider collection
   func numberOfItemsInSection() -> Int {

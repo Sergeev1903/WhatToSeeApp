@@ -42,7 +42,7 @@ class HomeViewController: UIViewController {
     navigationController?.navigationBar.shadowImage = UIImage()
     navigationItem.titleView = tabMenu
     
-    let profileButton = createCustomBarButton(
+    let profileButton = createBarButton(
       image: UIImage(named: "user")!,
       size: 32,
       selector: #selector(profileRightButtonTapped))

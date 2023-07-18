@@ -11,7 +11,6 @@ protocol HTTPClient {
   func sendRequest<T: Codable>(
     endpoint: Endpoint, responseModel: T.Type,
     completion: @escaping (Result<T, RequestError>) -> Void)
-  
   func fetchData(from url: URL) -> Data?
 }
 

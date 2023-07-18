@@ -27,9 +27,11 @@ class HomeViewModel: HomeViewModelProtocol {
   }
   
   
-  // MARK: - Methods
+  // MARK: - Methods  
   func getMedia(completion: @escaping () -> Void) {
-    service.getUpcoming {[weak self] result in
+    service.getMedia(
+      endpoint: MoviesEndpoint.nowPlaying,
+      responseModel: TMDBMovieResponse.self) {[weak self] result in
       guard let strongSelf = self else {
         return
       }
