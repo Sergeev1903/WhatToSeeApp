@@ -1,24 +1,18 @@
 //
-//  ParallaxView.swift
+//  PreviewSliderCell.swift
 //  WhatToSeeApp
 //
-//  Created by Артем Сергеев on 11.07.2023.
+//  Created by Артем Сергеев on 18.07.2023.
 //
-
 
 import UIKit
 
-class ParallaxView: UIView {
+class SliderItem: UICollectionViewCell {
+    
+  // MARK: Properties
+  static let reuseId = "SliderItem"
   
-  // MARK: - Properties
-  static  let reuseId = "ParallaxView"
-  
-  let imageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.translatesAutoresizingMaskIntoConstraints = false
-    imageView.contentMode = .scaleAspectFill
-    return imageView
-  }()
+  let imageView = UIImageView()
   
   let topGradientView: UIView = {
     let view = UIView()
@@ -53,7 +47,6 @@ class ParallaxView: UIView {
   }()
   
   
-  
   // MARK: - Init
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -61,11 +54,11 @@ class ParallaxView: UIView {
     setupTopGradientView()
     setupBottomGradientView()
   }
-  
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    setupImageView()
   }
-  
   
   // MARK: -
   override func layoutSubviews() {
@@ -81,9 +74,15 @@ class ParallaxView: UIView {
       height: 60)
   }
   
-  
   // MARK: - Methods
+  func configureSliderItem(with image: UIImage) {
+    self.imageView.image = image
+  }
+  
   private func setupImageView() {
+    imageView.contentMode = .scaleAspectFill
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    
     addSubview(imageView)
     layer.masksToBounds = true
     
@@ -93,7 +92,6 @@ class ParallaxView: UIView {
       imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
       imageView.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
-
   }
   
   private func setupTopGradientView() {
@@ -129,3 +127,4 @@ class ParallaxView: UIView {
   }
   
 }
+

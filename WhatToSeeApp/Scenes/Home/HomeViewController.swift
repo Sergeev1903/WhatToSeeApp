@@ -10,24 +10,17 @@ import UIKit
 class HomeViewController: UIViewController {
   
   // MARK: - Properties
-  private let tagMenuSegmentedControl = TagMenuSegmentedControl()
+  private let tabMenu = TabMenu()
   private let tableView = UITableView(frame: .zero, style: .grouped)
-  
-  var images = [
-    UIImage(named: "1")!, UIImage(named: "2")!,
-    UIImage(named: "3")!, UIImage(named: "4")!,
-    UIImage(named: "5")!, UIImage(named: "6")!,
-    UIImage(named: "7")!, UIImage(named: "8")!,
-    UIImage(named: "9")!, UIImage(named: "10")!,
-    UIImage(named: "11")!
-  ]
-  
+  private let slider = Slider()
+
   // MARK: - ViewModel
   private var viewModel: HomeViewModelProtocol! {
     didSet {
       viewModel.getMedia {
         self.tableView.reloadData()
       }
+     
     }
   }
   
@@ -40,6 +33,7 @@ class HomeViewController: UIViewController {
     setupTagMenuSegmentedControl()
     setupNavigationBar()
     setupTableView()
+    setupSlider()
   }
   
   
@@ -53,7 +47,7 @@ class HomeViewController: UIViewController {
       selector: #selector(profileRightButtonTapped))
     
     navigationItem.rightBarButtonItems = [profileButton]
-    navigationItem.titleView = tagMenuSegmentedControl
+    navigationItem.titleView = tabMenu
   }
   
   @objc private func profileRightButtonTapped() {
@@ -62,18 +56,19 @@ class HomeViewController: UIViewController {
   }
   
   private func setupTagMenuSegmentedControl() {
-    tagMenuSegmentedControl.frame = CGRect(
+    tabMenu.frame = CGRect(
       x: 0, y: 0,
-      width: self.view.frame.width, height: 40)
-    tagMenuSegmentedControl.segments = ["Movies", "TV Shows"]
-    tagMenuSegmentedControl.segmentTintColor = .clear
-    tagMenuSegmentedControl.underlineColor = .systemBlue
-    tagMenuSegmentedControl.underlineHeight = 2.0
-    tagMenuSegmentedControl.addTarget(
+      width: self.view.frame.width,
+      height: 40)
+    tabMenu.segments = ["Movies", "TV Shows"]
+    tabMenu.segmentTintColor = .clear
+    tabMenu.underlineColor = .systemBlue
+    tabMenu.underlineHeight = 2.0
+    tabMenu.addTarget(
       self, action: #selector(segmentValueChanged(_:)), for: .valueChanged)
   }
   
-  @objc func segmentValueChanged(_ sender: TagMenuSegmentedControl) {
+  @objc func segmentValueChanged(_ sender: TabMenu) {
     print("#Debug Selected segment index: \(sender.selectedSegmentIndex)")
   }
   
@@ -83,9 +78,8 @@ class HomeViewController: UIViewController {
     tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.register(
       UITableViewCell.self, forCellReuseIdentifier: "cell")
-    tableView.register(
-      PreviewSliderView.self,
-      forHeaderFooterViewReuseIdentifier: PreviewSliderView.reuseId)
+    
+    tableView.tableHeaderView = slider
     
     view.addSubview(tableView)
     
@@ -99,6 +93,12 @@ class HomeViewController: UIViewController {
       tableView.bottomAnchor.constraint(
         equalTo: view.bottomAnchor)
     ])
+  }
+  
+  private func setupSlider() {
+    slider.frame = CGRect(
+      x: 0, y: 0, width: tableView.bounds.width,
+      height: 600)
   }
   
 }
@@ -120,17 +120,7 @@ extension HomeViewController: UITableViewDataSource {
       cell?.textLabel?.text = viewModel.mediaItems[indexPath.row].title
       return cell!
     }
-  
-  func tableView(
-    _ tableView: UITableView,
-    viewForHeaderInSection section: Int) -> UIView? {
-      print("header start")
-      let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: PreviewSliderView.reuseId) as! PreviewSliderView
-      header.setImages(images: viewModel.mediaImages)
-      print("header end")
-      return header
-    }
-  
+
 }
 
 
@@ -140,13 +130,8 @@ extension HomeViewController: UITableViewDelegate {
   func tableView(
     _ tableView: UITableView,
     heightForRowAt indexPath: IndexPath) -> CGFloat {
-      return 40
+      return 80
     }
-  
-  func tableView(
-    _ tableView: UITableView,
-    heightForHeaderInSection section: Int) -> CGFloat {
-      return 600
-    }
+
   
 }

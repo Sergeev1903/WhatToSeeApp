@@ -17,6 +17,8 @@ protocol HomeViewModelProtocol: AnyObject {
 
 
 class HomeViewModel: HomeViewModelProtocol {
+  
+  // MARK: - Properties
   private let service: MoviesServiceable
   
   var mediaItems: [TMDBMovieResult] = []
@@ -26,11 +28,13 @@ class HomeViewModel: HomeViewModelProtocol {
       print(mediaImages.count)
     }
   }
-  
+
+  // MARK: - Init
   init(service: MoviesServiceable) {
     self.service = service
   }
   
+  // MARK: - Methods
   func getMedia(completion: @escaping () -> Void) {
     service.getUpcoming {[weak self] result in
       guard let strongSelf = self else {
@@ -50,11 +54,11 @@ class HomeViewModel: HomeViewModelProtocol {
   func loadImages() {
     print("loadImages start")
     for item in mediaItems {
-      
+
       DispatchQueue.global(qos: .userInitiated).async {
         guard let data = self.service.loadData(url: item.posterURL) else { return }
         guard let image = UIImage(data: data) else { return }
-        
+
         DispatchQueue.main.async {
           self.mediaImages.append(image)
         }
@@ -62,7 +66,7 @@ class HomeViewModel: HomeViewModelProtocol {
     }
     print("loadImages end")
   }
-  
+    
 }
 
 
