@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 protocol HomeViewModelProtocol: AnyObject {
   var mediaItems: [TMDBMovieResult] { get }

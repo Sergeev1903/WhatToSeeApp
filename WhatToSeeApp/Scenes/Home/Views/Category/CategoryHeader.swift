@@ -1,0 +1,73 @@
+//
+//  CategoryHeader.swift
+//  WhatToSeeApp
+//
+//  Created by Артем Сергеев on 19.07.2023.
+//
+
+import UIKit
+
+class CategoryHeader: UITableViewHeaderFooterView {
+
+  // MARK: - Properties
+  static let reuseId = String(describing: CategoryHeader.self)
+  
+  private let titleLabel = UILabel()
+  private let button = UIButton(type: .system)
+  
+  
+  // MARK: - Init
+  override init(reuseIdentifier: String?) {
+    super.init(reuseIdentifier: reuseIdentifier)
+    configureUI()
+  }
+  
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    print("Sorry! only code, no storyboards")
+  }
+  
+  
+  // MARK: - Methods
+  private func configureUI() {
+    configureTitle()
+    configureButton()
+  }
+  
+  private func configureTitle() {
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    titleLabel.textColor = .label
+    titleLabel.text = "Trending"
+    titleLabel.font = UIFont.systemFont(ofSize: 24)
+    
+    contentView.addSubview(titleLabel)
+    
+    NSLayoutConstraint.activate([
+      titleLabel.leadingAnchor.constraint(
+        equalTo: contentView.leadingAnchor, constant: 32),
+      titleLabel.centerYAnchor.constraint(
+        equalTo: contentView.centerYAnchor)])
+  }
+  
+  private func configureButton() {
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitle("See All", for: .normal)
+    button.setTitleColor(.label, for: .normal)
+    button.addTarget(
+      self, action: #selector(headerDidTapped),
+      for: .touchUpInside)
+    
+    contentView.addSubview(button)
+
+    NSLayoutConstraint.activate([
+      button.trailingAnchor.constraint(
+        equalTo: contentView.trailingAnchor, constant: -32),
+      button.centerYAnchor.constraint(
+        equalTo: contentView.centerYAnchor)])
+  }
+  
+  // MARK: -
+  @objc func headerDidTapped() {
+  }
+
+}

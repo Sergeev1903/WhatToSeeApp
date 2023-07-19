@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
   
   // MARK: - Properties
   private let tabMenu = TabMenu()
-  private let tableView = UITableView(frame: .zero, style: .grouped)
+  private let tableView = UITableView(frame: .zero, style: .plain)
   private let slider = Slider()
   
   
@@ -64,7 +64,7 @@ class HomeViewController: UIViewController {
     tabMenu.segments = ["Movies", "TV Shows"]
     tabMenu.segmentTintColor = .clear
     tabMenu.underlineColor = .systemBlue
-    tabMenu.underlineHeight = 2.0
+    tabMenu.underlineHeight = 4.0
     tabMenu.addTarget(
       self, action: #selector(tabMenuValueChanged(_:)), for: .valueChanged)
   }
@@ -78,6 +78,10 @@ class HomeViewController: UIViewController {
     tableView.delegate = self
     tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
+    tableView.separatorStyle = .none
+    tableView.register(
+      CategoryHeader.self,
+      forHeaderFooterViewReuseIdentifier: CategoryHeader.reuseId)
     tableView.register(
       CategoryCell.self, forCellReuseIdentifier: CategoryCell.reuseId)
     
@@ -109,17 +113,31 @@ class HomeViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension HomeViewController: UITableViewDataSource {
   
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 5
+  }
+  
   func tableView(
     _ tableView: UITableView,
     numberOfRowsInSection section: Int) -> Int {
-      return 5
+      return 1
     }
   
   func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseId, for: indexPath) as! CategoryCell
+      let cell = tableView.dequeueReusableCell(
+        withIdentifier: CategoryCell.reuseId, for: indexPath) as! CategoryCell
       return cell
+    }
+  
+  
+  func tableView(
+    _ tableView: UITableView,
+    viewForHeaderInSection section: Int) -> UIView? {
+      let headerView = tableView.dequeueReusableHeaderFooterView(
+        withIdentifier: CategoryHeader.reuseId) as! CategoryHeader
+      return headerView
     }
   
 }
@@ -133,5 +151,11 @@ extension HomeViewController: UITableViewDelegate {
     heightForRowAt indexPath: IndexPath) -> CGFloat {
       return 300
     }
+  
+  func tableView(
+    _ tableView: UITableView,
+    heightForHeaderInSection section: Int) -> CGFloat {
+    return 32
+  }
   
 }

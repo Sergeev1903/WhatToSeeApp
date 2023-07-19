@@ -7,14 +7,14 @@
 
 import Foundation
 
-// MARK: - TMDBMovie
+// MARK: - TMDBMovieResponse
 struct TMDBMovieResponse: Codable {
   let page: Int
   let results: [TMDBMovieResult]
   let totalPages, totalResults: Int
 }
 
-// MARK: - Result
+// MARK: - TMDBMovieResult
 struct TMDBMovieResult: Codable {
   let adult: Bool?
   let backdropPath: String?
