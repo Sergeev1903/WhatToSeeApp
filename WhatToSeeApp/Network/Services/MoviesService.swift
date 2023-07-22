@@ -11,14 +11,11 @@ protocol MoviesServiceable {
   func getMedia<T: Codable>(
     endpoint: Endpoint, responseModel: T.Type,
     completion: @escaping (Result<T, RequestError>) -> Void)
-  
   func getUpcoming(
     completion: @escaping (Result<TMDBMovieResponse, RequestError>) -> Void)
-  
   func getMovieDetail(
     id: Int,
     completion: @escaping (Result<TMDBMovieResult, RequestError>) -> Void)
-  
   func loadData(url: URL) -> Data?
 }
 

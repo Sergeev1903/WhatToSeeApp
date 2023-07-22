@@ -15,7 +15,6 @@ class Slider: UIView {
   private let pageControl = UIPageControl()
   private var currentPageIndex = 0
   
-  
     // MARK: - ViewModel
   private var viewModel: SliderViewModelProtocol!
   
@@ -57,8 +56,7 @@ class Slider: UIView {
     collectionView.delegate = self
     collectionView.dataSource = self
     collectionView.register(
-      SliderItem.self,
-      forCellWithReuseIdentifier: SliderItem.reuseId)
+      SliderItem.self, forCellWithReuseIdentifier: SliderItem.reuseId)
     
     addSubview(collectionView)
     

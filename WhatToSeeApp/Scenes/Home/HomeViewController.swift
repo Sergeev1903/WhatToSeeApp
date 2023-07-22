@@ -104,7 +104,7 @@ class HomeViewController: UIViewController {
   private func setupSlider() {
     slider.frame = CGRect(
       x: 0, y: 0, width: tableView.bounds.width,
-      height: 600)
+      height: 560)
   }
   
 }
@@ -149,7 +149,7 @@ extension HomeViewController: UITableViewDelegate {
   func tableView(
     _ tableView: UITableView,
     heightForRowAt indexPath: IndexPath) -> CGFloat {
-      return 300
+      return 250
     }
   
   func tableView(

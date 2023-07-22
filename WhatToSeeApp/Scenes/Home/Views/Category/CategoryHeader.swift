@@ -44,7 +44,7 @@ class CategoryHeader: UITableViewHeaderFooterView {
     
     NSLayoutConstraint.activate([
       titleLabel.leadingAnchor.constraint(
-        equalTo: contentView.leadingAnchor, constant: 32),
+        equalTo: contentView.leadingAnchor, constant: 16),
       titleLabel.centerYAnchor.constraint(
         equalTo: contentView.centerYAnchor)])
   }
@@ -61,7 +61,7 @@ class CategoryHeader: UITableViewHeaderFooterView {
 
     NSLayoutConstraint.activate([
       button.trailingAnchor.constraint(
-        equalTo: contentView.trailingAnchor, constant: -32),
+        equalTo: contentView.trailingAnchor, constant: -20),
       button.centerYAnchor.constraint(
         equalTo: contentView.centerYAnchor)])
   }
