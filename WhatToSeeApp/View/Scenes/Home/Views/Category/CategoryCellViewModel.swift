@@ -18,20 +18,25 @@ protocol CategoryCellViewModelProtocol {
 
 class CategoryCellViewModel: CategoryCellViewModelProtocol {
   
+  // MARK: - Properties
   let mediaItems: [TMDBMovieResult]
   
+  
+  // MARK: - Init
   required init(mediaItems: [TMDBMovieResult]) {
     self.mediaItems = mediaItems
   }
   
+  
+  // MARK: - Methods
   func numberOfItemsInSection() -> Int {
     return mediaItems.count
   }
   
-  func cellForItemAt(indexPath: IndexPath) -> CategoryCellItemViewModelProtocol {
+  func cellForItemAt(
+    indexPath: IndexPath) -> CategoryCellItemViewModelProtocol {
     let media = mediaItems[indexPath.item]
     return CategoryCellItemViewModel(media: media)
   }
-  
   
 }

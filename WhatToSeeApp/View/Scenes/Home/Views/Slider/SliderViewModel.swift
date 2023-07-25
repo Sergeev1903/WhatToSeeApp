@@ -12,22 +12,23 @@ protocol SliderViewModelProtocol: AnyObject {
   var mediaItems: [TMDBMovieResult] { get }
   func getMedia(completion: @escaping () -> Void)
   func numberOfItemsInSection() -> Int
-  func cellForItemAt(indexPath: IndexPath) -> SliderItemViewModelProtocol
+  func cellForItemAt(
+    indexPath: IndexPath) -> SliderItemViewModelProtocol
 }
 
 
 class SliderViewModel: SliderViewModelProtocol {
-
+  
   // MARK: - Properties
   private let service: MoviesServiceable
   var mediaItems: [TMDBMovieResult] = []
-
+  
   
   // MARK: - Init
   init(service: MoviesServiceable) {
     self.service = service
   }
-
+  
   
   // MARK: - Networking
   func getMedia(completion: @escaping () -> Void) {
@@ -48,12 +49,13 @@ class SliderViewModel: SliderViewModelProtocol {
   
   // MARK: - Configure slider collection
   func numberOfItemsInSection() -> Int {
-      return mediaItems.count
-    }
+    return mediaItems.count
+  }
   
-  func cellForItemAt(indexPath: IndexPath) -> SliderItemViewModelProtocol {
+  func cellForItemAt(
+    indexPath: IndexPath) -> SliderItemViewModelProtocol {
       let media = mediaItems[indexPath.item]
-     return SliderItemViewModel(media: media)
+      return SliderItemViewModel(media: media)
     }
   
 }

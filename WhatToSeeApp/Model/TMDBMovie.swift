@@ -7,12 +7,14 @@
 
 import Foundation
 
+
 // MARK: - TMDBMovieResponse
 struct TMDBMovieResponse: Codable {
   let page: Int
   let results: [TMDBMovieResult]
   let totalPages, totalResults: Int
 }
+
 
 // MARK: - TMDBMovieResult
 struct TMDBMovieResult: Codable {
@@ -26,7 +28,6 @@ struct TMDBMovieResult: Codable {
   let video: Bool?
   let voteAverage: Double?
   let voteCount: Int?
-  
   
   var backdropURL: URL {
     return URL(string: "https://image.tmdb.org/t/p/original\(backdropPath ?? "")")!

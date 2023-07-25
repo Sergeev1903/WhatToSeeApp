@@ -7,12 +7,14 @@
 
 import UIKit
 
+
 class SliderItem: UICollectionViewCell {
   
   // MARK: Properties
   static let reuseId = String(describing: SliderItem.self)
   
-  let imageView = UIImageView()
+  public let imageView = UIImageView()
+  private let loadIndicator = UIActivityIndicatorView()
   private let topGradientView = UIView()
   private let topGradientLayer = CAGradientLayer()
   private let bottomGradientView = UIView()
@@ -22,6 +24,7 @@ class SliderItem: UICollectionViewCell {
   // MARK: - ViewModel
   var viewModel: SliderItemViewModelProtocol! {
     didSet {
+      loadIndicator.startAnimating()
       DispatchQueue.global(qos: .userInitiated).async {
         guard let data = self.viewModel.mediaData else {
           return
@@ -30,6 +33,7 @@ class SliderItem: UICollectionViewCell {
         
         DispatchQueue.main.async {
           self.imageView.image = image
+          self.loadIndicator.stopAnimating()
         }
       }
     }
@@ -40,6 +44,7 @@ class SliderItem: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupImageView()
+    setupLoadIndicator()
     setupTopGradientView()
     setupBottomGradientView()
   }
@@ -69,10 +74,6 @@ class SliderItem: UICollectionViewCell {
   }
   
   // MARK: - Methods
-  func configureSliderItem(with image: UIImage) {
-    self.imageView.image = image
-  }
-  
   private func setupImageView() {
     imageView.contentMode = .scaleAspectFill
     imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -85,6 +86,20 @@ class SliderItem: UICollectionViewCell {
       imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
       imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
       imageView.bottomAnchor.constraint(equalTo: bottomAnchor)
+    ])
+  }
+  
+  
+  private func setupLoadIndicator() {
+    loadIndicator.hidesWhenStopped = true
+    loadIndicator.style = .large
+    loadIndicator.translatesAutoresizingMaskIntoConstraints = false
+    
+    addSubview(loadIndicator)
+    
+    NSLayoutConstraint.activate([
+      loadIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+      loadIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
     ])
   }
   

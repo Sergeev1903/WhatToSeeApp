@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class HomeViewController: UIViewController {
   
   // MARK: - Properties
@@ -19,7 +20,9 @@ class HomeViewController: UIViewController {
   private var viewModel: HomeViewModelProtocol! {
     didSet {
       viewModel.getMovieCategories {
-        self.tableView.reloadData()
+        DispatchQueue.main.async {
+          self.tableView.reloadData()
+        }
       }
     }
   }
@@ -106,7 +109,6 @@ class HomeViewController: UIViewController {
       x: 0, y: 0, width: tableView.bounds.width,
       height: 560)
   }
-  
 }
 
 
@@ -148,7 +150,6 @@ extension HomeViewController: UITableViewDataSource {
       
       return cell
     }
-  
   
   func tableView(
     _ tableView: UITableView,

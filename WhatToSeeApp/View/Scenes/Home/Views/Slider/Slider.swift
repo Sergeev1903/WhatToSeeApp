@@ -15,8 +15,18 @@ class Slider: UIView {
   private let pageControl = UIPageControl()
   private var currentPageIndex = 0
   
-    // MARK: - ViewModel
-  private var viewModel: SliderViewModelProtocol!
+  
+  // MARK: - ViewModel
+  private var viewModel: SliderViewModelProtocol! {
+    didSet {
+      viewModel.getMedia {
+        DispatchQueue.main.async {
+          self.collectionView.reloadData()
+          self.pageControl.numberOfPages = self.viewModel.mediaItems.count
+        }
+      }
+    }
+  }
   
   
   // MARK: - Init
@@ -36,10 +46,6 @@ class Slider: UIView {
   // MARK: - Methods
   private func setupViewModel() {
     viewModel = SliderViewModel(service: MoviesService())
-    viewModel.getMedia {
-      self.collectionView.reloadData()
-      self.pageControl.numberOfPages = self.viewModel.mediaItems.count
-    }
   }
   
   private func setupCollectionView() {
@@ -104,7 +110,8 @@ class Slider: UIView {
         continue
       }
       
-      let newX: CGFloat = tempo * (collectionView.contentOffset.x - (CGFloat(index) * collectionView.frame.width))
+      let newX: CGFloat =
+      tempo * (collectionView.contentOffset.x - (CGFloat(index) * collectionView.frame.width))
       cell.imageView.frame.origin.x = newX
     }
   }

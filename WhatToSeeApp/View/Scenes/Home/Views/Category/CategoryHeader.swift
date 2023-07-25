@@ -7,11 +7,11 @@
 
 import UIKit
 
+
 class CategoryHeader: UITableViewHeaderFooterView {
 
   // MARK: - Properties
   static let reuseId = String(describing: CategoryHeader.self)
-  
   private let titleLabel = UILabel()
   private let button = UIButton(type: .system)
   
@@ -29,11 +29,9 @@ class CategoryHeader: UITableViewHeaderFooterView {
   
   
   // MARK: - Methods
-  
   func configure(title: String) {
     self.titleLabel.text = title
   }
-  
   
   private func configureUI() {
     setupTitle()

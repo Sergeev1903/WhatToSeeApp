@@ -25,6 +25,8 @@ class CategoryCellItemViewModel: CategoryCellItemViewModelProtocol {
     return data
   }
   
+  
+  // MARK: - Init
   required init(media: TMDBMovieResult) {
     self.media = media
   }

@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 protocol SliderItemViewModelProtocol: AnyObject {
   var media: TMDBMovieResult! { get }
   var mediaData: Data? { get }

@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 protocol HomeViewModelProtocol: AnyObject {
   var nowPlayingMovies: [TMDBMovieResult] { get }
   var popularMovies: [TMDBMovieResult] { get }
@@ -24,12 +25,11 @@ protocol HomeViewModelProtocol: AnyObject {
 class HomeViewModel: HomeViewModelProtocol {
   
   // MARK: - Properties
-  private let service: MoviesServiceable
-  
   var nowPlayingMovies: [TMDBMovieResult] = []
   var popularMovies: [TMDBMovieResult] = []
   var topRatedMovies: [TMDBMovieResult] = []
   var trendingMovies: [TMDBMovieResult] = []
+  private let service: MoviesServiceable
   
   
   // MARK: - Init
@@ -44,27 +44,21 @@ class HomeViewModel: HomeViewModelProtocol {
     getPopularMovies()
     getTopRatedMovies()
     getTrendingMovies()
-    
     completion()
   }
   
   
   // MARK: -
-  public func numberOfSections() -> Int {
-    return 4
-  }
+  public func numberOfSections() -> Int { return 4 }
   
-  public func numberOfRowsInSection() -> Int {
-    return 1
-  }
+  public func numberOfRowsInSection() -> Int { return 1 }
   
   public func cellForRowAt(
     indexPath: IndexPath,
     mediaItems: [TMDBMovieResult]) -> CategoryCellViewModelProtocol {
       return CategoryCellViewModel(mediaItems: mediaItems)
     }
-  
-  
+ 
   private func getNowPlayingMovies() {
     service.getMedia(
       endpoint: MoviesEndpoint.nowPlaying,
@@ -80,7 +74,6 @@ class HomeViewModel: HomeViewModelProtocol {
         }
       }
   }
-  
   
   private func getPopularMovies() {
     service.getMedia(
@@ -98,7 +91,6 @@ class HomeViewModel: HomeViewModelProtocol {
       }
   }
   
-  
   private func getTopRatedMovies() {
     service.getMedia(
       endpoint: MoviesEndpoint.topRated,
@@ -114,7 +106,6 @@ class HomeViewModel: HomeViewModelProtocol {
         }
       }
   }
-  
   
   private func getTrendingMovies() {
     service.getMedia(

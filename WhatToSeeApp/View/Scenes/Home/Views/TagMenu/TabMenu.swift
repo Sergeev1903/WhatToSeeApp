@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class TabMenu: UIControl {
   
   // MARK: - Properties
@@ -53,7 +54,6 @@ class TabMenu: UIControl {
     }
   }
   
-  
   // MARK: - Init
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -66,7 +66,6 @@ class TabMenu: UIControl {
     setupScrollView()
     setupSegmentedControl()
   }
-  
   
   // MARK: - Methods
   private func setupScrollView() {
