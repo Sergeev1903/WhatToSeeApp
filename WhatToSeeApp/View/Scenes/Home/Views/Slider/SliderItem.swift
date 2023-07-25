@@ -23,7 +23,9 @@ class SliderItem: UICollectionViewCell {
   var viewModel: SliderItemViewModelProtocol! {
     didSet {
       DispatchQueue.global(qos: .userInitiated).async {
-        guard let data = self.viewModel.mediaImage else { return }
+        guard let data = self.viewModel.mediaData else {
+          return
+        }
         let image = UIImage(data: data)
         
         DispatchQueue.main.async {

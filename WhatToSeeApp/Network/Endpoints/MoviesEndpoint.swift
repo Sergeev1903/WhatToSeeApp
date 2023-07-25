@@ -36,16 +36,16 @@ extension MoviesEndpoint: Endpoint {
   
   var method: RequestMethod {
     switch self {
-    case .nowPlaying, .popular, .topRated, .upcoming,
-         .trending,.movieDetail:
+    case .nowPlaying, .popular, .topRated,
+        .upcoming, .trending, .movieDetail:
       return .get
     }
   }
   
   var header: [String: String]? {
     switch self {
-    case .nowPlaying, .popular, .topRated, .upcoming,
-         .trending, .movieDetail:
+    case .nowPlaying, .popular, .topRated,
+        .upcoming, .trending, .movieDetail:
       return [
         "Authorization": "Bearer \(accessToken)",
         "Content-Type": "application/json;charset=utf-8"

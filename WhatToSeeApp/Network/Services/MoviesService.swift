@@ -8,11 +8,13 @@
 import Foundation
 
 protocol MoviesServiceable {
-  func getMedia<T: Codable>(
-    endpoint: Endpoint, responseModel: T.Type,
-    completion: @escaping (Result<T, RequestError>) -> Void)
+    func getMedia<T: Codable>(
+      endpoint: Endpoint, responseModel: T.Type,
+      completion: @escaping (Result<T, RequestError>) -> Void)
+  
   func getUpcoming(
     completion: @escaping (Result<TMDBMovieResponse, RequestError>) -> Void)
+  
   func getMovieDetail(
     id: Int,
     completion: @escaping (Result<TMDBMovieResult, RequestError>) -> Void)
@@ -25,7 +27,8 @@ struct MoviesService: HTTPClient, MoviesServiceable {
                    responseModel: T.Type,
                    completion: @escaping (Result<T, RequestError>) -> Void)
   where T : Decodable, T : Encodable {
-    DispatchQueue.global().async {
+    
+    DispatchQueue.global(qos: .utility).async {
       sendRequest(endpoint: endpoint,
                   responseModel: responseModel.self) { result in
         DispatchQueue.main.async {
@@ -38,7 +41,7 @@ struct MoviesService: HTTPClient, MoviesServiceable {
   
   func getUpcoming(
     completion: @escaping (Result<TMDBMovieResponse, RequestError>) -> Void) {
-      DispatchQueue.global().async {
+      DispatchQueue.global(qos: .userInitiated).async {
         sendRequest(
           endpoint: MoviesEndpoint.upcoming,
           responseModel: TMDBMovieResponse.self) { result in
@@ -49,16 +52,18 @@ struct MoviesService: HTTPClient, MoviesServiceable {
       }
     }
   
-  
+  // MARK: - Movie detail
   func getMovieDetail(
     id: Int,
     completion: @escaping (Result<TMDBMovieResult, RequestError>) -> Void) {
-      sendRequest(endpoint: MoviesEndpoint.movieDetail(id: id),
-                  responseModel: TMDBMovieResult.self) { result in
-        completion(result)
-      }
+      sendRequest(
+        endpoint: MoviesEndpoint.movieDetail(id: id),
+        responseModel: TMDBMovieResult.self) { result in
+          completion(result)
+        }
     }
   
+  // MARK: - Load data GCD: semaphores
   func loadData(url: URL) -> Data? {
     return fetchData(from: url)
   }

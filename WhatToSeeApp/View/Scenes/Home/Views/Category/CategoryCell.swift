@@ -14,6 +14,12 @@ class CategoryCell: UITableViewCell {
   
    var collectionView: UICollectionView!
   
+  // MARK: - View Model
+  var viewModel: CategoryCellViewModelProtocol! {
+    didSet {
+      self.collectionView.reloadData()
+    }
+  }
   
   // MARK: - Init
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -61,13 +67,15 @@ extension CategoryCell: UICollectionViewDataSource {
   func collectionView(
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int) -> Int {
-    return 20
+      return viewModel.numberOfItemsInSection()
   }
   
   func collectionView(
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCellItem.reuseId, for: indexPath) as! CategoryCellItem
+      
+      cell.viewModel = viewModel.cellForItemAt(indexPath: indexPath)
       return cell
   }
   
@@ -81,7 +89,6 @@ extension CategoryCell: UICollectionViewDelegateFlowLayout {
     _ collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAt indexPath: IndexPath) -> CGSize {
-
       return CGSize(width: 150, height: 225)
   }
   

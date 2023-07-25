@@ -9,7 +9,7 @@ import Foundation
 
 protocol SliderItemViewModelProtocol: AnyObject {
   var media: TMDBMovieResult! { get }
-  var mediaImage: Data? { get }
+  var mediaData: Data? { get }
   init(media: TMDBMovieResult)
 }
 
@@ -20,8 +20,9 @@ class SliderItemViewModel: SliderItemViewModelProtocol {
   private let service: MoviesServiceable
   var media: TMDBMovieResult!
   
-  var mediaImage: Data? {
-    service.loadData(url: media.posterURL)
+  var mediaData: Data? {
+    let data = try? Data(contentsOf: media.posterURL)
+    return data
   }
   
   

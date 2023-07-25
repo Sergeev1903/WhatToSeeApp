@@ -29,15 +29,20 @@ class CategoryHeader: UITableViewHeaderFooterView {
   
   
   // MARK: - Methods
-  private func configureUI() {
-    configureTitle()
-    configureButton()
+  
+  func configure(title: String) {
+    self.titleLabel.text = title
   }
   
-  private func configureTitle() {
+  
+  private func configureUI() {
+    setupTitle()
+    setupButton()
+  }
+  
+  private func setupTitle() {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.textColor = .label
-    titleLabel.text = "Trending"
     titleLabel.font = UIFont.systemFont(ofSize: 24)
     
     contentView.addSubview(titleLabel)
@@ -49,7 +54,7 @@ class CategoryHeader: UITableViewHeaderFooterView {
         equalTo: contentView.centerYAnchor)])
   }
   
-  private func configureButton() {
+  private func setupButton() {
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitle("See All", for: .normal)
     button.setTitleColor(.label, for: .normal)

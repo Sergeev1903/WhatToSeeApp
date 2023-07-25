@@ -11,9 +11,22 @@ class CategoryCellItem: UICollectionViewCell {
   
   // MARK: - Properties
   static let reuseId = String(describing: CategoryCellItem.self)
+  private let imageView = UIImageView()
   
-  let imageView = UIImageView()
   
+  // MARK: - ViewModel
+  var viewModel: CategoryCellItemViewModelProtocol! {
+    didSet {
+      DispatchQueue.global(qos: .utility).async {
+        guard let data = self.viewModel.mediaImageData else { return }
+        let image = UIImage(data: data)
+        
+        DispatchQueue.main.async {
+          self.imageView.image = image
+        }
+      }
+    }
+  }
   
   // MARK: - Init
   override init(frame: CGRect) {
