@@ -18,7 +18,7 @@ class CategoryCell: UITableViewCell {
   // MARK: - View Model
   var viewModel: CategoryCellViewModelProtocol! {
     didSet {
-      self.collectionView.reloadData()
+        collectionView.reloadData()
     }
   }
   

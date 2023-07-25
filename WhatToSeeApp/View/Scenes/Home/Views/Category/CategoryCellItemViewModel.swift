@@ -11,6 +11,7 @@ import Foundation
 protocol CategoryCellItemViewModelProtocol {
   var media: TMDBMovieResult { get }
   var mediaImageData: Data? { get }
+  var mediaVoteAverage: String { get }
   init(media: TMDBMovieResult)
 }
 
@@ -23,6 +24,11 @@ class CategoryCellItemViewModel: CategoryCellItemViewModelProtocol {
   var mediaImageData: Data? {
     let data = try? Data(contentsOf: media.posterURL)
     return data
+  }
+  
+  var mediaVoteAverage: String {
+    return media.voteAverage == 0 ? "New":
+    String(format: "%.1f", media.voteAverage!)
   }
   
   
