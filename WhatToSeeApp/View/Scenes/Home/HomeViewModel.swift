@@ -56,6 +56,7 @@ class HomeViewModel: HomeViewModelProtocol {
   public func cellForRowAt(
     indexPath: IndexPath,
     mediaItems: [TMDBMovieResult]) -> CategoryCellViewModelProtocol {
+      
       return CategoryCellViewModel(mediaItems: mediaItems)
     }
  

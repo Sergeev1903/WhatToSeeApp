@@ -30,8 +30,10 @@ class CategoryCellItem: UICollectionViewCell {
         }
       }
       voteLabel.text = viewModel.mediaVoteAverage
-      voteLabel.layer.borderColor = viewModel.media.voteAverage ?? 0 <= 6 ?
-      #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 1)
+//      voteLabel.layer.borderColor = viewModel.media.voteAverage ?? 0 <= 6 ?
+//      #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 1)
+      voteLabel.backgroundColor = viewModel.media.voteAverage ?? 0 <= 6 ?
+      #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0.8031870861): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 0.8018936258)
     }
   }
   
@@ -59,10 +61,11 @@ class CategoryCellItem: UICollectionViewCell {
   private func setupImageView() {
     imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.contentMode = .scaleAspectFill
-    imageView.layer.cornerRadius = 10
-    imageView.layer.masksToBounds = true
     
     addSubview(imageView)
+    
+    imageView.layer.cornerRadius = 10
+    imageView.layer.masksToBounds = true
     
     NSLayoutConstraint.activate([
       imageView.topAnchor.constraint(equalTo: topAnchor),
@@ -74,23 +77,25 @@ class CategoryCellItem: UICollectionViewCell {
   
   // FIXME: bug with size
   private func setupVoteLabel() {
-    voteLabel.font = UIFont.systemFont(ofSize: 12)
     voteLabel.textAlignment = .center
-    voteLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.8019453642)
-    voteLabel.layer.borderWidth = 2
-    voteLabel.layer.borderColor = #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 1)
-    voteLabel.layer.cornerRadius = 15
-    voteLabel.layer.masksToBounds = true
-
+    voteLabel.numberOfLines = 0
+    voteLabel.font = UIFont.systemFont(ofSize: 12)
+//    voteLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.8019453642)
     voteLabel.translatesAutoresizingMaskIntoConstraints = false
 
     imageView.addSubview(voteLabel)
-
+    
+    voteLabel.layer.borderWidth = 1
+    voteLabel.layer.borderColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+    voteLabel.layer.cornerRadius = 15
+    voteLabel.layer.masksToBounds = true
+    
     NSLayoutConstraint.activate([
-      voteLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
-      voteLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
+      voteLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+      voteLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
       voteLabel.heightAnchor.constraint(equalToConstant: 30),
-      voteLabel.widthAnchor.constraint(equalToConstant: 30)
+      voteLabel.widthAnchor.constraint(equalToConstant: 30),
+
     ])
 
   }
