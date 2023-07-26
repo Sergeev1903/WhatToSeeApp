@@ -38,7 +38,7 @@ class CategoryCell: UITableViewCell {
     backgroundGradient.frame = CGRect(
       x: 0, y: 0,
       width: contentView.layer.bounds.width,
-      height: contentView.layer.bounds.height + 16)
+      height: contentView.layer.bounds.height)
   }
   
   required init?(coder: NSCoder) {

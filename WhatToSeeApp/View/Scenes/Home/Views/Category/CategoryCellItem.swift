@@ -87,14 +87,14 @@ class CategoryCellItem: UICollectionViewCell {
     
     voteLabel.layer.borderWidth = 1
     voteLabel.layer.borderColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-    voteLabel.layer.cornerRadius = 15
+    voteLabel.layer.cornerRadius = 12
     voteLabel.layer.masksToBounds = true
     
     NSLayoutConstraint.activate([
-      voteLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-      voteLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-      voteLabel.heightAnchor.constraint(equalToConstant: 30),
-      voteLabel.widthAnchor.constraint(equalToConstant: 30),
+      voteLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
+      voteLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+      voteLabel.heightAnchor.constraint(equalToConstant: 24),
+      voteLabel.widthAnchor.constraint(equalToConstant: 24),
 
     ])
 

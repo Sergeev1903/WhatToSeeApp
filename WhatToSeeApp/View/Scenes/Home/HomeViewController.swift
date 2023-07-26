@@ -12,7 +12,7 @@ class HomeViewController: UIViewController {
   
   // MARK: - Properties
   private let tabMenu = TabMenu()
-  private let tableView = UITableView(frame: .zero, style: .plain)
+  private let tableView = UITableView(frame: .zero, style: .grouped)
   private let slider = Slider()
   
   
@@ -75,6 +75,21 @@ class HomeViewController: UIViewController {
   // Action for tabMenu
   @objc func tabMenuValueChanged(_ sender: TabMenu) {
     print("#Debug Selected segment index: \(sender.selectedSegmentIndex)")
+    
+    if sender.selectedSegmentIndex == 1 {
+      alert()
+    }
+    
+    func alert() {
+      let alert = UIAlertController(title: "Coming Soon",
+                                    message: "Sorry! This section is under development",
+                                    preferredStyle: .alert)
+      let action = UIAlertAction(title: "Cancel", style: .destructive) {_ in
+        sender.selectedSegmentIndex = 0
+      }
+      alert.addAction(action)
+      present(alert, animated: true)
+    }
   }
   
   private func setupTableView() {
@@ -94,7 +109,7 @@ class HomeViewController: UIViewController {
     
     NSLayoutConstraint.activate([
       tableView.topAnchor.constraint(
-        equalTo: view.topAnchor, constant: -8),
+        equalTo: view.topAnchor, constant: -16),
       tableView.leftAnchor.constraint(
         equalTo: view.leftAnchor),
       tableView.trailingAnchor.constraint(
@@ -107,7 +122,7 @@ class HomeViewController: UIViewController {
   private func setupSlider() {
     slider.frame = CGRect(
       x: 0, y: 0, width: tableView.bounds.width,
-      height: 580)
+      height: 600)
   }
 }
 
@@ -175,13 +190,13 @@ extension HomeViewController: UITableViewDelegate {
   func tableView(
     _ tableView: UITableView,
     heightForRowAt indexPath: IndexPath) -> CGFloat {
-      return 250
+      return 258
     }
   
   func tableView(
     _ tableView: UITableView,
     heightForHeaderInSection section: Int) -> CGFloat {
-      return 40
+      return 42
     }
   
 }

@@ -81,7 +81,7 @@ class TabMenu: UIControl {
     
     segments.forEach { segment in
       let button = UIButton(type: .system)
-      button.titleLabel?.font = UIFont.systemFont(ofSize: 24)
+      button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
       button.setTitleColor(.label, for: .selected)
       button.setTitleColor(.gray, for: .normal)
       button.setTitle(segment, for: .normal)
