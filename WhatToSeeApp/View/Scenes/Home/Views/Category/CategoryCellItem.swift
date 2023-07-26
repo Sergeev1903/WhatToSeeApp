@@ -20,20 +20,24 @@ class CategoryCellItem: UICollectionViewCell {
   var viewModel: CategoryCellItemViewModelProtocol! {
     didSet {
       loadIndicator.startAnimating()
+      voteLabel.isHidden = true
       DispatchQueue.global(qos: .utility).async {
         guard let data = self.viewModel.mediaImageData else { return }
         let image = UIImage(data: data)
         
         DispatchQueue.main.async {
           self.imageView.image = image
+          self.voteLabel.isHidden = false
           self.loadIndicator.stopAnimating()
         }
       }
       voteLabel.text = viewModel.mediaVoteAverage
-//      voteLabel.layer.borderColor = viewModel.media.voteAverage ?? 0 <= 6 ?
-//      #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 1)
       voteLabel.backgroundColor = viewModel.media.voteAverage ?? 0 <= 6 ?
       #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0.8031870861): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 0.8018936258)
+      
+      //      voteLabel.layer.borderColor = viewModel.media.voteAverage ?? 0 <= 6 ?
+      //      #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 1)
+      
     }
   }
   
@@ -55,7 +59,7 @@ class CategoryCellItem: UICollectionViewCell {
   override func prepareForReuse() {
     imageView.image = nil
   }
-
+  
   
   // MARK: - Methods
   private func setupImageView() {
@@ -80,9 +84,9 @@ class CategoryCellItem: UICollectionViewCell {
     voteLabel.textAlignment = .center
     voteLabel.numberOfLines = 0
     voteLabel.font = UIFont.systemFont(ofSize: 12)
-//    voteLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.8019453642)
+    //    voteLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.8019453642)
     voteLabel.translatesAutoresizingMaskIntoConstraints = false
-
+    
     imageView.addSubview(voteLabel)
     
     voteLabel.layer.borderWidth = 1
@@ -95,9 +99,9 @@ class CategoryCellItem: UICollectionViewCell {
       voteLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
       voteLabel.heightAnchor.constraint(equalToConstant: 24),
       voteLabel.widthAnchor.constraint(equalToConstant: 24),
-
+      
     ])
-
+    
   }
   
   private func setupLoadIndicator() {

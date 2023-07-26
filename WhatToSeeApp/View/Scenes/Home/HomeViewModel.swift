@@ -16,35 +16,16 @@ protocol HomeViewModelProtocol: AnyObject {
   func getMovieCategories(completion: @escaping () -> Void)
   func numberOfSections() -> Int
   func numberOfRowsInSection() -> Int
-//  func cellForRowAt(
-//    indexPath: IndexPath,
-//    mediaItems: [TMDBMovieResult]) -> CategoryCellViewModelProtocol
 }
 
 
 class HomeViewModel: HomeViewModelProtocol {
   
   // MARK: - Properties
-  var nowPlayingMovies: [TMDBMovieResult] = [] {
-    didSet {
-      print("nowPlayingMovies \(nowPlayingMovies.count)")
-    }
-  }
-  var popularMovies: [TMDBMovieResult] = [] {
-    didSet {
-      print("popularMovies \(popularMovies.count)")
-    }
-  }
-  var topRatedMovies: [TMDBMovieResult] = [] {
-    didSet {
-      print("topRatedMovies \(topRatedMovies.count)")
-    }
-  }
-  var trendingMovies: [TMDBMovieResult] = []  {
-    didSet {
-      print("trendingMovies \(trendingMovies.count)")
-    }
-  }
+  var nowPlayingMovies: [TMDBMovieResult] = []
+  var popularMovies: [TMDBMovieResult] = []
+  var topRatedMovies: [TMDBMovieResult] = []
+  var trendingMovies: [TMDBMovieResult] = []
   private let service: MoviesServiceable
   private let dispatchGroup = DispatchGroup()
 
@@ -79,13 +60,6 @@ class HomeViewModel: HomeViewModelProtocol {
   }
   
   public func numberOfRowsInSection() -> Int { return 1 }
-  
-//  public func cellForRowAt(
-//    indexPath: IndexPath,
-//    mediaItems: [TMDBMovieResult]) -> CategoryCellViewModelProtocol {
-//      return CategoryCellViewModel(mediaItems: mediaItems)
-//    }
-
  
   private func getNowPlayingMovies() {
     service.getMedia(

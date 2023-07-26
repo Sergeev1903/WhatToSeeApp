@@ -163,7 +163,8 @@ extension HomeViewController: UITableViewDataSource {
         cell.configure(mediaItems: viewModel.trendingMovies)
       default: break
       }
-
+      
+      cell.viewModel.delegate = self
       return cell
     }
   
@@ -200,5 +201,17 @@ extension HomeViewController: UITableViewDelegate {
     heightForHeaderInSection section: Int) -> CGFloat {
       return 42
     }
+  
+}
+
+
+extension HomeViewController: CategoryCellDelegate {
+  
+  func didTapCategoryCell(
+    _ categoryCell: CategoryCell, media: TMDBMovieResult) {
+    let vc = DetailViewController()
+    vc.setupViewModel(media: media)
+    navigationController?.pushViewController(vc, animated: true)
+  }
   
 }

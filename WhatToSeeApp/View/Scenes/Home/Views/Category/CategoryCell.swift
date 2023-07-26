@@ -82,7 +82,7 @@ class CategoryCell: UITableViewCell {
     
     backgroundGradient.colors = [
       UIColor.systemBackground.cgColor,
-      UIColor.darkGray.withAlphaComponent(0.5).cgColor
+      UIColor.darkGray.withAlphaComponent(0.1).cgColor
     ]
     
     backgroundGradient.startPoint = CGPoint(x: 0.5, y: 0.0)
@@ -118,7 +118,17 @@ extension CategoryCell: UICollectionViewDataSource {
 
 
 // MARK: - UICollectionViewDelegate
-extension CategoryCell: UICollectionViewDelegate {}
+extension CategoryCell: UICollectionViewDelegate {
+  
+  func collectionView(
+    _ collectionView: UICollectionView,
+    didSelectItemAt indexPath: IndexPath) {
+    
+    let mediaItem = viewModel.didSelectItemAt(indexPath: indexPath)
+    viewModel.delegate?.didTapCategoryCell(self, media: mediaItem)
+  }
+  
+}
 
 
 // MARK: - UICollectionViewDelegateFlowLayout
