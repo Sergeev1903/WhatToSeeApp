@@ -17,11 +17,7 @@ class CategoryCell: UITableViewCell {
   
   
   // MARK: - View Model
-  var viewModel: CategoryCellViewModelProtocol! {
-    didSet {
-        collectionView.reloadData()
-    }
-  }
+  var viewModel: CategoryCellViewModelProtocol!
   
   
   // MARK: - Init
@@ -30,7 +26,13 @@ class CategoryCell: UITableViewCell {
     setupCollectionView()
     contentViewGradient()
   }
+
   
+  func configure(mediaItems: [TMDBMovieResult]) {
+    viewModel = CategoryCellViewModel(mediaItems: mediaItems)
+    collectionView.reloadData()
+  }
+
   
   override func layoutSubviews() {
     super.layoutSubviews()

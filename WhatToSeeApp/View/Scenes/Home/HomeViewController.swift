@@ -20,9 +20,7 @@ class HomeViewController: UIViewController {
   private var viewModel: HomeViewModelProtocol! {
     didSet {
       viewModel.getMovieCategories {
-        DispatchQueue.main.async {
-          self.tableView.reloadData()
-        }
+        self.tableView.reloadData()
       }
     }
   }
@@ -77,19 +75,25 @@ class HomeViewController: UIViewController {
     print("#Debug Selected segment index: \(sender.selectedSegmentIndex)")
     
     if sender.selectedSegmentIndex == 1 {
-      alert()
-    }
-    
-    func alert() {
-      let alert = UIAlertController(title: "Coming Soon",
-                                    message: "Sorry! This section is under development",
-                                    preferredStyle: .alert)
-      let action = UIAlertAction(title: "Cancel", style: .destructive) {_ in
+      alert {
         sender.selectedSegmentIndex = 0
       }
-      alert.addAction(action)
-      present(alert, animated: true)
     }
+    
+  }
+  
+  
+  private func alert(completion: @escaping () -> Void) {
+    let alert = UIAlertController(
+      title: "Coming Soon",
+      message: "Sorry! This section is under development",
+      preferredStyle: .alert)
+    let action = UIAlertAction(
+      title: "Cancel", style: .destructive) {_ in
+        completion()
+      }
+    alert.addAction(action)
+    present(alert, animated: true)
   }
   
   private func setupTableView() {
@@ -143,26 +147,23 @@ extension HomeViewController: UITableViewDataSource {
   func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+      
       let cell = tableView.dequeueReusableCell(
-        withIdentifier: CategoryCell.reuseId, for: indexPath) as! CategoryCell
+        withIdentifier: CategoryCell.reuseId,
+        for: indexPath) as! CategoryCell
       
       switch indexPath.section {
       case 0:
-        cell.viewModel = viewModel.cellForRowAt(
-          indexPath: indexPath, mediaItems: viewModel.nowPlayingMovies)
+        cell.configure(mediaItems: viewModel.nowPlayingMovies)
       case 1:
-        cell.viewModel = viewModel.cellForRowAt(
-          indexPath: indexPath, mediaItems: viewModel.popularMovies)
+        cell.configure(mediaItems: viewModel.popularMovies)
       case 2:
-        cell.viewModel = viewModel.cellForRowAt(
-          indexPath: indexPath, mediaItems: viewModel.topRatedMovies)
+        cell.configure(mediaItems: viewModel.topRatedMovies)
       case 3:
-        cell.viewModel = viewModel.cellForRowAt(
-          indexPath: indexPath, mediaItems: viewModel.trendingMovies)
-      default:
-        break
+        cell.configure(mediaItems: viewModel.trendingMovies)
+      default: break
       }
-      
+
       return cell
     }
   
@@ -173,12 +174,13 @@ extension HomeViewController: UITableViewDataSource {
         withIdentifier: CategoryHeader.reuseId) as! CategoryHeader
       
       switch section {
-      case 0: headerView.configure(title: "Now Playing")
-      case 1: headerView.configure(title: "Popular")
-      case 2: headerView.configure(title: "Top Rated")
-      case 3: headerView.configure(title: "Trending")
+      case 0: headerView.configure(title: MovieCategory.nowPlaying.rawValue )
+      case 1: headerView.configure(title: MovieCategory.popular.rawValue)
+      case 2: headerView.configure(title: MovieCategory.topRated.rawValue)
+      case 3: headerView.configure(title: MovieCategory.trending.rawValue)
       default: break
       }
+      
       return headerView
     }
 }
