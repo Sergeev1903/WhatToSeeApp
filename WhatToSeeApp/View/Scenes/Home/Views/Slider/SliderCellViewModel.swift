@@ -8,14 +8,14 @@
 import Foundation
 
 
-protocol SliderItemViewModelProtocol: AnyObject {
+protocol SliderCellViewModelProtocol: AnyObject {
   var media: TMDBMovieResult! { get }
   var mediaData: Data? { get }
   init(media: TMDBMovieResult)
 }
 
 
-class SliderItemViewModel: SliderItemViewModelProtocol {
+class SliderCellViewModel: SliderCellViewModelProtocol {
  
   // MARK: - Properties
   private let service: MoviesServiceable

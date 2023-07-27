@@ -11,9 +11,9 @@ import UIKit
 class HomeViewController: UIViewController {
   
   // MARK: - Properties
-  private let tabMenu = TabMenu()
+  private let tabMenu = TabMenuControl()
   private let tableView = UITableView(frame: .zero, style: .grouped)
-  private let slider = Slider()
+  private let slider = SliderView()
   
   
   // MARK: - ViewModel
@@ -30,15 +30,19 @@ class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
-    viewModel = HomeViewModel(service: MoviesService())
-    setupTabMenu()
+    setupViewModel()
     setupNavigationBar()
+    setupTabMenu()
     setupTableView()
     setupSlider()
   }
-  
+
   
   // MARK: - Methods
+  private func setupViewModel() {
+    viewModel = HomeViewModel(service: MoviesService())
+  }
+  
   private func setupNavigationBar() {
     navigationController?.navigationBar.shadowImage = UIImage()
     navigationItem.titleView = tabMenu
@@ -71,7 +75,7 @@ class HomeViewController: UIViewController {
   }
   
   // Action for tabMenu
-  @objc func tabMenuValueChanged(_ sender: TabMenu) {
+  @objc func tabMenuValueChanged(_ sender: TabMenuControl) {
     print("#Debug Selected segment index: \(sender.selectedSegmentIndex)")
     
     if sender.selectedSegmentIndex == 1 {
@@ -82,7 +86,7 @@ class HomeViewController: UIViewController {
     
   }
   
-  
+  // Plug alert
   private func alert(completion: @escaping () -> Void) {
     let alert = UIAlertController(
       title: "Coming Soon",
@@ -127,6 +131,7 @@ class HomeViewController: UIViewController {
     slider.frame = CGRect(
       x: 0, y: 0, width: tableView.bounds.width,
       height: 600)
+    
   }
 }
 
@@ -154,13 +159,21 @@ extension HomeViewController: UITableViewDataSource {
       
       switch indexPath.section {
       case 0:
-        cell.configure(mediaItems: viewModel.nowPlayingMovies)
+        cell.viewModel = viewModel.cellForRowAt(
+          indexPath: indexPath,
+          mediaItems: viewModel.nowPlayingMovies)
       case 1:
-        cell.configure(mediaItems: viewModel.popularMovies)
+        cell.viewModel = viewModel.cellForRowAt(
+          indexPath: indexPath,
+          mediaItems: viewModel.popularMovies)
       case 2:
-        cell.configure(mediaItems: viewModel.topRatedMovies)
+        cell.viewModel = viewModel.cellForRowAt(
+          indexPath: indexPath,
+          mediaItems: viewModel.topRatedMovies)
       case 3:
-        cell.configure(mediaItems: viewModel.trendingMovies)
+        cell.viewModel = viewModel.cellForRowAt(
+          indexPath: indexPath,
+          mediaItems: viewModel.trendingMovies)
       default: break
       }
       
@@ -208,10 +221,10 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: CategoryCellDelegate {
   
   func didTapCategoryCell(
-    _ categoryCell: CategoryCell, media: TMDBMovieResult) {
+    _ categoryCell: CategoryCell, viewModel: DetailViewModelProtocol) {
     let vc = DetailViewController()
-    vc.setupViewModel(media: media)
+      vc.viewModel = viewModel as? DetailViewModel
     navigationController?.pushViewController(vc, animated: true)
   }
-  
+
 }

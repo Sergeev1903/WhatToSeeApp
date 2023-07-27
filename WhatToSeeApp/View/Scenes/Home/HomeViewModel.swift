@@ -16,6 +16,9 @@ protocol HomeViewModelProtocol: AnyObject {
   func getMovieCategories(completion: @escaping () -> Void)
   func numberOfSections() -> Int
   func numberOfRowsInSection() -> Int
+  func cellForRowAt(
+    indexPath: IndexPath,
+    mediaItems: [TMDBMovieResult]) -> CategoryCellViewModelProtocol
 }
 
 
@@ -37,7 +40,7 @@ class HomeViewModel: HomeViewModelProtocol {
   
   
   // MARK: - Methods
-  func getMovieCategories(completion: @escaping () -> Void) {
+  public func getMovieCategories(completion: @escaping () -> Void) {
     
     dispatchGroup.enter()
     getNowPlayingMovies()
@@ -60,7 +63,19 @@ class HomeViewModel: HomeViewModelProtocol {
   }
   
   public func numberOfRowsInSection() -> Int { return 1 }
- 
+  
+  public func cellForRowAt(
+    indexPath: IndexPath,
+    mediaItems: [TMDBMovieResult]) -> CategoryCellViewModelProtocol {
+    return CategoryCellViewModel(mediaItems: mediaItems)
+  }
+
+}
+
+
+// MARK: - Network requests
+extension HomeViewModel {
+  
   private func getNowPlayingMovies() {
     service.getMedia(
       endpoint: MoviesEndpoint.nowPlaying,
@@ -130,5 +145,3 @@ class HomeViewModel: HomeViewModelProtocol {
   }
   
 }
-
-

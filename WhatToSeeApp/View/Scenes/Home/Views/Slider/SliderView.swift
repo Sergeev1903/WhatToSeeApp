@@ -8,7 +8,7 @@
 import UIKit
 
 
-class Slider: UIView {
+class SliderView: UIView {
   
   // MARK: - Properties
   private var collectionView: UICollectionView!
@@ -62,7 +62,7 @@ class Slider: UIView {
     collectionView.delegate = self
     collectionView.dataSource = self
     collectionView.register(
-      SliderItem.self, forCellWithReuseIdentifier: SliderItem.reuseId)
+      SliderCell.self, forCellWithReuseIdentifier: SliderCell.reuseId)
     
     addSubview(collectionView)
     
@@ -106,7 +106,7 @@ class Slider: UIView {
     
     for index in 0 ..< viewModel.mediaItems.count {
       guard let cell = collectionView.cellForItem(
-        at: IndexPath(item: index, section: 0)) as? SliderItem else {
+        at: IndexPath(item: index, section: 0)) as? SliderCell else {
         continue
       }
       
@@ -120,7 +120,7 @@ class Slider: UIView {
 
 
 // MARK: - UICollectionViewDataSource
-extension Slider: UICollectionViewDataSource {
+extension SliderView: UICollectionViewDataSource {
   
   func collectionView(
     _ collectionView: UICollectionView,
@@ -133,7 +133,7 @@ extension Slider: UICollectionViewDataSource {
     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
       
       let cell = collectionView.dequeueReusableCell(
-        withReuseIdentifier: SliderItem.reuseId, for: indexPath) as! SliderItem
+        withReuseIdentifier: SliderCell.reuseId, for: indexPath) as! SliderCell
       cell.viewModel = viewModel.cellForItemAt(indexPath: indexPath)
       return cell
     }
@@ -142,7 +142,7 @@ extension Slider: UICollectionViewDataSource {
 
 
 // MARK: - UICollectionViewDelegate
-extension Slider: UICollectionViewDelegate {
+extension SliderView: UICollectionViewDelegate {
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     // Slider item change page control index
@@ -156,7 +156,7 @@ extension Slider: UICollectionViewDelegate {
   
 }
 
-extension Slider: UICollectionViewDelegateFlowLayout {
+extension SliderView: UICollectionViewDelegateFlowLayout {
   
   func collectionView(
     _ collectionView: UICollectionView,

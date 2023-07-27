@@ -10,7 +10,7 @@ import Foundation
 
 protocol CategoryCellDelegate: AnyObject {
   func didTapCategoryCell(
-    _ categoryCell: CategoryCell, media: TMDBMovieResult)
+    _ categoryCell: CategoryCell, viewModel: DetailViewModelProtocol)
 }
 
 protocol CategoryCellViewModelProtocol {
@@ -19,7 +19,7 @@ protocol CategoryCellViewModelProtocol {
   init(mediaItems: [TMDBMovieResult])
   func numberOfItemsInSection() -> Int
   func cellForItemAt(indexPath: IndexPath) -> CategoryCellItemViewModelProtocol
-  func didSelectItemAt(indexPath: IndexPath) -> TMDBMovieResult
+  func didSelectItemAt(indexPath: IndexPath) -> DetailViewModelProtocol
 }
 
 
@@ -49,11 +49,10 @@ class CategoryCellViewModel: CategoryCellViewModelProtocol {
     return CategoryCellItemViewModel(media: media)
   }
   
-  
-   func didSelectItemAt(
-    indexPath: IndexPath) -> TMDBMovieResult {
-     return mediaItems[indexPath.item]
-    }
-  
+  func didSelectItemAt(
+   indexPath: IndexPath) -> DetailViewModelProtocol {
+    let media = mediaItems[indexPath.item]
+    return DetailViewModel(media: media)
+   }
   
 }

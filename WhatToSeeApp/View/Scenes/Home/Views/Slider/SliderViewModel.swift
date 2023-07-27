@@ -13,7 +13,7 @@ protocol SliderViewModelProtocol: AnyObject {
   func getMedia(completion: @escaping () -> Void)
   func numberOfItemsInSection() -> Int
   func cellForItemAt(
-    indexPath: IndexPath) -> SliderItemViewModelProtocol
+    indexPath: IndexPath) -> SliderCellViewModelProtocol
 }
 
 
@@ -53,9 +53,9 @@ class SliderViewModel: SliderViewModelProtocol {
   }
   
   func cellForItemAt(
-    indexPath: IndexPath) -> SliderItemViewModelProtocol {
+    indexPath: IndexPath) -> SliderCellViewModelProtocol {
       let media = mediaItems[indexPath.item]
-      return SliderItemViewModel(media: media)
+      return SliderCellViewModel(media: media)
     }
   
 }

@@ -17,7 +17,11 @@ class CategoryCell: UITableViewCell {
   
   
   // MARK: - View Model
-  var viewModel: CategoryCellViewModelProtocol!
+  var viewModel: CategoryCellViewModelProtocol! {
+    didSet {
+      self.collectionView.reloadData()
+    }
+  }
   
   
   // MARK: - Init
@@ -26,14 +30,13 @@ class CategoryCell: UITableViewCell {
     setupCollectionView()
     contentViewGradient()
   }
-
   
-  func configure(mediaItems: [TMDBMovieResult]) {
-    viewModel = CategoryCellViewModel(mediaItems: mediaItems)
-    collectionView.reloadData()
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    print("Sorry! only code, no storyboards")
   }
-
   
+  // MARK: -
   override func layoutSubviews() {
     super.layoutSubviews()
     
@@ -41,11 +44,6 @@ class CategoryCell: UITableViewCell {
       x: 0, y: 0,
       width: contentView.layer.bounds.width,
       height: contentView.layer.bounds.height)
-  }
-  
-  required init?(coder: NSCoder) {
-    super.init(coder: coder)
-    print("Sorry! only code, no storyboards")
   }
   
   
@@ -124,8 +122,8 @@ extension CategoryCell: UICollectionViewDelegate {
     _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath) {
     
-    let mediaItem = viewModel.didSelectItemAt(indexPath: indexPath)
-    viewModel.delegate?.didTapCategoryCell(self, media: mediaItem)
+    let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
+      viewModel.delegate?.didTapCategoryCell(self, viewModel: detailViewModel)
   }
   
 }

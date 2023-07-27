@@ -14,7 +14,7 @@ class DetailViewController: UIViewController {
   private let tableView = UITableView()
   
   // MARK: - View Model
-  private var viewModel: DetailViewModel!
+  var viewModel: DetailViewModel!
   
   
   // MARK: - Lifecycle
@@ -28,10 +28,6 @@ class DetailViewController: UIViewController {
   
   
   // MARK: - Methods
-  func setupViewModel(media: TMDBMovieResult) {
-    viewModel = DetailViewModel(media: media)
-  }
-  
   private func setuptTableView() {
     tableView.delegate = self
     tableView.dataSource = self

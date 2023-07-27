@@ -34,10 +34,6 @@ class CategoryCellItem: UICollectionViewCell {
       voteLabel.text = viewModel.mediaVoteAverage
       voteLabel.backgroundColor = viewModel.media.voteAverage ?? 0 <= 6 ?
       #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0.8031870861): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 0.8018936258)
-      
-      //      voteLabel.layer.borderColor = viewModel.media.voteAverage ?? 0 <= 6 ?
-      //      #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 1)
-      
     }
   }
   
@@ -59,7 +55,7 @@ class CategoryCellItem: UICollectionViewCell {
   override func prepareForReuse() {
     imageView.image = nil
   }
-  
+
   
   // MARK: - Methods
   private func setupImageView() {
@@ -79,27 +75,29 @@ class CategoryCellItem: UICollectionViewCell {
     ])
   }
   
-  // FIXME: bug with size
+  // FIXME: bug with size if change border color!
   private func setupVoteLabel() {
     voteLabel.textAlignment = .center
     voteLabel.numberOfLines = 0
     voteLabel.font = UIFont.systemFont(ofSize: 12)
-    //    voteLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.8019453642)
     voteLabel.translatesAutoresizingMaskIntoConstraints = false
     
     imageView.addSubview(voteLabel)
     
     voteLabel.layer.borderWidth = 1
-    voteLabel.layer.borderColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+    voteLabel.layer.borderColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 0.8014279801)
     voteLabel.layer.cornerRadius = 12
     voteLabel.layer.masksToBounds = true
     
     NSLayoutConstraint.activate([
-      voteLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
-      voteLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
-      voteLabel.heightAnchor.constraint(equalToConstant: 24),
-      voteLabel.widthAnchor.constraint(equalToConstant: 24),
-      
+      voteLabel.leadingAnchor.constraint(
+        equalTo: contentView.leadingAnchor, constant: 4),
+      voteLabel.topAnchor.constraint(
+        equalTo: contentView.topAnchor, constant: 4),
+      voteLabel.heightAnchor.constraint(
+        equalToConstant: 24),
+      voteLabel.widthAnchor.constraint(
+        equalToConstant: 24)
     ])
     
   }

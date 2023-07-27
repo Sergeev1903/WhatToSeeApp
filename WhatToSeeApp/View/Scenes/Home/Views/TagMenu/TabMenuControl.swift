@@ -8,7 +8,7 @@
 import UIKit
 
 
-class TabMenu: UIControl {
+class TabMenuControl: UIControl {
   
   // MARK: - Properties
   private var buttons = [UIButton]()

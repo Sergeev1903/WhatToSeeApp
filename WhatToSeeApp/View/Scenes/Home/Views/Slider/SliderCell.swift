@@ -8,10 +8,10 @@
 import UIKit
 
 
-class SliderItem: UICollectionViewCell {
+class SliderCell: UICollectionViewCell {
   
   // MARK: Properties
-  static let reuseId = String(describing: SliderItem.self)
+  static let reuseId = String(describing: SliderCell.self)
   
   public let imageView = UIImageView()
   private let loadIndicator = UIActivityIndicatorView()
@@ -22,7 +22,7 @@ class SliderItem: UICollectionViewCell {
   
   
   // MARK: - ViewModel
-  var viewModel: SliderItemViewModelProtocol! {
+  var viewModel: SliderCellViewModelProtocol! {
     didSet {
       loadIndicator.startAnimating()
       DispatchQueue.global(qos: .userInitiated).async {
