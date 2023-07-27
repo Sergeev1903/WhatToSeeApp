@@ -47,7 +47,7 @@ class SliderView: UIView {
   private func setupViewModel() {
     viewModel = SliderViewModel(service: MoviesService())
   }
-  
+
   private func setupCollectionView() {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal

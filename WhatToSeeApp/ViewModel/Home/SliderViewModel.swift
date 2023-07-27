@@ -10,6 +10,7 @@ import Foundation
 
 protocol SliderViewModelProtocol: AnyObject {
   var mediaItems: [TMDBMovieResult] { get }
+  init(service: MoviesServiceable)
   func getMedia(completion: @escaping () -> Void)
   func numberOfItemsInSection() -> Int
   func cellForItemAt(
@@ -25,10 +26,9 @@ class SliderViewModel: SliderViewModelProtocol {
   
   
   // MARK: - Init
-  init(service: MoviesServiceable) {
+  required init(service: MoviesServiceable) {
     self.service = service
   }
-  
   
   // MARK: - Networking
   func getMedia(completion: @escaping () -> Void) {

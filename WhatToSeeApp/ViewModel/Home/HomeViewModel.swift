@@ -41,7 +41,6 @@ class HomeViewModel: HomeViewModelProtocol {
   
   // MARK: - Methods
   public func getMovieCategories(completion: @escaping () -> Void) {
-    
     dispatchGroup.enter()
     getNowPlayingMovies()
     dispatchGroup.enter()

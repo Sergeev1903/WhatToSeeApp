@@ -36,6 +36,11 @@ class HomeViewController: UIViewController {
     setupTableView()
     setupSlider()
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+  }
 
   
   // MARK: - Methods
@@ -131,7 +136,6 @@ class HomeViewController: UIViewController {
     slider.frame = CGRect(
       x: 0, y: 0, width: tableView.bounds.width,
       height: 600)
-    
   }
 }
 
@@ -212,7 +216,7 @@ extension HomeViewController: UITableViewDelegate {
   func tableView(
     _ tableView: UITableView,
     heightForHeaderInSection section: Int) -> CGFloat {
-      return 42
+      return 32
     }
   
 }

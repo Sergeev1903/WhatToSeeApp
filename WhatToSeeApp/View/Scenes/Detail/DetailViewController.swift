@@ -12,20 +12,45 @@ class DetailViewController: UIViewController {
   
   // MARK: - Properties
   private let tableView = UITableView()
+  private let headerView = DetailHeaderView()
   
   // MARK: - View Model
-  var viewModel: DetailViewModel!
+  var viewModel: DetailViewModel! {
+    didSet {
+      DispatchQueue.global(qos: .utility).async {
+        guard let data = self.viewModel.mediaImageData else { return }
+        let image = UIImage(data: data)
+        
+        DispatchQueue.main.async {
+          self.headerView.imageView.image = image
+          self.headerView.titleLabel.text = self.viewModel.mediaTitle
+        }
+      }
+    }
+  }
   
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .systemGreen
-    navigationController?.navigationBar.prefersLargeTitles = true
-    title = viewModel.mediaTitle
     setuptTableView()
+    setupHeaderView()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+
+      // Make the Navigation Bar background transparent
+      self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+      self.navigationController?.navigationBar.shadowImage = UIImage()
+      self.navigationController?.navigationBar.isTranslucent = true
+      self.navigationController?.navigationBar.tintColor = .white
+
+      // Remove 'Back' text and Title from Navigation Bar
+      self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+      self.title = ""
+  }
+
   
   // MARK: - Methods
   private func setuptTableView() {
@@ -41,6 +66,13 @@ class DetailViewController: UIViewController {
       tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
     ])
+  }
+  
+  
+  private func setupHeaderView() {
+    headerView.frame = CGRect(
+      x: 0, y: 0, width: self.view.bounds.width, height: 500)
+    tableView.tableHeaderView = headerView
   }
   
 }
@@ -64,4 +96,11 @@ extension DetailViewController: UITableViewDataSource {
 
 
 // MARK: - UITableViewDelegate
-extension DetailViewController: UITableViewDelegate {}
+extension DetailViewController: UITableViewDelegate {
+  
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    let headerView = self.tableView.tableHeaderView as! DetailHeaderView
+    headerView.scrollViewDidScroll(scrollView: scrollView)
+  }
+  
+}
