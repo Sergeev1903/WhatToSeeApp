@@ -41,7 +41,7 @@ class HomeViewController: UIViewController {
     super.viewWillAppear(animated)
     self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
   }
-
+  
   
   // MARK: - Methods
   private func setupViewModel() {
@@ -136,6 +136,7 @@ class HomeViewController: UIViewController {
     slider.frame = CGRect(
       x: 0, y: 0, width: tableView.bounds.width,
       height: 600)
+    slider.viewModel.delegate = self
   }
 }
 
@@ -222,13 +223,27 @@ extension HomeViewController: UITableViewDelegate {
 }
 
 
+// MARK: - CategoryCellDelegate
 extension HomeViewController: CategoryCellDelegate {
   
   func didTapCategoryCell(
     _ categoryCell: CategoryCell, viewModel: DetailViewModelProtocol) {
-    let vc = DetailViewController()
+      let vc = DetailViewController()
       vc.viewModel = viewModel as? DetailViewModel
-    navigationController?.pushViewController(vc, animated: true)
-  }
+      navigationController?.pushViewController(vc, animated: true)
+    }
+  
+}
 
+
+// MARK: - SliderViewDelegate
+extension HomeViewController: SliderViewDelegate {
+  
+  func didTapSliderView(
+    _ categoryCell: SliderView, viewModel: DetailViewModelProtocol) {
+      let vc = DetailViewController()
+      vc.viewModel = viewModel as? DetailViewModel
+      navigationController?.pushViewController(vc, animated: true)
+    }
+  
 }

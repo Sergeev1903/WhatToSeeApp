@@ -8,13 +8,21 @@
 import Foundation
 
 
+protocol SliderViewDelegate: AnyObject {
+  func didTapSliderView(
+    _ categoryCell: SliderView, viewModel: DetailViewModelProtocol)
+}
+
 protocol SliderViewModelProtocol: AnyObject {
   var mediaItems: [TMDBMovieResult] { get }
+  var delegate: SliderViewDelegate? { get set}
   init(service: MoviesServiceable)
   func getMedia(completion: @escaping () -> Void)
   func numberOfItemsInSection() -> Int
   func cellForItemAt(
     indexPath: IndexPath) -> SliderCellViewModelProtocol
+  func didSelectItemAt(
+   indexPath: IndexPath) -> DetailViewModelProtocol
 }
 
 
@@ -24,6 +32,8 @@ class SliderViewModel: SliderViewModelProtocol {
   private let service: MoviesServiceable
   var mediaItems: [TMDBMovieResult] = []
   
+  
+  weak var delegate: SliderViewDelegate?
   
   // MARK: - Init
   required init(service: MoviesServiceable) {
@@ -57,5 +67,12 @@ class SliderViewModel: SliderViewModelProtocol {
       let media = mediaItems[indexPath.item]
       return SliderCellViewModel(media: media)
     }
+  
+  
+  func didSelectItemAt(
+   indexPath: IndexPath) -> DetailViewModelProtocol {
+    let media = mediaItems[indexPath.item]
+    return DetailViewModel(media: media)
+   }
   
 }

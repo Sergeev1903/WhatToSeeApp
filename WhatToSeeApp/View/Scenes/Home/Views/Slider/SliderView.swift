@@ -18,7 +18,7 @@ class SliderView: UIView {
   
   
   // MARK: - ViewModel
-  private var viewModel: SliderViewModelProtocol! {
+   var viewModel: SliderViewModelProtocol! {
     didSet {
       viewModel.getMedia {
         DispatchQueue.main.async {
@@ -160,6 +160,16 @@ extension SliderView: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension SliderView: UICollectionViewDelegate {
+  
+  
+  func collectionView(
+    _ collectionView: UICollectionView,
+    didSelectItemAt indexPath: IndexPath) {
+    
+    let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
+      viewModel.delegate?.didTapSliderView(self, viewModel: detailViewModel)
+  }
+  
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     // Slider item change page control index
