@@ -14,6 +14,7 @@ class SliderView: UIView {
   private var collectionView: UICollectionView!
   private let pageControl = UIPageControl()
   private var currentPageIndex = 0
+  private var titleLabel = UILabel()
   
   
   // MARK: - ViewModel
@@ -34,6 +35,7 @@ class SliderView: UIView {
     super.init(frame: frame)
     setupViewModel()
     setupCollectionView()
+    setupTitleLabel()
     setupPageControl()
   }
   
@@ -71,6 +73,21 @@ class SliderView: UIView {
       collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
       collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
       collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+    ])
+  }
+  
+  
+  private func setupTitleLabel() {
+    titleLabel.text = "Upcoming"
+    titleLabel.font = UIFont.boldSystemFont(ofSize: 32)
+    titleLabel.textAlignment = .left
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    addSubview(titleLabel)
+    
+    NSLayoutConstraint.activate([
+      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 32),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
     ])
   }
   

@@ -44,7 +44,7 @@ class DetailHeaderView: UIView {
   // MARK: - Methods
   
   private func setupTitleLabel() {
-    titleLabel.font = UIFont.boldSystemFont(ofSize: 42)
+    titleLabel.font = UIFont.boldSystemFont(ofSize: 32)
     titleLabel.textAlignment = .center
     titleLabel.numberOfLines = 0
     titleLabel.translatesAutoresizingMaskIntoConstraints = false

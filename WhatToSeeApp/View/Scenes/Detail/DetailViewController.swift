@@ -56,6 +56,7 @@ class DetailViewController: UIViewController {
   private func setuptTableView() {
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     tableView.translatesAutoresizingMaskIntoConstraints = false
     
     view.addSubview(tableView)
@@ -71,7 +72,9 @@ class DetailViewController: UIViewController {
   
   private func setupHeaderView() {
     headerView.frame = CGRect(
-      x: 0, y: 0, width: self.view.bounds.width, height: 500)
+      x: 0, y: 0,
+      width: self.view.bounds.width,
+      height: 500)
     tableView.tableHeaderView = headerView
   }
   
@@ -89,7 +92,25 @@ extension DetailViewController: UITableViewDataSource {
   func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      return UITableViewCell()
+      let cell = tableView.dequeueReusableCell(
+        withIdentifier: "Cell", for: indexPath)
+      
+      cell.selectionStyle = .none
+      cell.textLabel?.numberOfLines = 0
+      cell.textLabel?.textAlignment = .left
+      
+      switch indexPath.row {
+      case 0:
+        cell.textLabel?.text = viewModel.mediaVoteAverage
+      case 1:
+        cell.textLabel?.text = viewModel.mediaReleaseDate
+      case 2:
+        cell.textLabel?.text = viewModel.mediaOverview
+      default:
+        break
+      }
+      
+      return cell
     }
   
 }

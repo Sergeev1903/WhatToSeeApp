@@ -65,7 +65,7 @@ class SliderCell: UICollectionViewCell {
     topGradientLayer.frame = CGRect(
       x: 0, y: 0,
       width: bounds.width,
-      height: 60)
+      height: 120)
     
     bottomGradientLayer.frame = CGRect(
       x: 0, y: 0,
@@ -120,7 +120,7 @@ class SliderCell: UICollectionViewCell {
     
     NSLayoutConstraint.activate([
       topGradientView.heightAnchor.constraint(
-        equalToConstant: 60),
+        equalToConstant: 120),
       topGradientView.topAnchor.constraint(
         equalTo: imageView.topAnchor),
       topGradientView.leadingAnchor.constraint(

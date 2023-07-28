@@ -41,7 +41,7 @@ class CategoryHeader: UITableViewHeaderFooterView {
   private func setupTitle() {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.textColor = .label
-    titleLabel.font = UIFont.boldSystemFont(ofSize: 24)
+    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
     
     contentView.addSubview(titleLabel)
     
