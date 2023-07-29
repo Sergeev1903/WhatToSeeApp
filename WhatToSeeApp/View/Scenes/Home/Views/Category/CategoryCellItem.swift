@@ -17,25 +17,38 @@ class CategoryCellItem: UICollectionViewCell {
   
   
   // MARK: - ViewModel
+  //  var viewModel: CategoryCellItemViewModelProtocol! {
+  //    didSet {
+  //      DispatchQueue.global(qos: .utility).async {
+  //        guard let data = self.viewModel.mediaImageData else { return }
+  //        let image = UIImage(data: data)
+  //
+  //        DispatchQueue.main.async {
+  //          self.imageView.image = image
+  //          self.voteLabel.isHidden = false
+  //          self.loadIndicator.stopAnimating()
+  //        }
+  //      }
+  //      voteLabel.text = viewModel.mediaVoteAverage
+  //      voteLabel.backgroundColor = viewModel.media.voteAverage ?? 0 <= 6 ?
+  //      #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0.8031870861): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 0.8018936258)
+  //    }
+  //  }
+  
   var viewModel: CategoryCellItemViewModelProtocol! {
     didSet {
-      loadIndicator.startAnimating()
-      voteLabel.isHidden = true
-      DispatchQueue.global(qos: .utility).async {
-        guard let data = self.viewModel.mediaImageData else { return }
-        let image = UIImage(data: data)
-        
-        DispatchQueue.main.async {
-          self.imageView.image = image
-          self.voteLabel.isHidden = false
-          self.loadIndicator.stopAnimating()
-        }
+      imageView.sd_setImage(with: viewModel.mediaPosterURL) { image, error, cache, url in
+        self.voteLabel.isHidden = false
+        self.loadIndicator.stopAnimating()
       }
+      
       voteLabel.text = viewModel.mediaVoteAverage
       voteLabel.backgroundColor = viewModel.media.voteAverage ?? 0 <= 6 ?
       #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0.8031870861): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 0.8018936258)
     }
   }
+  
+  
   
   // MARK: - Init
   override init(frame: CGRect) {
@@ -55,7 +68,7 @@ class CategoryCellItem: UICollectionViewCell {
   override func prepareForReuse() {
     imageView.image = nil
   }
-
+  
   
   // MARK: - Methods
   private func setupImageView() {
@@ -80,6 +93,7 @@ class CategoryCellItem: UICollectionViewCell {
     voteLabel.textAlignment = .center
     voteLabel.numberOfLines = 0
     voteLabel.font = UIFont.systemFont(ofSize: 12)
+    voteLabel.isHidden = true
     voteLabel.translatesAutoresizingMaskIntoConstraints = false
     
     imageView.addSubview(voteLabel)
@@ -103,6 +117,7 @@ class CategoryCellItem: UICollectionViewCell {
   }
   
   private func setupLoadIndicator() {
+    loadIndicator.startAnimating()
     loadIndicator.hidesWhenStopped = true
     loadIndicator.style = .large
     loadIndicator.translatesAutoresizingMaskIntoConstraints = false

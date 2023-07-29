@@ -14,7 +14,8 @@ protocol DetailViewModelProtocol: AnyObject {
   var mediaVoteAverage: String { get }
   var mediaReleaseDate: String { get }
   var mediaOverview: String { get }
-  var mediaImageData: Data? { get }
+  //  var mediaImageData: Data? { get }
+  var mediaBackdropURL: URL { get }
   init(media: TMDBMovieResult)
 }
 
@@ -41,9 +42,13 @@ class DetailViewModel: DetailViewModelProtocol {
     media.overview ?? ""
   }
   
-  var mediaImageData: Data? {
-    let data = try? Data(contentsOf: media.backdropURL)
-    return data
+  //  var mediaImageData: Data? {
+  //    let data = try? Data(contentsOf: media.backdropURL)
+  //    return data
+  //  }
+  
+  var mediaBackdropURL: URL {
+    media.backdropURL
   }
   
   

@@ -17,6 +17,7 @@ class DetailHeaderView: UIView {
   var containerView = UIView()
   var imageView = UIImageView()
   var titleLabel = UILabel()
+  let watchTrailerButton = UIButton()
   private let bottomGradientLayer = CAGradientLayer()
   
   
@@ -25,6 +26,7 @@ class DetailHeaderView: UIView {
     super.init(frame: frame)
     createViews()
     setViewConstraints()
+    setupWatchTrailerButton()
     setupTitleLabel()
     setupBottomGradientView()
   }
@@ -40,8 +42,37 @@ class DetailHeaderView: UIView {
   }
   
   
-  
   // MARK: - Methods
+  private func setupWatchTrailerButton() {
+    let imageConfig = UIImage.SymbolConfiguration(weight: .thin)
+    let buttonImage = UIImage(
+      systemName: "play.circle", withConfiguration: imageConfig)
+    
+    watchTrailerButton.setBackgroundImage(buttonImage, for: .normal)
+    watchTrailerButton.tintColor = .white.withAlphaComponent(0.4)
+    watchTrailerButton.translatesAutoresizingMaskIntoConstraints = false
+    
+    watchTrailerButton.addTarget(
+      self, action: #selector(watchTrailerButtonAction), for: .touchUpInside)
+    
+    containerView.addSubview(watchTrailerButton)
+    
+    NSLayoutConstraint.activate([
+      watchTrailerButton.heightAnchor.constraint(
+        equalToConstant: 200),
+      watchTrailerButton.widthAnchor.constraint(
+        equalToConstant: 200),
+      watchTrailerButton.centerXAnchor.constraint(
+        equalTo: containerView.centerXAnchor),
+      watchTrailerButton.centerYAnchor.constraint(
+        equalTo: containerView.centerYAnchor)
+    ])
+    
+  }
+  
+  @objc func watchTrailerButtonAction() {
+    print("watchTrailerButtonAction")
+  }
   
   private func setupTitleLabel() {
     titleLabel.font = UIFont.boldSystemFont(ofSize: 32)
@@ -52,9 +83,12 @@ class DetailHeaderView: UIView {
     containerView.addSubview(titleLabel)
     
     NSLayoutConstraint.activate([
-      titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-      titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -32),
-      titleLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor)
+      titleLabel.leadingAnchor.constraint(
+        equalTo: containerView.leadingAnchor),
+      titleLabel.bottomAnchor.constraint(
+        equalTo: containerView.bottomAnchor, constant: -32),
+      titleLabel.widthAnchor.constraint(
+        equalTo: containerView.widthAnchor)
     ])
   }
   

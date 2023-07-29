@@ -10,7 +10,8 @@ import Foundation
 
 protocol CategoryCellItemViewModelProtocol {
   var media: TMDBMovieResult { get }
-  var mediaImageData: Data? { get }
+  //  var mediaImageData: Data? { get }
+  var mediaPosterURL: URL { get }
   var mediaVoteAverage: String { get }
   init(media: TMDBMovieResult)
 }
@@ -21,9 +22,13 @@ class CategoryCellItemViewModel: CategoryCellItemViewModelProtocol {
   // MARK: - Properties
   var media: TMDBMovieResult
   
-  var mediaImageData: Data? {
-    let data = try? Data(contentsOf: media.posterURL)
-    return data
+  //  var mediaImageData: Data? {
+  //    let data = try? Data(contentsOf: media.posterURL)
+  //    return data
+  //  }
+  
+  var mediaPosterURL: URL {
+    media.posterURL
   }
   
   var mediaVoteAverage: String {

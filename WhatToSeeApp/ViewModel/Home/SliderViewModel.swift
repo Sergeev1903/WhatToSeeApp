@@ -32,13 +32,15 @@ class SliderViewModel: SliderViewModelProtocol {
   private let service: MoviesServiceable
   var mediaItems: [TMDBMovieResult] = []
   
-  
+  // MARK: - Delegate
   weak var delegate: SliderViewDelegate?
+  
   
   // MARK: - Init
   required init(service: MoviesServiceable) {
     self.service = service
   }
+  
   
   // MARK: - Networking
   func getMedia(completion: @escaping () -> Void) {
