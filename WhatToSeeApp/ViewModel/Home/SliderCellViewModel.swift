@@ -10,7 +10,6 @@ import Foundation
 
 protocol SliderCellViewModelProtocol: AnyObject {
   var media: TMDBMovieResult! { get }
-  //  var mediaData: Data? { get }
   var mediaPosterURL: URL { get }
   init(media: TMDBMovieResult)
 }
@@ -21,11 +20,6 @@ class SliderCellViewModel: SliderCellViewModelProtocol {
   // MARK: - Properties
   private let service: MoviesServiceable
   var media: TMDBMovieResult!
-  
-  //  var mediaData: Data? {
-  //    let data = try? Data(contentsOf: media.posterURL)
-  //    return data
-  //  }
   
   var mediaPosterURL: URL {
     media.posterURL

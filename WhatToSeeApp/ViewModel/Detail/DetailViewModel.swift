@@ -10,12 +10,11 @@ import Foundation
 
 protocol DetailViewModelProtocol: AnyObject {
   var media: TMDBMovieResult { get }
+  var mediaBackdropURL: URL { get }
   var mediaTitle: String { get }
   var mediaVoteAverage: String { get }
   var mediaReleaseDate: String { get }
   var mediaOverview: String { get }
-  //  var mediaImageData: Data? { get }
-  var mediaBackdropURL: URL { get }
   init(media: TMDBMovieResult)
 }
 
@@ -24,6 +23,10 @@ class DetailViewModel: DetailViewModelProtocol {
   
   // MARK: - Properties
   let media: TMDBMovieResult
+  
+  var mediaBackdropURL: URL {
+    media.backdropURL
+  }
   
   var mediaTitle: String {
     media.title ?? ""
@@ -41,16 +44,7 @@ class DetailViewModel: DetailViewModelProtocol {
   var mediaOverview: String {
     media.overview ?? ""
   }
-  
-  //  var mediaImageData: Data? {
-  //    let data = try? Data(contentsOf: media.backdropURL)
-  //    return data
-  //  }
-  
-  var mediaBackdropURL: URL {
-    media.backdropURL
-  }
-  
+
   
   // MARK: - Init
   required init(media: TMDBMovieResult) {

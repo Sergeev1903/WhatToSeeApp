@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 
 class HomeViewController: UIViewController {
@@ -13,7 +14,7 @@ class HomeViewController: UIViewController {
   // MARK: - Properties
   private let tabMenu = TabMenuControl()
   private let tableView = UITableView(frame: .zero, style: .grouped)
-  private let slider = SliderView()
+  private var slider = SliderView()
   
   
   // MARK: - ViewModel
@@ -23,6 +24,12 @@ class HomeViewController: UIViewController {
         self.tableView.reloadData()
       }
     }
+  }
+  
+  
+  deinit {
+    SDImageCache.shared.clearMemory()
+    SDImageCache.shared.clearDisk()
   }
   
   
@@ -138,6 +145,7 @@ class HomeViewController: UIViewController {
       height: 600)
     slider.viewModel.delegate = self
   }
+  
 }
 
 

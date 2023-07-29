@@ -18,16 +18,16 @@ class SliderView: UIView {
   
   
   // MARK: - ViewModel
-   var viewModel: SliderViewModelProtocol! {
-    didSet {
-      viewModel.getMedia {
-        DispatchQueue.main.async {
-          self.collectionView.reloadData()
-          self.pageControl.numberOfPages = self.viewModel.mediaItems.count
+     var viewModel: SliderViewModelProtocol! {
+      didSet {
+        viewModel.getMedia {
+          DispatchQueue.main.async {
+            self.collectionView.reloadData()
+            self.pageControl.numberOfPages = self.viewModel.mediaItems.count
+          }
         }
       }
     }
-  }
   
   
   // MARK: - Init
@@ -49,7 +49,7 @@ class SliderView: UIView {
   private func setupViewModel() {
     viewModel = SliderViewModel(service: MoviesService())
   }
-
+  
   private func setupCollectionView() {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
@@ -165,10 +165,10 @@ extension SliderView: UICollectionViewDelegate {
   func collectionView(
     _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath) {
-    
-    let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
+      
+      let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
       viewModel.delegate?.didTapSliderView(self, viewModel: detailViewModel)
-  }
+    }
   
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {

@@ -23,26 +23,10 @@ class SliderCell: UICollectionViewCell {
   
   
   // MARK: - ViewModel
-//  var viewModel: SliderCellViewModelProtocol! {
-//    didSet {
-//      DispatchQueue.global(qos: .userInitiated).async {
-//        guard let data = self.viewModel.mediaData else {
-//          return
-//        }
-//        let image = UIImage(data: data)
-//
-//        DispatchQueue.main.async {
-//          self.imageView.image = image
-//          self.loadIndicator.stopAnimating()
-//        }
-//      }
-//    }
-//  }
-  
   var viewModel: SliderCellViewModelProtocol! {
     didSet {
-      self.imageView.sd_setImage(with: self.viewModel.mediaPosterURL) { _, _, _, _ in
-          self.loadIndicator.stopAnimating()
+      self.imageView.sd_setImage(with: self.viewModel.mediaPosterURL) { _,_,_,_ in
+        self.loadIndicator.stopAnimating()
       }
     }
   }
@@ -61,7 +45,7 @@ class SliderCell: UICollectionViewCell {
     super.init(coder: coder)
     print("Sorry! only code, no storyboards")
   }
-  
+
   
   // MARK: -
   override func prepareForReuse() {

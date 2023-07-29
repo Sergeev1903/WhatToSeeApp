@@ -19,12 +19,14 @@ protocol HomeViewModelProtocol: AnyObject {
   func cellForRowAt(
     indexPath: IndexPath,
     mediaItems: [TMDBMovieResult]) -> CategoryCellViewModelProtocol
+//  func initSliderItems() -> SliderViewModelProtocol
 }
 
 
 class HomeViewModel: HomeViewModelProtocol {
   
   // MARK: - Properties
+//  var upcomingMovies: [TMDBMovieResult] = []
   var nowPlayingMovies: [TMDBMovieResult] = []
   var popularMovies: [TMDBMovieResult] = []
   var topRatedMovies: [TMDBMovieResult] = []
@@ -41,6 +43,8 @@ class HomeViewModel: HomeViewModelProtocol {
   
   // MARK: - Methods
   public func getMovieCategories(completion: @escaping () -> Void) {
+//    dispatchGroup.enter()
+//    getUpcomingMovies()
     dispatchGroup.enter()
     getNowPlayingMovies()
     dispatchGroup.enter()
@@ -68,12 +72,34 @@ class HomeViewModel: HomeViewModelProtocol {
     mediaItems: [TMDBMovieResult]) -> CategoryCellViewModelProtocol {
     return CategoryCellViewModel(mediaItems: mediaItems)
   }
+  
+//  public func initSliderItems() -> SliderViewModelProtocol {
+//    return SliderViewModel(items: upcomingMovies)
+//  }
 
 }
 
 
 // MARK: - Network requests
 extension HomeViewModel {
+  
+//  private func getUpcomingMovies() {
+//    service.getMedia(
+//      endpoint: MoviesEndpoint.upcoming,
+//      responseModel: TMDBMovieResponse.self) {[weak self] result in
+//        guard let strongSelf = self else {
+//          return
+//        }
+//        switch result {
+//        case .success(let result):
+//          strongSelf.upcomingMovies = result.results
+//        case .failure(let error):
+//          print(error.customMessage)
+//        }
+//        strongSelf.dispatchGroup.leave()
+//      }
+//  }
+  
   
   private func getNowPlayingMovies() {
     service.getMedia(

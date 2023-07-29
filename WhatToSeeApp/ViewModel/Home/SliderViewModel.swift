@@ -70,7 +70,6 @@ class SliderViewModel: SliderViewModelProtocol {
       return SliderCellViewModel(media: media)
     }
   
-  
   func didSelectItemAt(
    indexPath: IndexPath) -> DetailViewModelProtocol {
     let media = mediaItems[indexPath.item]

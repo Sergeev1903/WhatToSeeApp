@@ -36,6 +36,7 @@ class DetailHeaderView: UIView {
   }
   
   
+  // MARK: -
   override func layoutSubviews() {
     super.layoutSubviews()
     bottomGradientLayer.frame = containerView.bounds

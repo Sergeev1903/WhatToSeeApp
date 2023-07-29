@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 
 class DetailViewController: UIViewController {
@@ -15,28 +16,13 @@ class DetailViewController: UIViewController {
   private let headerView = DetailHeaderView()
   
   // MARK: - View Model
-  //  var viewModel: DetailViewModel! {
-  //    didSet {
-  //      DispatchQueue.global(qos: .utility).async {
-  //        guard let data = self.viewModel.mediaImageData else { return }
-  //        let image = UIImage(data: data)
-  //
-  //        DispatchQueue.main.async {
-  //          self.headerView.imageView.image = image
-  //          self.headerView.titleLabel.text = self.viewModel.mediaTitle
-  //        }
-  //      }
-  //    }
-  //  }
-  
-  
   var viewModel: DetailViewModel! {
     didSet {
       headerView.imageView.sd_setImage(with: viewModel.mediaBackdropURL)
       headerView.titleLabel.text = self.viewModel.mediaTitle
     }
   }
-  
+
   
   // MARK: - Lifecycle
   override func viewDidLoad() {

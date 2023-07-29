@@ -107,7 +107,7 @@ extension CategoryCell: UICollectionViewDataSource {
       let cell = collectionView.dequeueReusableCell(
         withReuseIdentifier: CategoryCellItem.reuseId,
         for: indexPath) as! CategoryCellItem
-    
+      
       cell.viewModel = viewModel.cellForItemAt(indexPath: indexPath)
       return cell
     }
@@ -121,10 +121,10 @@ extension CategoryCell: UICollectionViewDelegate {
   func collectionView(
     _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath) {
-    
-    let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
+      
+      let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
       viewModel.delegate?.didTapCategoryCell(self, viewModel: detailViewModel)
-  }
+    }
   
 }
 
