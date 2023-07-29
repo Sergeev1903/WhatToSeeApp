@@ -25,7 +25,10 @@ class SliderCell: UICollectionViewCell {
   // MARK: - ViewModel
   var viewModel: SliderCellViewModelProtocol! {
     didSet {
-      self.imageView.sd_setImage(with: self.viewModel.mediaPosterURL) { _,_,_,_ in
+      
+      imageView.sd_setImage(with: viewModel.mediaPosterURL,
+                            placeholderImage: UIImage(named: "load_placeholder"),
+                            options: .delayPlaceholder) { _,_,_,_ in
         self.loadIndicator.stopAnimating()
       }
     }

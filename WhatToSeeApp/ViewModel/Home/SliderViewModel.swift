@@ -16,8 +16,7 @@ protocol SliderViewDelegate: AnyObject {
 protocol SliderViewModelProtocol: AnyObject {
   var mediaItems: [TMDBMovieResult] { get }
   var delegate: SliderViewDelegate? { get set}
-  init(service: MoviesServiceable)
-  func getMedia(completion: @escaping () -> Void)
+  init(mediaItems: [TMDBMovieResult], delegate: SliderViewDelegate?)
   func numberOfItemsInSection() -> Int
   func cellForItemAt(
     indexPath: IndexPath) -> SliderCellViewModelProtocol
@@ -29,7 +28,6 @@ protocol SliderViewModelProtocol: AnyObject {
 class SliderViewModel: SliderViewModelProtocol {
   
   // MARK: - Properties
-  private let service: MoviesServiceable
   var mediaItems: [TMDBMovieResult] = []
   
   // MARK: - Delegate
@@ -37,28 +35,12 @@ class SliderViewModel: SliderViewModelProtocol {
   
   
   // MARK: - Init
-  required init(service: MoviesServiceable) {
-    self.service = service
+  required init(mediaItems: [TMDBMovieResult], delegate: SliderViewDelegate? = nil) {
+    self.mediaItems = mediaItems
+    self.delegate = delegate
   }
-  
-  
-  // MARK: - Networking
-  func getMedia(completion: @escaping () -> Void) {
-    service.getUpcoming {[weak self] result in
-      guard let strongSelf = self else {
-        return
-      }
-      switch result {
-      case .success(let movieResponse):
-        strongSelf.mediaItems = movieResponse.results
-      case .failure(let error):
-        print(error.customMessage)
-      }
-      completion()
-    }
-  }
-  
-  
+
+    
   // MARK: - Configure slider collection
   func numberOfItemsInSection() -> Int {
     return mediaItems.count

@@ -9,6 +9,7 @@ import Foundation
 
 
 protocol HomeViewModelProtocol: AnyObject {
+  var upcomingMovies: [TMDBMovieResult] { get }
   var nowPlayingMovies: [TMDBMovieResult] { get }
   var popularMovies: [TMDBMovieResult] { get }
   var topRatedMovies: [TMDBMovieResult] { get }
@@ -24,9 +25,9 @@ protocol HomeViewModelProtocol: AnyObject {
 
 
 class HomeViewModel: HomeViewModelProtocol {
-  
+
   // MARK: - Properties
-//  var upcomingMovies: [TMDBMovieResult] = []
+  var upcomingMovies: [TMDBMovieResult] = []
   var nowPlayingMovies: [TMDBMovieResult] = []
   var popularMovies: [TMDBMovieResult] = []
   var topRatedMovies: [TMDBMovieResult] = []
@@ -43,8 +44,8 @@ class HomeViewModel: HomeViewModelProtocol {
   
   // MARK: - Methods
   public func getMovieCategories(completion: @escaping () -> Void) {
-//    dispatchGroup.enter()
-//    getUpcomingMovies()
+    dispatchGroup.enter()
+    getUpcomingMovies()
     dispatchGroup.enter()
     getNowPlayingMovies()
     dispatchGroup.enter()
@@ -74,7 +75,7 @@ class HomeViewModel: HomeViewModelProtocol {
   }
   
 //  public func initSliderItems() -> SliderViewModelProtocol {
-//    return SliderViewModel(items: upcomingMovies)
+//    return SliderViewModel(mediaItems: upcomingMovies)
 //  }
 
 }
@@ -83,22 +84,22 @@ class HomeViewModel: HomeViewModelProtocol {
 // MARK: - Network requests
 extension HomeViewModel {
   
-//  private func getUpcomingMovies() {
-//    service.getMedia(
-//      endpoint: MoviesEndpoint.upcoming,
-//      responseModel: TMDBMovieResponse.self) {[weak self] result in
-//        guard let strongSelf = self else {
-//          return
-//        }
-//        switch result {
-//        case .success(let result):
-//          strongSelf.upcomingMovies = result.results
-//        case .failure(let error):
-//          print(error.customMessage)
-//        }
-//        strongSelf.dispatchGroup.leave()
-//      }
-//  }
+  private func getUpcomingMovies() {
+    service.getMedia(
+      endpoint: MoviesEndpoint.upcoming,
+      responseModel: TMDBMovieResponse.self) {[weak self] result in
+        guard let strongSelf = self else {
+          return
+        }
+        switch result {
+        case .success(let result):
+          strongSelf.upcomingMovies = result.results
+        case .failure(let error):
+          print(error.customMessage)
+        }
+        strongSelf.dispatchGroup.leave()
+      }
+  }
   
   
   private func getNowPlayingMovies() {

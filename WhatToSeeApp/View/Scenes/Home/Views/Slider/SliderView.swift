@@ -20,12 +20,8 @@ class SliderView: UIView {
   // MARK: - ViewModel
      var viewModel: SliderViewModelProtocol! {
       didSet {
-        viewModel.getMedia {
-          DispatchQueue.main.async {
             self.collectionView.reloadData()
             self.pageControl.numberOfPages = self.viewModel.mediaItems.count
-          }
-        }
       }
     }
   
@@ -33,7 +29,6 @@ class SliderView: UIView {
   // MARK: - Init
   override init(frame: CGRect) {
     super.init(frame: frame)
-    setupViewModel()
     setupCollectionView()
     setupTitleLabel()
     setupPageControl()
@@ -46,10 +41,6 @@ class SliderView: UIView {
   
   
   // MARK: - Methods
-  private func setupViewModel() {
-    viewModel = SliderViewModel(service: MoviesService())
-  }
-  
   private func setupCollectionView() {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal

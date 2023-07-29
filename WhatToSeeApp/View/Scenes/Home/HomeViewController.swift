@@ -21,16 +21,17 @@ class HomeViewController: UIViewController {
   private var viewModel: HomeViewModelProtocol! {
     didSet {
       viewModel.getMovieCategories {
+        self.configureSlider()
         self.tableView.reloadData()
       }
     }
   }
   
   
-  deinit {
-    SDImageCache.shared.clearMemory()
-    SDImageCache.shared.clearDisk()
-  }
+//  deinit {
+//    SDImageCache.shared.clearMemory()
+//    SDImageCache.shared.clearDisk()
+//  }
   
   
   // MARK: - Lifecycle
@@ -143,7 +144,14 @@ class HomeViewController: UIViewController {
     slider.frame = CGRect(
       x: 0, y: 0, width: tableView.bounds.width,
       height: 600)
-    slider.viewModel.delegate = self
+    //FIXME!!!
+    configureSlider()
+  }
+  
+  private func configureSlider() {
+    slider.viewModel = SliderViewModel(
+      mediaItems: viewModel.upcomingMovies,
+      delegate: self)
   }
   
 }
