@@ -20,6 +20,8 @@ protocol DetailViewModelProtocol: AnyObject {
   //MARK: - Movie details
   func getMovieDetail(completion: @escaping () -> Void)
   func getMovieTrailers(completion: @escaping () -> Void)
+  var detailGenres: String { get }
+  var detailTrailerUrl: String { get }
 }
 
 
@@ -60,30 +62,15 @@ class DetailViewModel: DetailViewModelProtocol {
   //MARK: - Movie details
   let service: MoviesService
   
-  var mediaDetail: TMDBMovieDetail! {
-    didSet {
-      print(mediaDetail.genres.forEach({ genre in
-        print(genre.name)
-      }))
-    }
+  var mediaDetail: TMDBMovieDetail!
+  var mediaGenres: [Genre] = []
+  var mediaTrailers: [Video] = []
+  
+  var detailGenres: String {
+    mediaGenres.compactMap {$0.name}.lazy.joined(separator: ", ")
   }
-  
-  var mediaGenres: String {
-    mediaDetail.genres.compactMap {$0.name}.lazy.joined(separator: ", ")
-  }
-  
-  
-  
-  var mediaTrailers: [Video] = [] {
-    didSet {
-      print(mediaTrailers.forEach({ trailer in
-        print(trailer.keyURL)
-      }))
-    }
-  }
-  
-  
-  var trailerUrl: String {
+
+  var detailTrailerUrl: String {
     var key = ""
     for trailer in mediaTrailers {
       switch trailer.name {
@@ -93,7 +80,7 @@ class DetailViewModel: DetailViewModelProtocol {
     }
     return "https://www.youtube.com/watch?v=\(key))"
   }
-  
+
   
   func getMovieDetail(completion: @escaping () -> Void) {
     service.getMovieDetail(id: media.id!) {[weak self] result in
@@ -101,6 +88,7 @@ class DetailViewModel: DetailViewModelProtocol {
       switch result {
       case .success(let detail):
         strongSelf.mediaDetail = detail
+        strongSelf.mediaGenres = detail.genres
       case .failure(let error):
         print(error.customMessage)
       }

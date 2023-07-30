@@ -16,7 +16,7 @@ class DetailViewController: UIViewController {
   private let headerView = DetailHeaderView()
   
   // MARK: - View Model
-  var viewModel: DetailViewModel! {
+  var viewModel: DetailViewModelProtocol!{
     didSet {
       headerView.imageView.sd_setImage(with: viewModel.mediaBackdropURL)
       headerView.titleLabel.text = self.viewModel.mediaTitle
@@ -92,7 +92,7 @@ extension DetailViewController: UITableViewDataSource {
   func tableView(
     _ tableView: UITableView,
     numberOfRowsInSection section: Int) -> Int {
-      return 5
+      return 10
     }
   
   func tableView(
@@ -107,15 +107,15 @@ extension DetailViewController: UITableViewDataSource {
       
       switch indexPath.row {
       case 0:
-        cell.textLabel?.text = viewModel.mediaVoteAverage
+        cell.textLabel?.text = viewModel.detailGenres
       case 1:
-        cell.textLabel?.text = viewModel.mediaReleaseDate
+        cell.textLabel?.text = viewModel.mediaVoteAverage
       case 2:
-        cell.textLabel?.text = viewModel.mediaOverview
+        cell.textLabel?.text = viewModel.mediaReleaseDate
       case 3:
-        cell.textLabel?.text = viewModel.trailerUrl
+        cell.textLabel?.text = viewModel.mediaOverview
       case 4:
-        cell.textLabel?.text = viewModel.mediaGenres
+        cell.textLabel?.text = viewModel.detailTrailerUrl
       default:
         break
       }
