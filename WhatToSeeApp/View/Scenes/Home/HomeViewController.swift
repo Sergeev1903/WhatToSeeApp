@@ -262,11 +262,38 @@ extension HomeViewController: SliderViewDelegate {
 }
 
 
+// MARK: - CategoryHeaderButtonDelegate
 extension HomeViewController: CategoryHeaderButtonDelegate {
-  
   
   func didTabcategoryHeaderButton(_ categoryHeader: CategoryHeader) {
     print("didTabcategoryHeaderButton")
+    let vc = ShowAllViewController()
+    
+    switch categoryHeader.titleLabel.text {
+    case MovieCategory.nowPlaying.rawValue:
+      vc.viewModel = viewModel.didTapSeeAll(
+        mediaItems: viewModel.nowPlayingMovies,
+        category: MovieCategory.nowPlaying)
+      
+    case MovieCategory.popular.rawValue:
+      vc.viewModel = viewModel.didTapSeeAll(
+        mediaItems: viewModel.popularMovies,
+        category: MovieCategory.popular)
+      
+    case MovieCategory.topRated.rawValue:
+      vc.viewModel = viewModel.didTapSeeAll(
+        mediaItems: viewModel.topRatedMovies,
+        category: MovieCategory.topRated)
+      
+    case MovieCategory.trending.rawValue:
+      vc.viewModel = viewModel.didTapSeeAll(
+        mediaItems: viewModel.trendingMovies,
+        category: MovieCategory.trending)
+      
+    default: break
+    }
+    
+    navigationController?.pushViewController(vc, animated: true)
   }
   
 }

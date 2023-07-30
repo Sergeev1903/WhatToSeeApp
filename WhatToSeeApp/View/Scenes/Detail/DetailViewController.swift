@@ -21,13 +21,7 @@ class DetailViewController: UIViewController {
       headerView.imageView.sd_setImage(with: viewModel.mediaBackdropURL)
       headerView.titleLabel.text = self.viewModel.mediaTitle
       
-      viewModel.getMovieDetail {
-        DispatchQueue.main.async {
-          self.tableView.reloadData()
-        }
-      }
-      
-      viewModel.getMovieTrailers {
+      viewModel.getMultiplyRequest {
         DispatchQueue.main.async {
           self.tableView.reloadData()
         }
@@ -62,6 +56,7 @@ class DetailViewController: UIViewController {
   private func setuptTableView() {
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.separatorStyle = .none
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     tableView.translatesAutoresizingMaskIntoConstraints = false
     

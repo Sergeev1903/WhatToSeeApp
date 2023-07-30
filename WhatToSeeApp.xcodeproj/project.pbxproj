@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D0585FC2A76F5D700664193 /* ShowAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0585FB2A76F5D700664193 /* ShowAllViewController.swift */; };
+		1D0585FE2A76F9EB00664193 /* ShowAllViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0585FD2A76F9EB00664193 /* ShowAllViewModel.swift */; };
+		1D0586012A77013200664193 /* CustomVerticalFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0586002A77013200664193 /* CustomVerticalFlowLayout.swift */; };
 		1D35B99A2A64544E009A6CB9 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D35B9992A64544E009A6CB9 /* Endpoint.swift */; };
 		1D35B99C2A6454CE009A6CB9 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D35B99B2A6454CE009A6CB9 /* HTTPMethod.swift */; };
 		1D35B99E2A64552F009A6CB9 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D35B99D2A64552F009A6CB9 /* RequestError.swift */; };
@@ -43,6 +46,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D0585FB2A76F5D700664193 /* ShowAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAllViewController.swift; sourceTree = "<group>"; };
+		1D0585FD2A76F9EB00664193 /* ShowAllViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAllViewModel.swift; sourceTree = "<group>"; };
+		1D0586002A77013200664193 /* CustomVerticalFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVerticalFlowLayout.swift; sourceTree = "<group>"; };
 		1D35B9992A64544E009A6CB9 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		1D35B99B2A6454CE009A6CB9 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		1D35B99D2A64552F009A6CB9 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
@@ -109,6 +115,16 @@
 				1D3800DC2A6734D800C4729D /* Category */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		1D0585FF2A77011400664193 /* ShowAll */ = {
+			isa = PBXGroup;
+			children = (
+				1D0585FB2A76F5D700664193 /* ShowAllViewController.swift */,
+				1D0585FD2A76F9EB00664193 /* ShowAllViewModel.swift */,
+				1D0586002A77013200664193 /* CustomVerticalFlowLayout.swift */,
+			);
+			path = ShowAll;
 			sourceTree = "<group>";
 		};
 		1D35B9962A642E7E009A6CB9 /* Model */ = {
@@ -223,6 +239,7 @@
 				1D93FEB42A5D738A00314762 /* Wishlist */,
 				1D93FEB52A5D739400314762 /* Profile */,
 				1DFFB1A12A71789200FB4DA8 /* Detail */,
+				1D0585FF2A77011400664193 /* ShowAll */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -411,12 +428,14 @@
 				1D35B9AA2A645DCD009A6CB9 /* MoviesService.swift in Sources */,
 				1DFFB1A72A71A61800FB4DA8 /* DetailViewModel.swift in Sources */,
 				1D3800D92A66E73B00C4729D /* SliderCellViewModel.swift in Sources */,
+				1D0585FC2A76F5D700664193 /* ShowAllViewController.swift in Sources */,
 				1D93FEB72A5D75C800314762 /* ViewController+Extension.swift in Sources */,
 				1D93FEAB2A5D611100314762 /* SearchViewController.swift in Sources */,
 				1D93FEAD2A5D61A000314762 /* WishListViewController.swift in Sources */,
 				1D35B9A02A64569B009A6CB9 /* HTTPClient.swift in Sources */,
 				1D93FE992A5D56BB00314762 /* HomeViewController.swift in Sources */,
 				1D3800D22A669F7800C4729D /* SliderView.swift in Sources */,
+				1D0586012A77013200664193 /* CustomVerticalFlowLayout.swift in Sources */,
 				1D3800E02A674AA900C4729D /* CategoryHeader.swift in Sources */,
 				1D93FE952A5D56BB00314762 /* AppDelegate.swift in Sources */,
 				1D3800DE2A67350D00C4729D /* CategoryCellItem.swift in Sources */,
@@ -429,6 +448,7 @@
 				1DD550922A5F1C6900DD5383 /* TMDBMovie.swift in Sources */,
 				1D93FEAF2A5D627500314762 /* ProfileViewController.swift in Sources */,
 				1D3800DB2A6728C900C4729D /* CategoryCell.swift in Sources */,
+				1D0585FE2A76F9EB00664193 /* ShowAllViewModel.swift in Sources */,
 				1D35B99A2A64544E009A6CB9 /* Endpoint.swift in Sources */,
 				1DE4E68C2A6FFADA009CDB27 /* CategoryCellItemViewModel.swift in Sources */,
 				1D35B99E2A64552F009A6CB9 /* RequestError.swift in Sources */,

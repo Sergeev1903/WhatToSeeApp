@@ -18,8 +18,7 @@ protocol DetailViewModelProtocol: AnyObject {
   init(media: TMDBMovieResult)
   
   //MARK: - Movie details
-  func getMovieDetail(completion: @escaping () -> Void)
-  func getMovieTrailers(completion: @escaping () -> Void)
+  func getMultiplyRequest(completion: @escaping () -> Void)
   var detailGenres: String { get }
   var detailTrailerUrl: String { get }
 }
@@ -61,6 +60,7 @@ class DetailViewModel: DetailViewModelProtocol {
   
   //MARK: - Movie details
   let service: MoviesService
+  let dispatchGroup = DispatchGroup()
 
   var mediaGenres: [Genre] = []
   var mediaTrailers: [Video] = []
@@ -81,7 +81,19 @@ class DetailViewModel: DetailViewModelProtocol {
   }
 
   
-  func getMovieDetail(completion: @escaping () -> Void) {
+  public func getMultiplyRequest(completion: @escaping () -> Void) {
+    dispatchGroup.enter()
+    getMovieDetail()
+    dispatchGroup.enter()
+    getMovieTrailers()
+    
+    dispatchGroup.notify(queue: .main) {
+      completion()
+    }
+  }
+  
+  
+ private func getMovieDetail() {
     service.getMovieGenres(id: media.id!) {[weak self] result in
       guard let strongSelf = self else { return }
       switch result {
@@ -90,12 +102,12 @@ class DetailViewModel: DetailViewModelProtocol {
       case .failure(let error):
         print(error.customMessage)
       }
-      completion()
+      strongSelf.dispatchGroup.enter()
     }
   }
   
   
-  func getMovieTrailers(completion: @escaping () -> Void) {
+ private func getMovieTrailers() {
     service.getMovieTrailers(id: media.id!) {[weak self] result in
       guard let strongSelf = self else { return }
       switch result {
@@ -104,7 +116,7 @@ class DetailViewModel: DetailViewModelProtocol {
       case .failure(let error):
         print(error.customMessage)
       }
-      completion()
+      strongSelf.dispatchGroup.leave()
     }
   }
 

@@ -20,11 +20,14 @@ protocol HomeViewModelProtocol: AnyObject {
   func cellForRowAt(
     indexPath: IndexPath,
     mediaItems: [TMDBMovieResult]) -> CategoryCellViewModelProtocol
+  func didTapSeeAll(
+    mediaItems: [TMDBMovieResult],
+    category: MovieCategory) -> ShowAllViewModelProtocol
 }
 
 
 class HomeViewModel: HomeViewModelProtocol {
-
+  
   // MARK: - Properties
   var upcomingMovies: [TMDBMovieResult] = []
   var nowPlayingMovies: [TMDBMovieResult] = []
@@ -33,7 +36,7 @@ class HomeViewModel: HomeViewModelProtocol {
   var trendingMovies: [TMDBMovieResult] = []
   private let service: MoviesServiceable
   private let dispatchGroup = DispatchGroup()
-
+  
   
   // MARK: - Init
   init(service: MoviesServiceable) {
@@ -70,9 +73,13 @@ class HomeViewModel: HomeViewModelProtocol {
   public func cellForRowAt(
     indexPath: IndexPath,
     mediaItems: [TMDBMovieResult]) -> CategoryCellViewModelProtocol {
-    return CategoryCellViewModel(mediaItems: mediaItems)
+      return CategoryCellViewModel(mediaItems: mediaItems)
+    }
+  
+  func didTapSeeAll(mediaItems: [TMDBMovieResult], category: MovieCategory) -> ShowAllViewModelProtocol {
+    return ShowAllViewModel(mediaItems: mediaItems, category: category)
   }
-
+  
 }
 
 

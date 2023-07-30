@@ -17,7 +17,7 @@ class CategoryHeader: UITableViewHeaderFooterView {
 
   // MARK: - Properties
   static let reuseId = String(describing: CategoryHeader.self)
-  private let titleLabel = UILabel()
+  let titleLabel = UILabel()
   private let button = UIButton(type: .system)
   
   // MARK: - Delegate
