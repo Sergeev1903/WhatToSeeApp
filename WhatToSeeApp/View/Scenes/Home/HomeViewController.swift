@@ -27,7 +27,6 @@ class HomeViewController: UIViewController {
     }
   }
   
-  
   deinit {
     SDImageCache.shared.clearMemory()
     SDImageCache.shared.clearDisk()
@@ -75,10 +74,7 @@ class HomeViewController: UIViewController {
   }
   
   private func setupTabMenu() {
-    tabMenu.frame = CGRect(
-      x: 0, y: 0,
-      width: self.view.frame.width,
-      height: 40)
+    tabMenu.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 40)
     tabMenu.segments = ["Movies", "TV Shows"]
     tabMenu.segmentTintColor = .clear
     tabMenu.underlineColor = .systemBlue
@@ -124,8 +120,6 @@ class HomeViewController: UIViewController {
     tableView.register(
       CategoryCell.self, forCellReuseIdentifier: CategoryCell.reuseId)
     
-    tableView.tableHeaderView = slider
-    
     view.addSubview(tableView)
     
     NSLayoutConstraint.activate([
@@ -144,8 +138,10 @@ class HomeViewController: UIViewController {
     slider.frame = CGRect(
       x: 0, y: 0, width: tableView.bounds.width,
       height: 600)
-    //FIXME!!!
+    // FIXME: fix slider viewModel init
     configureSlider()
+    tableView.tableHeaderView = slider
+    
   }
   
   private func configureSlider() {

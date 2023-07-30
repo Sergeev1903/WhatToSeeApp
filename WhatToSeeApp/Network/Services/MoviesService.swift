@@ -12,9 +12,9 @@ protocol MoviesServiceable {
       endpoint: Endpoint, responseModel: T.Type,
       completion: @escaping (Result<T, RequestError>) -> Void)
   
-  func getMovieDetail(
+  func getMovieGenres(
     id: Int,
-    completion: @escaping (Result<TMDBMovieDetail, RequestError>) -> Void)
+    completion: @escaping (Result<Genres, RequestError>) -> Void)
   
   func getMovieTrailers(
     id: Int,
@@ -41,13 +41,12 @@ struct MoviesService: HTTPClient, MoviesServiceable {
   }
 
   
-  // MARK: - Movie detail
-  func getMovieDetail(
+  func getMovieGenres(
     id: Int,
-    completion: @escaping (Result<TMDBMovieDetail, RequestError>) -> Void) {
+    completion: @escaping (Result<Genres, RequestError>) -> Void) {
       sendRequest(
-        endpoint: MoviesEndpoint.movieDetail(id: id),
-        responseModel: TMDBMovieDetail.self) { result in
+        endpoint: MoviesEndpoint.movieGenres(id: id),
+        responseModel: Genres.self) { result in
           DispatchQueue.main.async {
             completion(result)
           }

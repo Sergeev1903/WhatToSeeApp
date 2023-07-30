@@ -81,6 +81,7 @@ class DetailViewController: UIViewController {
       x: 0, y: 0,
       width: self.view.bounds.width,
       height: 500)
+    headerView.watchTrailerButtonDelegate = self
     tableView.tableHeaderView = headerView
   }
   
@@ -132,6 +133,18 @@ extension DetailViewController: UITableViewDelegate {
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let headerView = self.tableView.tableHeaderView as! DetailHeaderView
     headerView.scrollViewDidScroll(scrollView: scrollView)
+  }
+  
+}
+
+
+extension DetailViewController: watchTrailerButtonDelegate {
+  
+  func didTabWatchTrailerButton(_ detailHeaderView: DetailHeaderView) {
+      UIApplication.shared.open(
+        URL(string: viewModel.detailTrailerUrl)!,
+        options: [:],
+        completionHandler: nil)
   }
   
 }

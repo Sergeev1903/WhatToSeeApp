@@ -61,8 +61,7 @@ class DetailViewModel: DetailViewModelProtocol {
   
   //MARK: - Movie details
   let service: MoviesService
-  
-  var mediaDetail: TMDBMovieDetail!
+
   var mediaGenres: [Genre] = []
   var mediaTrailers: [Video] = []
   
@@ -83,11 +82,10 @@ class DetailViewModel: DetailViewModelProtocol {
 
   
   func getMovieDetail(completion: @escaping () -> Void) {
-    service.getMovieDetail(id: media.id!) {[weak self] result in
+    service.getMovieGenres(id: media.id!) {[weak self] result in
       guard let strongSelf = self else { return }
       switch result {
       case .success(let detail):
-        strongSelf.mediaDetail = detail
         strongSelf.mediaGenres = detail.genres
       case .failure(let error):
         print(error.customMessage)

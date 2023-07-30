@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol watchTrailerButtonDelegate: AnyObject {
+  func didTabWatchTrailerButton(_ detailHeaderView: DetailHeaderView)
+}
+
+
 class DetailHeaderView: UIView {
   
   // MARK: - Properties
@@ -19,6 +24,9 @@ class DetailHeaderView: UIView {
   var titleLabel = UILabel()
   let watchTrailerButton = UIButton()
   private let bottomGradientLayer = CAGradientLayer()
+  
+  // MARK: - Delegate
+  weak var watchTrailerButtonDelegate: watchTrailerButtonDelegate?
   
   
   // MARK: - Init
@@ -73,6 +81,7 @@ class DetailHeaderView: UIView {
   
   @objc func watchTrailerButtonAction() {
     print("watchTrailerButtonAction")
+    watchTrailerButtonDelegate?.didTabWatchTrailerButton(self)
   }
   
   private func setupTitleLabel() {

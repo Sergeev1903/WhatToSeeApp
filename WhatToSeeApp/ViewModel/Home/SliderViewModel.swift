@@ -21,7 +21,7 @@ protocol SliderViewModelProtocol: AnyObject {
   func cellForItemAt(
     indexPath: IndexPath) -> SliderCellViewModelProtocol
   func didSelectItemAt(
-   indexPath: IndexPath) -> DetailViewModelProtocol
+    indexPath: IndexPath) -> DetailViewModelProtocol
 }
 
 
@@ -35,12 +35,13 @@ class SliderViewModel: SliderViewModelProtocol {
   
   
   // MARK: - Init
-  required init(mediaItems: [TMDBMovieResult], delegate: SliderViewDelegate? = nil) {
+  required init(mediaItems: [TMDBMovieResult],
+                delegate: SliderViewDelegate? = nil) {
     self.mediaItems = mediaItems
     self.delegate = delegate
   }
-
-    
+  
+  
   // MARK: - Configure slider collection
   func numberOfItemsInSection() -> Int {
     return mediaItems.count
@@ -53,9 +54,9 @@ class SliderViewModel: SliderViewModelProtocol {
     }
   
   func didSelectItemAt(
-   indexPath: IndexPath) -> DetailViewModelProtocol {
-    let media = mediaItems[indexPath.item]
-    return DetailViewModel(media: media)
-   }
+    indexPath: IndexPath) -> DetailViewModelProtocol {
+      let media = mediaItems[indexPath.item]
+      return DetailViewModel(media: media)
+    }
   
 }
