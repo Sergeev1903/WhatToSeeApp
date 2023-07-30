@@ -20,7 +20,6 @@ protocol HomeViewModelProtocol: AnyObject {
   func cellForRowAt(
     indexPath: IndexPath,
     mediaItems: [TMDBMovieResult]) -> CategoryCellViewModelProtocol
-//  func initSliderItems() -> SliderViewModelProtocol
 }
 
 
@@ -73,10 +72,6 @@ class HomeViewModel: HomeViewModelProtocol {
     mediaItems: [TMDBMovieResult]) -> CategoryCellViewModelProtocol {
     return CategoryCellViewModel(mediaItems: mediaItems)
   }
-  
-//  public func initSliderItems() -> SliderViewModelProtocol {
-//    return SliderViewModel(mediaItems: upcomingMovies)
-//  }
 
 }
 

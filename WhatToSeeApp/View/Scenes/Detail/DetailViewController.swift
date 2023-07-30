@@ -20,6 +20,18 @@ class DetailViewController: UIViewController {
     didSet {
       headerView.imageView.sd_setImage(with: viewModel.mediaBackdropURL)
       headerView.titleLabel.text = self.viewModel.mediaTitle
+      
+      viewModel.getMovieDetail {
+        DispatchQueue.main.async {
+          self.tableView.reloadData()
+        }
+      }
+      
+      viewModel.getMovieTrailers {
+        DispatchQueue.main.async {
+          self.tableView.reloadData()
+        }
+      }
     }
   }
 
@@ -80,7 +92,7 @@ extension DetailViewController: UITableViewDataSource {
   func tableView(
     _ tableView: UITableView,
     numberOfRowsInSection section: Int) -> Int {
-      return 10
+      return 5
     }
   
   func tableView(
@@ -100,6 +112,10 @@ extension DetailViewController: UITableViewDataSource {
         cell.textLabel?.text = viewModel.mediaReleaseDate
       case 2:
         cell.textLabel?.text = viewModel.mediaOverview
+      case 3:
+        cell.textLabel?.text = viewModel.trailerUrl
+      case 4:
+        cell.textLabel?.text = viewModel.mediaGenres
       default:
         break
       }

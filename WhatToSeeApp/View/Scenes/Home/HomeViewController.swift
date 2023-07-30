@@ -28,10 +28,10 @@ class HomeViewController: UIViewController {
   }
   
   
-//  deinit {
-//    SDImageCache.shared.clearMemory()
-//    SDImageCache.shared.clearDisk()
-//  }
+  deinit {
+    SDImageCache.shared.clearMemory()
+    SDImageCache.shared.clearDisk()
+  }
   
   
   // MARK: - Lifecycle

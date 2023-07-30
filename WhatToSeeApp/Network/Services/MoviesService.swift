@@ -12,12 +12,14 @@ protocol MoviesServiceable {
       endpoint: Endpoint, responseModel: T.Type,
       completion: @escaping (Result<T, RequestError>) -> Void)
   
-  func getUpcoming(
-    completion: @escaping (Result<TMDBMovieResponse, RequestError>) -> Void)
-  
   func getMovieDetail(
     id: Int,
-    completion: @escaping (Result<TMDBMovieResult, RequestError>) -> Void)
+    completion: @escaping (Result<TMDBMovieDetail, RequestError>) -> Void)
+  
+  func getMovieTrailers(
+    id: Int,
+    completion: @escaping (Result<Videos, RequestError>) -> Void)
+  
   func loadData(url: URL) -> Data?
 }
 
@@ -37,31 +39,34 @@ struct MoviesService: HTTPClient, MoviesServiceable {
       }
     }
   }
-  
-  
-  func getUpcoming(
-    completion: @escaping (Result<TMDBMovieResponse, RequestError>) -> Void) {
-      DispatchQueue.global(qos: .userInitiated).async {
-        sendRequest(
-          endpoint: MoviesEndpoint.upcoming,
-          responseModel: TMDBMovieResponse.self) { result in
-            DispatchQueue.main.async {
-              completion(result)
-            }
-          }
-      }
-    }
+
   
   // MARK: - Movie detail
   func getMovieDetail(
     id: Int,
-    completion: @escaping (Result<TMDBMovieResult, RequestError>) -> Void) {
+    completion: @escaping (Result<TMDBMovieDetail, RequestError>) -> Void) {
       sendRequest(
         endpoint: MoviesEndpoint.movieDetail(id: id),
-        responseModel: TMDBMovieResult.self) { result in
-          completion(result)
+        responseModel: TMDBMovieDetail.self) { result in
+          DispatchQueue.main.async {
+            completion(result)
+          }
         }
     }
+  
+  
+  func getMovieTrailers(
+    id: Int,
+    completion: @escaping (Result<Videos, RequestError>) -> Void) {
+      sendRequest(
+        endpoint: MoviesEndpoint.movieTrailers(id: id),
+        responseModel: Videos.self) { result in
+          DispatchQueue.main.async {
+            completion(result)
+          }
+        }
+    }
+  
   
   // MARK: - Load data GCD: semaphores
   func loadData(url: URL) -> Data? {

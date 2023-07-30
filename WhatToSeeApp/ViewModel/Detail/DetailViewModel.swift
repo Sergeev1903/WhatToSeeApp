@@ -16,6 +16,10 @@ protocol DetailViewModelProtocol: AnyObject {
   var mediaReleaseDate: String { get }
   var mediaOverview: String { get }
   init(media: TMDBMovieResult)
+  
+  //MARK: - Movie details
+  func getMovieDetail(completion: @escaping () -> Void)
+  func getMovieTrailers(completion: @escaping () -> Void)
 }
 
 
@@ -49,6 +53,73 @@ class DetailViewModel: DetailViewModelProtocol {
   // MARK: - Init
   required init(media: TMDBMovieResult) {
     self.media = media
+    self.service = MoviesService()
   }
   
+  
+  //MARK: - Movie details
+  let service: MoviesService
+  
+  var mediaDetail: TMDBMovieDetail! {
+    didSet {
+      print(mediaDetail.genres.forEach({ genre in
+        print(genre.name)
+      }))
+    }
+  }
+  
+  var mediaGenres: String {
+    mediaDetail.genres.compactMap {$0.name}.lazy.joined(separator: ", ")
+  }
+  
+  
+  
+  var mediaTrailers: [Video] = [] {
+    didSet {
+      print(mediaTrailers.forEach({ trailer in
+        print(trailer.keyURL)
+      }))
+    }
+  }
+  
+  
+  var trailerUrl: String {
+    var key = ""
+    for trailer in mediaTrailers {
+      switch trailer.name {
+      case "Official Trailer": key = trailer.key
+      case _ : key = trailer.key
+      }
+    }
+    return "https://www.youtube.com/watch?v=\(key))"
+  }
+  
+  
+  func getMovieDetail(completion: @escaping () -> Void) {
+    service.getMovieDetail(id: media.id!) {[weak self] result in
+      guard let strongSelf = self else { return }
+      switch result {
+      case .success(let detail):
+        strongSelf.mediaDetail = detail
+      case .failure(let error):
+        print(error.customMessage)
+      }
+      completion()
+    }
+  }
+  
+  
+  func getMovieTrailers(completion: @escaping () -> Void) {
+    service.getMovieTrailers(id: media.id!) {[weak self] result in
+      guard let strongSelf = self else { return }
+      switch result {
+      case .success(let trailers):
+        strongSelf.mediaTrailers = trailers.results
+      case .failure(let error):
+        print(error.customMessage)
+      }
+      completion()
+    }
+  }
+
 }
