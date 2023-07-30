@@ -8,6 +8,11 @@
 import UIKit
 
 
+protocol CategoryHeaderButtonDelegate: AnyObject {
+  func didTabcategoryHeaderButton(_ categoryHeader: CategoryHeader)
+}
+
+
 class CategoryHeader: UITableViewHeaderFooterView {
 
   // MARK: - Properties
@@ -15,6 +20,8 @@ class CategoryHeader: UITableViewHeaderFooterView {
   private let titleLabel = UILabel()
   private let button = UIButton(type: .system)
   
+  // MARK: - Delegate
+  weak var categoryHeaderButtonDelegate: CategoryHeaderButtonDelegate?
   
   // MARK: - Init
   override init(reuseIdentifier: String?) {
@@ -57,7 +64,7 @@ class CategoryHeader: UITableViewHeaderFooterView {
     button.setTitle("See All", for: .normal)
     button.setTitleColor(.label, for: .normal)
     button.addTarget(
-      self, action: #selector(headerDidTapped),
+      self, action: #selector(categoryHeaderButtonAction),
       for: .touchUpInside)
     
     contentView.addSubview(button)
@@ -70,7 +77,9 @@ class CategoryHeader: UITableViewHeaderFooterView {
   }
   
   // MARK: -
-  @objc func headerDidTapped() {
+  @objc func categoryHeaderButtonAction() {
+    print("categoryHeaderButtonAction")
+    categoryHeaderButtonDelegate?.didTabcategoryHeaderButton(self)
   }
 
 }

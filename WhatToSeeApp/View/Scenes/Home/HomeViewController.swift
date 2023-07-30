@@ -212,6 +212,7 @@ extension HomeViewController: UITableViewDataSource {
       default: break
       }
       
+      headerView.categoryHeaderButtonDelegate = self
       return headerView
     }
 }
@@ -257,5 +258,15 @@ extension HomeViewController: SliderViewDelegate {
       vc.viewModel = viewModel as? DetailViewModel
       navigationController?.pushViewController(vc, animated: true)
     }
+  
+}
+
+
+extension HomeViewController: CategoryHeaderButtonDelegate {
+  
+  
+  func didTabcategoryHeaderButton(_ categoryHeader: CategoryHeader) {
+    print("didTabcategoryHeaderButton")
+  }
   
 }
