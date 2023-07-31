@@ -16,7 +16,7 @@ final class CustomVerticalFlowLayout: UICollectionViewFlowLayout {
   private var interitemSpacing: CGFloat = 8
   private var heightMultiplier: CGFloat = 1.5
   
-  // MARK: - Initializers
+  // MARK: - Init
   init(itemsPerRow: CGFloat, margin: CGFloat, lineSpacing: CGFloat,
        interitemSpacing: CGFloat, heightMultiplier: CGFloat) {
     self.itemsPerRow = itemsPerRow
@@ -27,15 +27,18 @@ final class CustomVerticalFlowLayout: UICollectionViewFlowLayout {
     super.init()
     
     sectionInsetReference = .fromSafeArea
+    self.scrollDirection = .vertical
   }
 
   override init() {
     super.init()
     sectionInsetReference = .fromSafeArea
+    self.scrollDirection = .vertical
   }
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
+    self.scrollDirection = .vertical
   }
   
   // MARK: - Lifecycle

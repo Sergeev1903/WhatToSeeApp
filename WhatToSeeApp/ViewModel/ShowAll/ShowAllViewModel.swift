@@ -48,4 +48,5 @@ class ShowAllViewModel: ShowAllViewModelProtocol {
     let media = mediaItems[indexPath.item]
     return DetailViewModel(media: media)
    }
+  
 }

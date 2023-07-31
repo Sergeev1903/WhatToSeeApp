@@ -16,7 +16,6 @@ class HomeViewController: UIViewController {
   private let tableView = UITableView(frame: .zero, style: .grouped)
   private var slider = SliderView()
   
-  
   // MARK: - ViewModel
   private var viewModel: HomeViewModelProtocol! {
     didSet {
@@ -46,7 +45,8 @@ class HomeViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+    navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+    navigationController?.navigationBar.prefersLargeTitles = false
   }
   
   

@@ -18,7 +18,9 @@ protocol DetailViewModelProtocol: AnyObject {
   init(media: TMDBMovieResult)
   
   //MARK: - Movie details
-  func getMultiplyRequest(completion: @escaping () -> Void)
+  //  func getMultiplyRequest(completion: @escaping () -> Void)
+  func getMovieGenres(completion: @escaping () -> Void)
+  func getMovieTrailers(completion: @escaping () -> Void)
   var detailGenres: String { get }
   var detailTrailerUrl: String { get }
 }
@@ -49,7 +51,7 @@ class DetailViewModel: DetailViewModelProtocol {
   var mediaOverview: String {
     media.overview ?? ""
   }
-
+  
   
   // MARK: - Init
   required init(media: TMDBMovieResult) {
@@ -61,14 +63,20 @@ class DetailViewModel: DetailViewModelProtocol {
   //MARK: - Movie details
   let service: MoviesService
   let dispatchGroup = DispatchGroup()
-
-  var mediaGenres: [Genre] = []
+  
+  var mediaGenres: [Genre] = [] {
+    didSet {
+      print(mediaGenres.forEach({ genre in
+        print(genre.name)
+      }))
+    }
+  }
   var mediaTrailers: [Video] = []
   
   var detailGenres: String {
-    mediaGenres.compactMap {$0.name}.lazy.joined(separator: ", ")
+    return  mediaGenres.compactMap {$0.name}.lazy.joined(separator: ", ")
   }
-
+  
   var detailTrailerUrl: String {
     var key = ""
     for trailer in mediaTrailers {
@@ -79,45 +87,53 @@ class DetailViewModel: DetailViewModelProtocol {
     }
     return "https://www.youtube.com/watch?v=\(key))"
   }
-
-  
-  public func getMultiplyRequest(completion: @escaping () -> Void) {
-    dispatchGroup.enter()
-    getMovieDetail()
-    dispatchGroup.enter()
-    getMovieTrailers()
-    
-    dispatchGroup.notify(queue: .main) {
-      completion()
-    }
-  }
   
   
- private func getMovieDetail() {
-    service.getMovieGenres(id: media.id!) {[weak self] result in
-      guard let strongSelf = self else { return }
-      switch result {
-      case .success(let detail):
-        strongSelf.mediaGenres = detail.genres
-      case .failure(let error):
-        print(error.customMessage)
+  //  public func getMultiplyRequest(completion: @escaping () -> Void) {
+  //    dispatchGroup.enter()
+  //    getMovieDetail()
+  //    dispatchGroup.enter()
+  //    getMovieTrailers()
+  //
+  //    dispatchGroup.notify(queue: .main) {
+  //      completion()
+  //    }
+  //  }
+  
+  
+  func getMovieGenres(completion: @escaping () -> Void) {
+    service.getMedia(
+      endpoint: MoviesEndpoint.movieGenres(id: media.id!),
+      responseModel: Genres.self) { [weak self] result in
+        guard let strongSelf = self else { return }
+        
+        switch result {
+        case .success(let genres):
+          strongSelf.mediaGenres = genres.genres
+        case .failure(let error):
+          print(error.customMessage)
+        }
+        //      strongSelf.dispatchGroup.enter()
+        completion()
       }
-      strongSelf.dispatchGroup.enter()
-    }
   }
   
   
- private func getMovieTrailers() {
-    service.getMovieTrailers(id: media.id!) {[weak self] result in
-      guard let strongSelf = self else { return }
-      switch result {
-      case .success(let trailers):
-        strongSelf.mediaTrailers = trailers.results
-      case .failure(let error):
-        print(error.customMessage)
+  func getMovieTrailers(completion: @escaping () -> Void) {
+    service.getMedia(
+      endpoint: MoviesEndpoint.movieTrailers(id: media.id!),
+      responseModel: Videos.self) { [weak self] result in
+        guard let strongSelf = self else { return }
+        
+        switch result {
+        case .success(let trailers):
+          strongSelf.mediaTrailers = trailers.results
+        case .failure(let error):
+          print(error.customMessage)
+        }
+        //      strongSelf.dispatchGroup.enter()
+        completion()
       }
-      strongSelf.dispatchGroup.leave()
-    }
   }
-
+  
 }

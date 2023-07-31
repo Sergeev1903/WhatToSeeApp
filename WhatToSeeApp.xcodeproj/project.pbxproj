@@ -121,8 +121,22 @@
 			isa = PBXGroup;
 			children = (
 				1D0585FB2A76F5D700664193 /* ShowAllViewController.swift */,
-				1D0585FD2A76F9EB00664193 /* ShowAllViewModel.swift */,
+			);
+			path = ShowAll;
+			sourceTree = "<group>";
+		};
+		1D1BC43C2A770DC300BFF67A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
 				1D0586002A77013200664193 /* CustomVerticalFlowLayout.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		1D1BC43D2A770E1D00BFF67A /* ShowAll */ = {
+			isa = PBXGroup;
+			children = (
+				1D0585FD2A76F9EB00664193 /* ShowAllViewModel.swift */,
 			);
 			path = ShowAll;
 			sourceTree = "<group>";
@@ -223,6 +237,7 @@
 				1DE4E6892A6FE8C2009CDB27 /* View */,
 				1DE4E68A2A6FE8E3009CDB27 /* ViewModel */,
 				1D0325392A5EBFD700221BEB /* Network */,
+				1D1BC43C2A770DC300BFF67A /* Helpers */,
 				1D93FEB82A5D8C1D00314762 /* Extensions */,
 				1D93FE9D2A5D56BC00314762 /* Assets.xcassets */,
 				1D93FE9F2A5D56BC00314762 /* LaunchScreen.storyboard */,
@@ -307,6 +322,7 @@
 			children = (
 				1DF0C3D32A72685F00BF60A9 /* Home */,
 				1DF0C3D42A7268C100BF60A9 /* Detail */,
+				1D1BC43D2A770E1D00BFF67A /* ShowAll */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";

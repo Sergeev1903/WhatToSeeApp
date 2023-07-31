@@ -12,6 +12,7 @@ class ShowAllViewController: UIViewController {
   // MARK: - Properties
   private var collectionView: UICollectionView!
   
+  // MARK: - View Model
   var viewModel: ShowAllViewModelProtocol!
   
   
@@ -23,13 +24,15 @@ class ShowAllViewController: UIViewController {
     setupCollectionView()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+  }
   
   // MARK: - Methods
-  
   private func setupNavigationBar() {
     navigationController?.navigationBar.prefersLargeTitles = true
   }
-  
   
   private func setupCollectionView() {
     let layout = CustomVerticalFlowLayout(
@@ -91,15 +94,14 @@ extension ShowAllViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension ShowAllViewController: UICollectionViewDelegate {
   
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    
-    let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
-    let vc = DetailViewController()
-    vc.viewModel = detailViewModel
-    navigationController?.pushViewController(vc, animated: true)
-  }
+  func collectionView(
+    _ collectionView: UICollectionView,
+    didSelectItemAt indexPath: IndexPath) {
+      
+      let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
+      let vc = DetailViewController()
+      vc.viewModel = detailViewModel
+      navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension ShowAllViewController: UICollectionViewDelegateFlowLayout {}

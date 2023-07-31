@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 
 class DetailViewController: UIViewController {
@@ -18,17 +17,28 @@ class DetailViewController: UIViewController {
   // MARK: - View Model
   var viewModel: DetailViewModelProtocol!{
     didSet {
-      headerView.imageView.sd_setImage(with: viewModel.mediaBackdropURL)
-      headerView.titleLabel.text = self.viewModel.mediaTitle
       
-      viewModel.getMultiplyRequest {
+      //      viewModel.getMultiplyRequest {
+      //        self.tableView.reloadData()
+      //      }
+      
+      viewModel.getMovieGenres {
         DispatchQueue.main.async {
           self.tableView.reloadData()
         }
       }
+      
+      viewModel.getMovieTrailers {
+        DispatchQueue.main.async {
+          self.tableView.reloadData()
+        }
+      }
+      
+      headerView.imageView.sd_setImage(with: viewModel.mediaBackdropURL)
+      headerView.titleLabel.text = self.viewModel.mediaTitle
     }
   }
-
+  
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
@@ -136,10 +146,10 @@ extension DetailViewController: UITableViewDelegate {
 extension DetailViewController: watchTrailerButtonDelegate {
   
   func didTabWatchTrailerButton(_ detailHeaderView: DetailHeaderView) {
-      UIApplication.shared.open(
-        URL(string: viewModel.detailTrailerUrl)!,
-        options: [:],
-        completionHandler: nil)
+    UIApplication.shared.open(
+      URL(string: viewModel.detailTrailerUrl)!,
+      options: [:],
+      completionHandler: nil)
   }
   
 }

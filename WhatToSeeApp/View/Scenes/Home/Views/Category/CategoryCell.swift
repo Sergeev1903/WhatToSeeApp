@@ -15,7 +15,6 @@ class CategoryCell: UITableViewCell {
   private var collectionView: UICollectionView!
   private let backgroundGradient = CAGradientLayer()
   
-  
   // MARK: - View Model
   var viewModel: CategoryCellViewModelProtocol! {
     didSet {
@@ -36,6 +35,7 @@ class CategoryCell: UITableViewCell {
     print("Sorry! only code, no storyboards")
   }
   
+  
   // MARK: -
   override func layoutSubviews() {
     super.layoutSubviews()
@@ -50,7 +50,11 @@ class CategoryCell: UITableViewCell {
   // MARK: - Methods
   private func setupCollectionView() {
     let layout = UICollectionViewFlowLayout()
+    layout.itemSize = CGSize(width: 150, height: 225)
     layout.scrollDirection = .horizontal
+    layout.minimumInteritemSpacing = 16
+    layout.minimumLineSpacing = 16
+    layout.sectionInset.left = 16
     
     collectionView = UICollectionView(
       frame: .zero, collectionViewLayout: layout)
@@ -68,7 +72,7 @@ class CategoryCell: UITableViewCell {
       collectionView.topAnchor.constraint(
         equalTo: contentView.topAnchor),
       collectionView.leadingAnchor.constraint(
-        equalTo: contentView.leadingAnchor, constant: 16),
+        equalTo: contentView.leadingAnchor),
       collectionView.trailingAnchor.constraint(
         equalTo: contentView.trailingAnchor),
       collectionView.bottomAnchor.constraint(
@@ -77,7 +81,6 @@ class CategoryCell: UITableViewCell {
   }
   
   private func contentViewGradient() {
-    
     backgroundGradient.colors = [
       UIColor.systemBackground.cgColor,
       UIColor.darkGray.withAlphaComponent(0.1).cgColor
@@ -129,28 +132,3 @@ extension CategoryCell: UICollectionViewDelegate {
 }
 
 
-// MARK: - UICollectionViewDelegateFlowLayout
-extension CategoryCell: UICollectionViewDelegateFlowLayout {
-  
-  func collectionView(
-    _ collectionView: UICollectionView,
-    layout collectionViewLayout: UICollectionViewLayout,
-    sizeForItemAt indexPath: IndexPath) -> CGSize {
-      return CGSize(width: 150, height: 225)
-    }
-  
-  func collectionView(
-    _ collectionView: UICollectionView,
-    layout collectionViewLayout: UICollectionViewLayout,
-    minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-      return 16
-    }
-  
-  func collectionView(
-    _ collectionView: UICollectionView,
-    layout collectionViewLayout: UICollectionViewLayout,
-    minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-      return 16
-    }
-  
-}

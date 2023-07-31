@@ -94,11 +94,11 @@ class DetailHeaderView: UIView {
     
     NSLayoutConstraint.activate([
       titleLabel.leadingAnchor.constraint(
-        equalTo: containerView.leadingAnchor),
+        equalTo: containerView.leadingAnchor, constant: 16),
+      titleLabel.trailingAnchor.constraint(
+        equalTo: containerView.trailingAnchor, constant: -16),
       titleLabel.bottomAnchor.constraint(
         equalTo: containerView.bottomAnchor, constant: -32),
-      titleLabel.widthAnchor.constraint(
-        equalTo: containerView.widthAnchor)
     ])
   }
   

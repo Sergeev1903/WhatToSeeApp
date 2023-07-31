@@ -21,16 +21,16 @@ class SliderCell: UICollectionViewCell {
   private let bottomGradientView = UIView()
   private let bottomGradientLayer = CAGradientLayer()
   
-  
   // MARK: - ViewModel
   var viewModel: SliderCellViewModelProtocol! {
     didSet {
       
-      imageView.sd_setImage(with: viewModel.mediaPosterURL,
-                            placeholderImage: UIImage(named: "load_placeholder"),
-                            options: .delayPlaceholder) { _,_,_,_ in
-        self.loadIndicator.stopAnimating()
-      }
+      imageView.sd_setImage(
+        with: viewModel.mediaPosterURL,
+        placeholderImage: UIImage(named: "load_placeholder"),
+        options: .delayPlaceholder) { _,_,_,_ in
+          self.loadIndicator.stopAnimating()
+        }
     }
   }
   
@@ -48,7 +48,7 @@ class SliderCell: UICollectionViewCell {
     super.init(coder: coder)
     print("Sorry! only code, no storyboards")
   }
-
+  
   
   // MARK: -
   override func prepareForReuse() {

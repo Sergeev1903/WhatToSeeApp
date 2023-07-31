@@ -16,14 +16,13 @@ class SliderView: UIView {
   private var currentPageIndex = 0
   private var titleLabel = UILabel()
   
-  
   // MARK: - ViewModel
-     var viewModel: SliderViewModelProtocol! {
-      didSet {
-            self.collectionView.reloadData()
-            self.pageControl.numberOfPages = self.viewModel.mediaItems.count
-      }
+  var viewModel: SliderViewModelProtocol! {
+    didSet {
+      self.collectionView.reloadData()
+      self.pageControl.numberOfPages = self.viewModel.mediaItems.count
     }
+  }
   
   
   // MARK: - Init
@@ -70,7 +69,7 @@ class SliderView: UIView {
   
   private func setupTitleLabel() {
     titleLabel.text = "Upcoming"
-    titleLabel.font = UIFont.boldSystemFont(ofSize: 32)
+    titleLabel.font = UIFont.boldSystemFont(ofSize: 36)
     titleLabel.textAlignment = .left
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     
@@ -152,7 +151,6 @@ extension SliderView: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension SliderView: UICollectionViewDelegate {
   
-  
   func collectionView(
     _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath) {
@@ -160,7 +158,6 @@ extension SliderView: UICollectionViewDelegate {
       let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
       viewModel.delegate?.didTapSliderView(self, viewModel: detailViewModel)
     }
-  
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     // Slider item change page control index

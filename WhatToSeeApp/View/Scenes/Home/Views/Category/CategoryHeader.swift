@@ -23,6 +23,7 @@ class CategoryHeader: UITableViewHeaderFooterView {
   // MARK: - Delegate
   weak var categoryHeaderButtonDelegate: CategoryHeaderButtonDelegate?
   
+  
   // MARK: - Init
   override init(reuseIdentifier: String?) {
     super.init(reuseIdentifier: reuseIdentifier)

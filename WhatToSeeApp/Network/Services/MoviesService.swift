@@ -7,21 +7,14 @@
 
 import Foundation
 
+
 protocol MoviesServiceable {
-    func getMedia<T: Codable>(
-      endpoint: Endpoint, responseModel: T.Type,
-      completion: @escaping (Result<T, RequestError>) -> Void)
-  
-  func getMovieGenres(
-    id: Int,
-    completion: @escaping (Result<Genres, RequestError>) -> Void)
-  
-  func getMovieTrailers(
-    id: Int,
-    completion: @escaping (Result<Videos, RequestError>) -> Void)
-  
+  func getMedia<T: Codable>(
+    endpoint: Endpoint, responseModel: T.Type,
+    completion: @escaping (Result<T, RequestError>) -> Void)
   func loadData(url: URL) -> Data?
 }
+
 
 struct MoviesService: HTTPClient, MoviesServiceable {
   
@@ -39,32 +32,6 @@ struct MoviesService: HTTPClient, MoviesServiceable {
       }
     }
   }
-
-  
-  func getMovieGenres(
-    id: Int,
-    completion: @escaping (Result<Genres, RequestError>) -> Void) {
-      sendRequest(
-        endpoint: MoviesEndpoint.movieGenres(id: id),
-        responseModel: Genres.self) { result in
-          DispatchQueue.main.async {
-            completion(result)
-          }
-        }
-    }
-  
-  
-  func getMovieTrailers(
-    id: Int,
-    completion: @escaping (Result<Videos, RequestError>) -> Void) {
-      sendRequest(
-        endpoint: MoviesEndpoint.movieTrailers(id: id),
-        responseModel: Videos.self) { result in
-          DispatchQueue.main.async {
-            completion(result)
-          }
-        }
-    }
   
   
   // MARK: - Load data GCD: semaphores
