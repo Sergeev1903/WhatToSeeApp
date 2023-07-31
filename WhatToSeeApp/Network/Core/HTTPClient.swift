@@ -26,9 +26,6 @@ extension HTTPClient {
       urlComponents.path = endpoint.path
       urlComponents.queryItems = endpoint.queryItems
       
-//      let pageQueryItem = URLQueryItem(name: "page", value: "2")
-//      urlComponents.queryItems = [pageQueryItem]
-      
       guard let url = urlComponents.url else {
         return completion(.failure(.invalidURL))
       }

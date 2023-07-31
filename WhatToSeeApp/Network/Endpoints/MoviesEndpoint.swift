@@ -25,7 +25,6 @@ enum MoviesEndpoint {
   case movieTrailers(id: Int)
 }
 
-
 extension MoviesEndpoint: Endpoint {
   
   var path: String {
