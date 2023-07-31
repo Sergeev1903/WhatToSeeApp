@@ -19,7 +19,7 @@ class ShowAllViewController: UIViewController {
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.title = viewModel.title
+    self.title = viewModel.category
     setupNavigationBar()
     setupCollectionView()
   }
@@ -103,5 +103,21 @@ extension ShowAllViewController: UICollectionViewDelegate {
       vc.viewModel = detailViewModel
       navigationController?.pushViewController(vc, animated: true)
     }
+  
+  
+  // MARK: - Load more movies
+  func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    //     Load more movies when reaching the last item
+    if indexPath.item == viewModel.numberOfItemsInSection()
+        - 1 && viewModel.currentPage <= viewModel.totalPages {
+      viewModel.currentPage += 1
+      viewModel.loadMoreItems {
+        DispatchQueue.main.async {
+          self.collectionView.reloadData()
+        }
+      }
+    }
+  }
+  
 }
 

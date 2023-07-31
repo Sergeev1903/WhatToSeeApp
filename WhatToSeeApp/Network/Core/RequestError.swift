@@ -13,7 +13,7 @@ enum RequestError: Error {
   case invalidURL
   case noResponse
   case unauthorized
-  case unexpectedStatusCode
+  case unexpectedStatusCode(code: Int)
   case unknown
   
   var customMessage: String {
@@ -29,8 +29,8 @@ enum RequestError: Error {
       result = "Response error"
     case .unauthorized:
       result = "Session expired"
-    case .unexpectedStatusCode:
-      result = "Unexpected error"
+    case .unexpectedStatusCode(let code):
+      result = "Unexpected error: \(code)"
     case .unknown:
       result = "Unknown error"
     }

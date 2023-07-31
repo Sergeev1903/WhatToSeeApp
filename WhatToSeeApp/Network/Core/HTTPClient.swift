@@ -24,6 +24,10 @@ extension HTTPClient {
       urlComponents.scheme = endpoint.scheme
       urlComponents.host = endpoint.host
       urlComponents.path = endpoint.path
+      urlComponents.queryItems = endpoint.queryItems
+      
+//      let pageQueryItem = URLQueryItem(name: "page", value: "2")
+//      urlComponents.queryItems = [pageQueryItem]
       
       guard let url = urlComponents.url else {
         return completion(.failure(.invalidURL))
@@ -69,7 +73,8 @@ extension HTTPClient {
           case 401:
             completion(.failure(.unauthorized))
           default:
-            completion(.failure(.unexpectedStatusCode))
+            print(response.statusCode)
+            completion(.failure(.unexpectedStatusCode(code: response.statusCode)))
           }
         }
       task.resume()

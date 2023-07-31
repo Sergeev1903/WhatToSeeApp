@@ -16,16 +16,18 @@ enum MovieCategory: String, CaseIterable {
 }
 
 enum MoviesEndpoint {
-  case nowPlaying
-  case popular
-  case topRated
   case upcoming
-  case trending
+  case nowPlaying(page: Int)
+  case popular(page: Int)
+  case topRated(page: Int)
+  case trending(page: Int)
   case movieGenres(id: Int)
   case movieTrailers(id: Int)
 }
 
+
 extension MoviesEndpoint: Endpoint {
+  
   var path: String {
     switch self {
     case .nowPlaying:
@@ -63,4 +65,17 @@ extension MoviesEndpoint: Endpoint {
       ]
     }
   }
+  
+  
+  var queryItems: [URLQueryItem]? {
+    switch self {
+    case .nowPlaying(let page), .popular(let page),
+        .topRated(let page), .trending(let page):
+      return [URLQueryItem(name: "page", value: "\(page)")]
+      
+    case .upcoming, .movieGenres, .movieTrailers:
+      return nil
+    }
+  }
+  
 }

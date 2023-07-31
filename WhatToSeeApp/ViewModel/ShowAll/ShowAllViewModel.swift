@@ -9,9 +9,12 @@ import Foundation
 
 
 protocol ShowAllViewModelProtocol: AnyObject {
+  var currentPage: Int { get set }
+  var totalPages: Int { get set }
   var mediaItems: [TMDBMovieResult] { get }
-  var title: String { get }
+  var category: String { get }
   init(mediaItems: [TMDBMovieResult], category: MovieCategory)
+  func loadMoreItems(completion: () -> Void)
   func numberOfItemsInSection() -> Int
   func cellForItemAt(indexPath: IndexPath) -> CategoryCellItemViewModelProtocol
   func didSelectItemAt(indexPath: IndexPath) -> DetailViewModelProtocol
@@ -22,14 +25,39 @@ protocol ShowAllViewModelProtocol: AnyObject {
 class ShowAllViewModel: ShowAllViewModelProtocol {
   
   // MARK: - Properties
-  let mediaItems: [TMDBMovieResult]
-  let title: String
+  let service: MoviesService
+  
+  var mediaItems: [TMDBMovieResult]
+  let category: String
+  
+  var currentPage: Int = 1
+  var totalPages: Int = 1
+  
   
   // MARK: - Init
   required init(mediaItems: [TMDBMovieResult], category: MovieCategory) {
     self.mediaItems = mediaItems
-    self.title = category.rawValue
+    self.category = category.rawValue
+    self.service = MoviesService()
   }
+  
+  
+  func loadMoreItems(completion: () -> Void) {
+    service.getMedia(endpoint: MoviesEndpoint.nowPlaying(page: currentPage), responseModel: TMDBMovieResponse.self) { [weak self] result in
+      
+      guard let strongSelf = self else { return }
+      
+      switch result {
+      case .success(let response):
+        strongSelf.totalPages = response.totalPages
+        strongSelf.mediaItems.append(contentsOf: response.results)
+      case .failure(let error):
+        print(error.customMessage)
+      }
+    }
+    
+  }
+  
   
   
   // MARK: - Methods

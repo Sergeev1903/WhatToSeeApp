@@ -95,6 +95,7 @@ extension HomeViewModel {
         }
         switch result {
         case .success(let result):
+          print(result.page, result.totalPages)
           strongSelf.upcomingMovies = result.results
         case .failure(let error):
           print(error.customMessage)
@@ -106,13 +107,14 @@ extension HomeViewModel {
   
   private func getNowPlayingMovies() {
     service.getMedia(
-      endpoint: MoviesEndpoint.nowPlaying,
+      endpoint: MoviesEndpoint.nowPlaying(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
         guard let strongSelf = self else {
           return
         }
         switch result {
         case .success(let result):
+          print(result.page, result.totalPages)
           strongSelf.nowPlayingMovies = result.results
         case .failure(let error):
           print(error.customMessage)
@@ -123,13 +125,14 @@ extension HomeViewModel {
   
   private func getPopularMovies() {
     service.getMedia(
-      endpoint: MoviesEndpoint.popular,
+      endpoint: MoviesEndpoint.popular(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
         guard let strongSelf = self else {
           return
         }
         switch result {
         case .success(let result):
+          print(result.page, result.totalPages)
           strongSelf.popularMovies = result.results
         case .failure(let error):
           print(error.customMessage)
@@ -140,13 +143,14 @@ extension HomeViewModel {
   
   private func getTopRatedMovies() {
     service.getMedia(
-      endpoint: MoviesEndpoint.topRated,
+      endpoint: MoviesEndpoint.topRated(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
         guard let strongSelf = self else {
           return
         }
         switch result {
         case .success(let result):
+          print(result.page, result.totalPages)
           strongSelf.topRatedMovies = result.results
         case .failure(let error):
           print(error.customMessage)
@@ -157,13 +161,14 @@ extension HomeViewModel {
   
   private func getTrendingMovies() {
     service.getMedia(
-      endpoint: MoviesEndpoint.trending,
+      endpoint: MoviesEndpoint.trending(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
         guard let strongSelf = self else {
           return
         }
         switch result {
         case .success(let result):
+          print(result.page, result.totalPages)
           strongSelf.trendingMovies = result.results
         case .failure(let error):
           print(error.customMessage)
