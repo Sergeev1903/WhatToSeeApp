@@ -14,7 +14,7 @@ protocol ShowAllViewModelProtocol: AnyObject {
   var mediaItems: [TMDBMovieResult] { get }
   var category: String { get }
   init(mediaItems: [TMDBMovieResult], category: MovieCategory)
-  func loadMoreItems(completion: () -> Void)
+  func loadMoreItems(completion: @escaping () -> Void)
   func numberOfItemsInSection() -> Int
   func cellForItemAt(indexPath: IndexPath) -> CategoryCellItemViewModelProtocol
   func didSelectItemAt(indexPath: IndexPath) -> DetailViewModelProtocol
@@ -42,8 +42,29 @@ class ShowAllViewModel: ShowAllViewModelProtocol {
   }
   
   
-  func loadMoreItems(completion: () -> Void) {
-    service.getMedia(endpoint: MoviesEndpoint.nowPlaying(page: currentPage), responseModel: TMDBMovieResponse.self) { [weak self] result in
+  func loadMoreItems(completion: @escaping () -> Void) {
+    
+    
+    // FIXME: -
+    var categoryEndpoint = MoviesEndpoint.upcoming
+    
+    switch category {
+    case MovieCategory.nowPlaying.rawValue:
+      categoryEndpoint = MoviesEndpoint.nowPlaying(page: currentPage)
+    case MovieCategory.popular.rawValue:
+      categoryEndpoint = MoviesEndpoint.popular(page: currentPage)
+    case MovieCategory.topRated.rawValue:
+      categoryEndpoint = MoviesEndpoint.topRated(page: currentPage)
+    case MovieCategory.trending.rawValue:
+      categoryEndpoint = MoviesEndpoint.trending(page: currentPage)
+    default:
+      break
+    }
+    // FIXME: -
+    
+    service.getMedia(
+      endpoint: categoryEndpoint,
+      responseModel: TMDBMovieResponse.self) { [weak self] result in
       
       guard let strongSelf = self else { return }
       
@@ -54,8 +75,8 @@ class ShowAllViewModel: ShowAllViewModelProtocol {
       case .failure(let error):
         print(error.customMessage)
       }
+      completion()
     }
-    
   }
   
   
