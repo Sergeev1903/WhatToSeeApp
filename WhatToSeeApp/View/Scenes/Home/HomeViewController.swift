@@ -119,6 +119,8 @@ class HomeViewController: UIViewController {
       forHeaderFooterViewReuseIdentifier: CategoryHeader.reuseId)
     tableView.register(
       CategoryCell.self, forCellReuseIdentifier: CategoryCell.reuseId)
+    tableView.register(
+      CategoryGenresCell.self, forCellReuseIdentifier: CategoryGenresCell.reuseId)
     
     view.addSubview(tableView)
     
@@ -170,50 +172,108 @@ extension HomeViewController: UITableViewDataSource {
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       
-      let cell = tableView.dequeueReusableCell(
-        withIdentifier: CategoryCell.reuseId,
-        for: indexPath) as! CategoryCell
       
       switch indexPath.section {
+        
       case 0:
+        // NowPlaying
+        let cell = tableView.dequeueReusableCell(
+          withIdentifier: CategoryCell.reuseId,
+          for: indexPath) as! CategoryCell
         cell.viewModel = viewModel.cellForRowAt(
           indexPath: indexPath,
           mediaItems: viewModel.nowPlayingMovies)
+        cell.viewModel.delegate = self
+        return cell
+        
       case 1:
+        // Genres
+        let cell = tableView.dequeueReusableCell(
+          withIdentifier: CategoryGenresCell.reuseId,
+          for: indexPath) as! CategoryGenresCell
+        return cell
+        
+      case 2:
+        // Popular
+        let cell = tableView.dequeueReusableCell(
+          withIdentifier: CategoryCell.reuseId,
+          for: indexPath) as! CategoryCell
         cell.viewModel = viewModel.cellForRowAt(
           indexPath: indexPath,
           mediaItems: viewModel.popularMovies)
-      case 2:
+        cell.viewModel.delegate = self
+        return cell
+        
+      case 3:
+        // TopRated
+        let cell = tableView.dequeueReusableCell(
+          withIdentifier: CategoryCell.reuseId,
+          for: indexPath) as! CategoryCell
         cell.viewModel = viewModel.cellForRowAt(
           indexPath: indexPath,
           mediaItems: viewModel.topRatedMovies)
-      case 3:
+        cell.viewModel.delegate = self
+        return cell
+        
+      case 4:
+        // Trending
+        let cell = tableView.dequeueReusableCell(
+          withIdentifier: CategoryCell.reuseId,
+          for: indexPath) as! CategoryCell
         cell.viewModel = viewModel.cellForRowAt(
           indexPath: indexPath,
           mediaItems: viewModel.trendingMovies)
-      default: break
+        cell.viewModel.delegate = self
+        return cell
+        
+      default:
+        break
       }
       
-      cell.viewModel.delegate = self
-      return cell
+      return UITableViewCell()
     }
   
   func tableView(
     _ tableView: UITableView,
     viewForHeaderInSection section: Int) -> UIView? {
-      let headerView = tableView.dequeueReusableHeaderFooterView(
-        withIdentifier: CategoryHeader.reuseId) as! CategoryHeader
       
       switch section {
-      case 0: headerView.configure(title: MovieCategory.nowPlaying.rawValue )
-      case 1: headerView.configure(title: MovieCategory.popular.rawValue)
-      case 2: headerView.configure(title: MovieCategory.topRated.rawValue)
-      case 3: headerView.configure(title: MovieCategory.trending.rawValue)
+      case 0:
+        // NowPlaying
+        let headerView = tableView.dequeueReusableHeaderFooterView(
+          withIdentifier: CategoryHeader.reuseId) as! CategoryHeader
+        headerView.configure(title: MovieCategory.nowPlaying.rawValue)
+        headerView.categoryHeaderButtonDelegate = self
+        return headerView
+        
+      case 2:
+        // Popular
+        let headerView = tableView.dequeueReusableHeaderFooterView(
+          withIdentifier: CategoryHeader.reuseId) as! CategoryHeader
+        headerView.configure(title: MovieCategory.popular.rawValue)
+        headerView.categoryHeaderButtonDelegate = self
+        return headerView
+        
+      case 3:
+        // TopRated
+        let headerView = tableView.dequeueReusableHeaderFooterView(
+          withIdentifier: CategoryHeader.reuseId) as! CategoryHeader
+        headerView.configure(title: MovieCategory.topRated.rawValue)
+        headerView.categoryHeaderButtonDelegate = self
+        return headerView
+        
+      case 4:
+        // Trending
+        let headerView = tableView.dequeueReusableHeaderFooterView(
+          withIdentifier: CategoryHeader.reuseId) as! CategoryHeader
+        headerView.configure(title: MovieCategory.trending.rawValue)
+        headerView.categoryHeaderButtonDelegate = self
+        return headerView
+        
       default: break
       }
       
-      headerView.categoryHeaderButtonDelegate = self
-      return headerView
+      return UIView()
     }
 }
 
@@ -224,14 +284,21 @@ extension HomeViewController: UITableViewDelegate {
   func tableView(
     _ tableView: UITableView,
     heightForRowAt indexPath: IndexPath) -> CGFloat {
-      return 258
+      return indexPath.section == 1 ? 200: 258
     }
   
   func tableView(
     _ tableView: UITableView,
     heightForHeaderInSection section: Int) -> CGFloat {
-      return 32
+      return section == 1 ? 8: 32
     }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    if indexPath.section == 1 {
+     let vc = GenresViewController()
+      navigationController?.pushViewController(vc, animated: true)
+    }
+  }
   
 }
 
@@ -270,6 +337,7 @@ extension HomeViewController: CategoryHeaderButtonDelegate {
     let vc = ShowAllViewController()
     
     switch categoryHeader.titleLabel.text {
+      
     case MovieCategory.nowPlaying.rawValue:
       vc.viewModel = viewModel.didTapSeeAll(
         mediaItems: viewModel.nowPlayingMovies,
