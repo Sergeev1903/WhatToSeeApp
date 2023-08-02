@@ -30,7 +30,13 @@ class CategoryGenresCell: UITableViewCell {
     selectionStyle = .none
     
     backgroundImageView.image = UIImage(named: "movie_genre_cell")
-    backgroundImageView.contentMode = .scaleAspectFill
+    
+    switch UIDevice.current.userInterfaceIdiom {
+    case .phone: backgroundImageView.contentMode = .scaleAspectFill
+    case .pad: backgroundImageView.contentMode = .top
+    default: break
+    }
+
     backgroundImageView.layer.cornerRadius = 10
     backgroundImageView.layer.masksToBounds = true
     backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -83,11 +89,11 @@ class CategoryGenresCell: UITableViewCell {
       titleLabel.topAnchor.constraint(
         equalTo: backgroundImageView.topAnchor ),
       titleLabel.leadingAnchor.constraint(
-        equalTo: backgroundImageView.leadingAnchor),
+        equalTo: backgroundImageView.leadingAnchor, constant: 8),
       titleLabel.bottomAnchor.constraint(
         equalTo: backgroundImageView.bottomAnchor),
       titleLabel.trailingAnchor.constraint(
-        equalTo: backgroundImageView.trailingAnchor)
+        equalTo: backgroundImageView.trailingAnchor, constant: -8)
     ])
   }
   

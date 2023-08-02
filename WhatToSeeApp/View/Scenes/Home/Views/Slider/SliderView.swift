@@ -46,7 +46,8 @@ class SliderView: UIView {
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
     
-    collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView = UICollectionView(
+      frame: .zero, collectionViewLayout: layout)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.isPagingEnabled = true
@@ -76,8 +77,10 @@ class SliderView: UIView {
     addSubview(titleLabel)
     
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 32),
-      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
+      titleLabel.topAnchor.constraint(
+        equalTo: topAnchor, constant: 32),
+      titleLabel.leadingAnchor.constraint(
+        equalTo: leadingAnchor, constant: 32)
     ])
   }
   

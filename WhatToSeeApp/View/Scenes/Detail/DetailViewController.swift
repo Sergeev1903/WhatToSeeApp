@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import QuartzCore
 
 
 class DetailViewController: UIViewController {
@@ -57,10 +56,58 @@ class DetailViewController: UIViewController {
     self.navigationController?.navigationBar.isTranslucent = true
     self.navigationController?.navigationBar.tintColor = .white
       
-    // Remove 'Back' text and Title from Navigation Bar
-    self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-    self.title = ""
+    // Create a custom back button
+    let backButtonImage = UIImage(systemName: "arrow.backward.circle.fill")?.withTintColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8), renderingMode: .alwaysOriginal)
     
+    let buttonSize = CGSize(width: 32, height: 32)
+    UIGraphicsBeginImageContextWithOptions(buttonSize, false, 0.0)
+    backButtonImage?.draw(in: CGRect(origin: .zero, size: buttonSize))
+    
+    let resizedButtonImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
+    UIGraphicsEndImageContext()
+    
+    let backButton = UIBarButtonItem(image: resizedButtonImage, style: .plain, target: self, action: #selector(backButtonTapped))
+    
+    navigationItem.leftBarButtonItem = backButton
+    
+    
+    // Create a custom wish button
+    let wishButtonImage = UIImage(systemName: "heart.circle.fill")?.withTintColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8), renderingMode: .alwaysTemplate)
+    let wishButtonSize = CGSize(width: 32, height: 32)
+
+    UIGraphicsBeginImageContextWithOptions(wishButtonSize, false, UIScreen.main.scale)
+    wishButtonImage?.draw(in: CGRect(origin: .zero, size: wishButtonSize))
+
+    let wishResizedButtonImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
+    UIGraphicsEndImageContext()
+
+    let wishButton = UIBarButtonItem(image: wishResizedButtonImage, style: .plain, target: self, action: #selector(wishButtonTapped))
+    
+    navigationItem.rightBarButtonItems = [wishButton]
+    
+  }
+  
+  // custom back button action
+  @objc func backButtonTapped() {
+    navigationController?.popViewController(animated: true)
+  }
+  
+  // custom wish button action
+  @objc func wishButtonTapped() {
+    print("wishButtonTapped")
+    alert()
+  }
+  
+  
+  private func alert() {
+    let alert = UIAlertController(
+      title: "Added to wishlist",
+      message: "Now the movie is in your collection",
+      preferredStyle: .alert)
+    let action = UIAlertAction(
+      title: "OK", style: .default)
+    alert.addAction(action)
+    present(alert, animated: true)
   }
   
   

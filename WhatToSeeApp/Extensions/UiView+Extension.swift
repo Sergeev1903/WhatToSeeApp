@@ -10,7 +10,7 @@ import UIKit
 extension UIView {
   
   // MARK: - self.layer.addSublayer(gradientLayer)
-  func setupGradientAddSublayer(
+  func addGradientAddSublayer(
     _ gradientLayer: CAGradientLayer,
     colors: [UIColor],
     startPoint: Point,
@@ -27,7 +27,7 @@ extension UIView {
     }
   
   // MARK: - self.layer.insertSublayer(gradientLayer, at: index)
-  func setupGradientInsertSublayer(
+  func addGradientInsertSublayer(
     _ gradientLayer: CAGradientLayer,
     at index: UInt32,
     colors: [UIColor],

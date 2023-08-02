@@ -21,12 +21,24 @@ class SliderCell: UICollectionViewCell {
   // MARK: - ViewModel
   var viewModel: SliderCellViewModelProtocol! {
     didSet {
-      imageView.sd_setImage(
-        with: viewModel.mediaPosterURL,
-        placeholderImage: UIImage(named: "load_placeholder"),
-        options: .delayPlaceholder) { _,_,_,_ in
-          self.loadIndicator.stopAnimating()
-        }
+      
+      switch UIDevice.current.userInterfaceIdiom {
+      case .phone:
+        imageView.sd_setImage(
+          with: viewModel.mediaPosterURL,
+          placeholderImage: UIImage(named: "load_placeholder"),
+          options: .delayPlaceholder) { _,_,_,_ in
+            self.loadIndicator.stopAnimating()
+          }
+      case .pad:
+        imageView.sd_setImage(
+          with: viewModel.mediaBackdropURL,
+          placeholderImage: UIImage(named: "load_placeholder"),
+          options: .delayPlaceholder) { _,_,_,_ in
+            self.loadIndicator.stopAnimating()
+          }
+      default: break
+      }
     }
   }
   
@@ -89,7 +101,7 @@ class SliderCell: UICollectionViewCell {
   
   private func setupSliderGradient() {
     // create & add gradient from UIView extension
-    imageView.setupGradientAddSublayer(
+    imageView.addGradientAddSublayer(
       sliderGradient, colors: [.systemBackground, .clear, .clear, .clear,
                                .systemBackground],
       startPoint: .top, endPoint: .bottom,

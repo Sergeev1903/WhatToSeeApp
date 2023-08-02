@@ -77,7 +77,7 @@ class CategoryCell: UITableViewCell {
   }
   
   private func setupContentViewGradient() {
-    contentView.setupGradientInsertSublayer(
+    contentView.addGradientInsertSublayer(
       contentViewGradient, at: 0,
       colors: [.systemBackground, .darkGray.withAlphaComponent(0.1)],
       startPoint: .center, endPoint: .bottom)

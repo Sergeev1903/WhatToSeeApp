@@ -19,7 +19,13 @@ final class CustomVerticalFlowLayout: UICollectionViewFlowLayout {
   // MARK: - Init
   init(itemsPerRow: CGFloat, margin: CGFloat, lineSpacing: CGFloat,
        interitemSpacing: CGFloat, heightMultiplier: CGFloat) {
-    self.itemsPerRow = itemsPerRow
+    
+    switch UIDevice.current.userInterfaceIdiom {
+    case .phone: self.itemsPerRow = itemsPerRow
+    case .pad: self.itemsPerRow = itemsPerRow + 2
+    default: break
+    }
+
     self.margin = margin
     self.lineSpacing = lineSpacing
     self.interitemSpacing = interitemSpacing
