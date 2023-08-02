@@ -23,12 +23,11 @@ extension UIImage {
     guard let filter = CIFilter(
       name: "CIAreaAverage",
       parameters: [kCIInputImageKey: inputImage,
-                  kCIInputExtentKey: extentVector])
-    else {
+                  kCIInputExtentKey: extentVector]) else {
       return nil
     }
-    guard let outputImage = filter.outputImage
-    else {
+    
+    guard let outputImage = filter.outputImage else {
       return nil
     }
     

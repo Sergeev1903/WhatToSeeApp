@@ -22,6 +22,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     window.rootViewController = MainTabBarController()
     self.window = window
     window.makeKeyAndVisible()
+    
+    // support only dark theme
+    window.overrideUserInterfaceStyle = .dark
   }
 
 

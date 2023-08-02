@@ -172,7 +172,6 @@ extension HomeViewController: UITableViewDataSource {
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       
-      
       switch indexPath.section {
         
       case 0:
@@ -238,6 +237,7 @@ extension HomeViewController: UITableViewDataSource {
     viewForHeaderInSection section: Int) -> UIView? {
       
       switch section {
+        
       case 0:
         // NowPlaying
         let headerView = tableView.dequeueReusableHeaderFooterView(
@@ -295,7 +295,7 @@ extension HomeViewController: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if indexPath.section == 1 {
-     let vc = GenresViewController()
+      let vc = GenresViewController()
       navigationController?.pushViewController(vc, animated: true)
     }
   }

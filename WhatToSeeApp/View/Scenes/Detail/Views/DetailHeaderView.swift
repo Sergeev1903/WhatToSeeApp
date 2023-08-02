@@ -23,6 +23,7 @@ class DetailHeaderView: UIView {
   var imageView = UIImageView()
   var titleLabel = UILabel()
   let watchTrailerButton = UIButton()
+  private let topGradientLayer = CAGradientLayer()
   private let bottomGradientLayer = CAGradientLayer()
   
   // MARK: - Delegate
@@ -36,7 +37,8 @@ class DetailHeaderView: UIView {
     setViewConstraints()
     setupWatchTrailerButton()
     setupTitleLabel()
-    setupBottomGradientView()
+    setupTopGradientLayer()
+    setupBottomGradientLayer()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -47,6 +49,7 @@ class DetailHeaderView: UIView {
   // MARK: -
   override func layoutSubviews() {
     super.layoutSubviews()
+    topGradientLayer.frame = imageView.bounds
     bottomGradientLayer.frame = containerView.bounds
   }
   
@@ -109,6 +112,7 @@ class DetailHeaderView: UIView {
     // ImageView for background
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill
+    
     containerView.addSubview(imageView)
   }
   
@@ -139,19 +143,32 @@ class DetailHeaderView: UIView {
     imageViewHeight.isActive = true
   }
   
+  private func setupTopGradientLayer() {
+    topGradientLayer.colors = [
+      UIColor.systemBackground.withAlphaComponent(0.2).cgColor,
+      UIColor.clear.cgColor,
+      UIColor.clear.cgColor
+    ]
+    // from top to bottom
+    topGradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+    topGradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+    topGradientLayer.locations = [0, 0.5, 1]
+    
+    imageView.layer.addSublayer(topGradientLayer)
+  }
   
-  private func setupBottomGradientView() {
+  private func setupBottomGradientLayer(){
     bottomGradientLayer.colors = [
       UIColor.systemBackground.cgColor,
       UIColor.clear.cgColor
     ]
+    // from bottom to top
     bottomGradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
     bottomGradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
     
     containerView.layer.insertSublayer(bottomGradientLayer, at: 1)
   }
-  
-  
+
   // Stretchy header
   func scrollViewDidScroll(scrollView: UIScrollView) {
     containerViewHeight.constant = scrollView.contentInset.top

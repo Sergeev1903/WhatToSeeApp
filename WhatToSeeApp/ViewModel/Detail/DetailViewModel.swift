@@ -88,7 +88,6 @@ class DetailViewModel: DetailViewModelProtocol {
     return "https://www.youtube.com/watch?v=\(key))"
   }
   
-  
   //  public func getMultiplyRequest(completion: @escaping () -> Void) {
   //    dispatchGroup.enter()
   //    getMovieDetail()
@@ -100,8 +99,7 @@ class DetailViewModel: DetailViewModelProtocol {
   //    }
   //  }
   
-  
-  func getMovieGenres(completion: @escaping () -> Void) {
+ public func getMovieGenres(completion: @escaping () -> Void) {
     service.getMedia(
       endpoint: MoviesEndpoint.movieGenres(id: media.id!),
       responseModel: Genres.self) { [weak self] result in
@@ -119,7 +117,7 @@ class DetailViewModel: DetailViewModelProtocol {
   }
   
   
-  func getMovieTrailers(completion: @escaping () -> Void) {
+ public func getMovieTrailers(completion: @escaping () -> Void) {
     service.getMedia(
       endpoint: MoviesEndpoint.movieTrailers(id: media.id!),
       responseModel: Videos.self) { [weak self] result in

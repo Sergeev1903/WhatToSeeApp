@@ -95,7 +95,6 @@ extension HomeViewModel {
         }
         switch result {
         case .success(let result):
-          print(result.page, result.totalPages)
           strongSelf.upcomingMovies = result.results
         case .failure(let error):
           print(error.customMessage)
@@ -114,7 +113,6 @@ extension HomeViewModel {
         }
         switch result {
         case .success(let result):
-          print(result.page, result.totalPages)
           strongSelf.nowPlayingMovies = result.results
         case .failure(let error):
           print(error.customMessage)
@@ -132,7 +130,6 @@ extension HomeViewModel {
         }
         switch result {
         case .success(let result):
-          print(result.page, result.totalPages)
           strongSelf.popularMovies = result.results
         case .failure(let error):
           print(error.customMessage)
@@ -150,7 +147,6 @@ extension HomeViewModel {
         }
         switch result {
         case .success(let result):
-          print(result.page, result.totalPages)
           strongSelf.topRatedMovies = result.results
         case .failure(let error):
           print(error.customMessage)
@@ -168,7 +164,6 @@ extension HomeViewModel {
         }
         switch result {
         case .success(let result):
-          print(result.page, result.totalPages)
           strongSelf.trendingMovies = result.results
         case .failure(let error):
           print(error.customMessage)

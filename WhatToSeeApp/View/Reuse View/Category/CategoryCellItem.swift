@@ -12,10 +12,10 @@ class CategoryCellItem: UICollectionViewCell {
   
   // MARK: - Properties
   static let reuseId = String(describing: CategoryCellItem.self)
+  
   private let imageView = UIImageView()
   private let voteLabel = UILabel()
   private let loadIndicator = UIActivityIndicatorView()
-  
   
   // MARK: - ViewModel
   var viewModel: CategoryCellItemViewModelProtocol! {
@@ -29,7 +29,8 @@ class CategoryCellItem: UICollectionViewCell {
           guard self.loadIndicator.isAnimating == false else { return }
           self.voteLabel.isHidden = false
           self.voteLabel.text = self.viewModel.mediaVoteAverage
-          self.voteLabel.backgroundColor = self.viewModel.media.voteAverage ?? 0 <= 6 ?
+          self.voteLabel.backgroundColor =
+          self.viewModel.media.voteAverage ?? 0 <= 6 ?
           #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0.8031870861): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 0.8018936258)
         }
     }

@@ -39,11 +39,7 @@ class CategoryCell: UITableViewCell {
   // MARK: -
   override func layoutSubviews() {
     super.layoutSubviews()
-    
-    backgroundGradient.frame = CGRect(
-      x: 0, y: 0,
-      width: contentView.layer.bounds.width,
-      height: contentView.layer.bounds.height)
+    backgroundGradient.frame = contentView.bounds
   }
   
   
@@ -83,10 +79,9 @@ class CategoryCell: UITableViewCell {
   private func contentViewGradient() {
     backgroundGradient.colors = [
       UIColor.systemBackground.cgColor,
-      UIColor.darkGray.withAlphaComponent(0.1).cgColor
-    ]
-    
-    backgroundGradient.startPoint = CGPoint(x: 0.5, y: 0.0)
+      UIColor.darkGray.withAlphaComponent(0.1).cgColor]
+    // from center top to bottom
+    backgroundGradient.startPoint = CGPoint(x: 0.5, y: 0.5)
     backgroundGradient.endPoint = CGPoint(x: 0.5, y: 1.0)
     
     contentView.layer.insertSublayer(backgroundGradient, at: 0)

@@ -26,7 +26,6 @@ class CategoryGenresCell: UITableViewCell {
   }
   
   private func backgroundImageViewSetup() {
-    
     backgroundColor = .clear
     selectionStyle = .none
     
@@ -74,9 +73,8 @@ class CategoryGenresCell: UITableViewCell {
     titleLabel.font = UIFont.boldSystemFont(ofSize: 100)
     titleLabel.numberOfLines = 0
     titleLabel.textAlignment = .center
-    
-    titleLabel.textColor = UIColor(patternImage: backgroundImageView.image!)
-    
+    titleLabel.textColor = UIColor(
+      patternImage: backgroundImageView.image!)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     
     backgroundImageView.addSubview(titleLabel)

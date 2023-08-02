@@ -16,15 +16,11 @@ class SliderCell: UICollectionViewCell {
   
   public let imageView = UIImageView()
   private let loadIndicator = UIActivityIndicatorView()
-  private let topGradientView = UIView()
-  private let topGradientLayer = CAGradientLayer()
-  private let bottomGradientView = UIView()
-  private let bottomGradientLayer = CAGradientLayer()
+  private let gradientLayer = CAGradientLayer()
   
   // MARK: - ViewModel
   var viewModel: SliderCellViewModelProtocol! {
     didSet {
-      
       imageView.sd_setImage(
         with: viewModel.mediaPosterURL,
         placeholderImage: UIImage(named: "load_placeholder"),
@@ -40,8 +36,7 @@ class SliderCell: UICollectionViewCell {
     super.init(frame: frame)
     setupImageView()
     setupLoadIndicator()
-    setupTopGradientView()
-    setupBottomGradientView()
+    setupGradientLayer()
   }
   
   required init?(coder: NSCoder) {
@@ -57,16 +52,9 @@ class SliderCell: UICollectionViewCell {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    topGradientLayer.frame = CGRect(
-      x: 0, y: 0,
-      width: bounds.width,
-      height: 120)
-    
-    bottomGradientLayer.frame = CGRect(
-      x: 0, y: 0,
-      width: bounds.width,
-      height: 60)
+    gradientLayer.frame = imageView.bounds
   }
+  
   
   // MARK: - Methods
   private func setupImageView() {
@@ -82,8 +70,8 @@ class SliderCell: UICollectionViewCell {
       imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
       imageView.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
+    
   }
-  
   
   private func setupLoadIndicator() {
     loadIndicator.startAnimating()
@@ -99,58 +87,19 @@ class SliderCell: UICollectionViewCell {
     ])
   }
   
-  private func setupTopGradientView() {
-    topGradientView.translatesAutoresizingMaskIntoConstraints = false
-    topGradientView.backgroundColor = .clear
+  private func setupGradientLayer() {
+    gradientLayer.colors = [UIColor.systemBackground.cgColor,
+                            UIColor.clear.cgColor,
+                            UIColor.clear.cgColor,
+                            UIColor.clear.cgColor,
+                            UIColor.systemBackground.cgColor]
+    // from top to bottom
+    gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+    gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
     
-    imageView.addSubview(topGradientView)
+    gradientLayer.locations = [0.0, 0.2, 0.5, 0.8, 1.0]
     
-    topGradientLayer.colors = [
-      UIColor.systemBackground.cgColor,
-      UIColor.clear.cgColor
-    ]
-    topGradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-    topGradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-    
-    topGradientView.layer.addSublayer(topGradientLayer)
-    
-    NSLayoutConstraint.activate([
-      topGradientView.heightAnchor.constraint(
-        equalToConstant: 120),
-      topGradientView.topAnchor.constraint(
-        equalTo: imageView.topAnchor),
-      topGradientView.leadingAnchor.constraint(
-        equalTo: imageView.leadingAnchor),
-      topGradientView.trailingAnchor.constraint(
-        equalTo: imageView.trailingAnchor)
-    ])
-  }
-  
-  private func setupBottomGradientView() {
-    bottomGradientView.translatesAutoresizingMaskIntoConstraints = false
-    bottomGradientView.backgroundColor = .clear
-    
-    imageView.addSubview(bottomGradientView)
-    
-    bottomGradientLayer.colors = [
-      UIColor.systemBackground.cgColor,
-      UIColor.clear.cgColor
-    ]
-    bottomGradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
-    bottomGradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
-    
-    bottomGradientView.layer.addSublayer(bottomGradientLayer)
-    
-    NSLayoutConstraint.activate([
-      bottomGradientView.heightAnchor.constraint(
-        equalToConstant: 60),
-      bottomGradientView.leadingAnchor.constraint(
-        equalTo: imageView.leadingAnchor),
-      bottomGradientView.trailingAnchor.constraint(
-        equalTo: imageView.trailingAnchor),
-      bottomGradientView.bottomAnchor.constraint(
-        equalTo: imageView.bottomAnchor)
-    ])
+    imageView.layer.addSublayer(gradientLayer)
   }
   
 }
