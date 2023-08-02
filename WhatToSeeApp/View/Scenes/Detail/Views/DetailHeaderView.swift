@@ -15,16 +15,15 @@ protocol watchTrailerButtonDelegate: AnyObject {
 class DetailHeaderView: UIView {
   
   // MARK: - Properties
-  var containerViewHeight = NSLayoutConstraint()
-  var imageViewHeight = NSLayoutConstraint()
-  var imageViewBottom = NSLayoutConstraint()
-  
-  var containerView = UIView()
   var imageView = UIImageView()
   var titleLabel = UILabel()
   let watchTrailerButton = UIButton()
-  private let topGradientLayer = CAGradientLayer()
-  private let bottomGradientLayer = CAGradientLayer()
+  private var containerView = UIView()
+  private let imageViewGradient = CAGradientLayer()
+  private let containerViewGradient = CAGradientLayer()
+  private var containerViewHeight = NSLayoutConstraint()
+  private var imageViewHeight = NSLayoutConstraint()
+  private var imageViewBottom = NSLayoutConstraint()
   
   // MARK: - Delegate
   weak var watchTrailerButtonDelegate: watchTrailerButtonDelegate?
@@ -37,8 +36,8 @@ class DetailHeaderView: UIView {
     setViewConstraints()
     setupWatchTrailerButton()
     setupTitleLabel()
-    setupTopGradientLayer()
-    setupBottomGradientLayer()
+    setupImageViewGradient()
+    setupContainerViewGradient()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -49,8 +48,8 @@ class DetailHeaderView: UIView {
   // MARK: -
   override func layoutSubviews() {
     super.layoutSubviews()
-    topGradientLayer.frame = imageView.bounds
-    bottomGradientLayer.frame = containerView.bounds
+    imageViewGradient.frame = imageView.bounds
+    containerViewGradient.frame = containerView.bounds
   }
   
   
@@ -143,32 +142,21 @@ class DetailHeaderView: UIView {
     imageViewHeight.isActive = true
   }
   
-  private func setupTopGradientLayer() {
-    topGradientLayer.colors = [
-      UIColor.systemBackground.withAlphaComponent(0.2).cgColor,
-      UIColor.clear.cgColor,
-      UIColor.clear.cgColor
-    ]
-    // from top to bottom
-    topGradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-    topGradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-    topGradientLayer.locations = [0, 0.5, 1]
-    
-    imageView.layer.addSublayer(topGradientLayer)
+  private func setupImageViewGradient() {
+    imageView.setupGradientAddSublayer(
+      imageViewGradient,
+      colors: [.systemBackground.withAlphaComponent(0.2), .clear, .clear],
+      startPoint: .top, endPoint: .bottom,
+      locations: [0, 0.5, 1])
   }
   
-  private func setupBottomGradientLayer(){
-    bottomGradientLayer.colors = [
-      UIColor.systemBackground.cgColor,
-      UIColor.clear.cgColor
-    ]
-    // from bottom to top
-    bottomGradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
-    bottomGradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
-    
-    containerView.layer.insertSublayer(bottomGradientLayer, at: 1)
+  private func setupContainerViewGradient() {
+    containerView.setupGradientInsertSublayer(
+      containerViewGradient, at: 1,
+      colors: [.systemBackground, .clear],
+      startPoint: .bottom, endPoint: .top)
   }
-
+  
   // Stretchy header
   func scrollViewDidScroll(scrollView: UIScrollView) {
     containerViewHeight.constant = scrollView.contentInset.top

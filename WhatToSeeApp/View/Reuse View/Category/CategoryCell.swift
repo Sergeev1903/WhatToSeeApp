@@ -13,7 +13,7 @@ class CategoryCell: UITableViewCell {
   // MARK: - Propererties
   static let reuseId = String(describing: CategoryCell.self)
   private var collectionView: UICollectionView!
-  private let backgroundGradient = CAGradientLayer()
+  private let contentViewGradient = CAGradientLayer()
   
   // MARK: - View Model
   var viewModel: CategoryCellViewModelProtocol! {
@@ -27,7 +27,7 @@ class CategoryCell: UITableViewCell {
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupCollectionView()
-    contentViewGradient()
+    setupContentViewGradient()
   }
   
   required init?(coder: NSCoder) {
@@ -39,7 +39,7 @@ class CategoryCell: UITableViewCell {
   // MARK: -
   override func layoutSubviews() {
     super.layoutSubviews()
-    backgroundGradient.frame = contentView.bounds
+    contentViewGradient.frame = contentView.bounds
   }
   
   
@@ -76,15 +76,11 @@ class CategoryCell: UITableViewCell {
     ])
   }
   
-  private func contentViewGradient() {
-    backgroundGradient.colors = [
-      UIColor.systemBackground.cgColor,
-      UIColor.darkGray.withAlphaComponent(0.1).cgColor]
-    // from center top to bottom
-    backgroundGradient.startPoint = CGPoint(x: 0.5, y: 0.5)
-    backgroundGradient.endPoint = CGPoint(x: 0.5, y: 1.0)
-    
-    contentView.layer.insertSublayer(backgroundGradient, at: 0)
+  private func setupContentViewGradient() {
+    contentView.setupGradientInsertSublayer(
+      contentViewGradient, at: 0,
+      colors: [.systemBackground, .darkGray.withAlphaComponent(0.1)],
+      startPoint: .center, endPoint: .bottom)
   }
   
 }

@@ -69,7 +69,7 @@ class CategoryGenresCell: UITableViewCell {
   }
   
   private func setupTitleLabel() {
-    titleLabel.text = "Genres"
+    titleLabel.text = MovieCategory.genres.rawValue
     titleLabel.font = UIFont.boldSystemFont(ofSize: 100)
     titleLabel.numberOfLines = 0
     titleLabel.textAlignment = .center

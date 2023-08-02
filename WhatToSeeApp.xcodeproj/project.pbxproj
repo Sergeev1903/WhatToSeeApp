@@ -39,8 +39,6 @@
 		1D93FEBE2A5D8D3200314762 /* TabMenuControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D93FEBD2A5D8D3200314762 /* TabMenuControl.swift */; };
 		1D93FEC02A5DA64300314762 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D93FEBF2A5DA64300314762 /* UIColor+Extension.swift */; };
 		1D96EBD52A7A51800057C048 /* UiView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D96EBD42A7A51800057C048 /* UiView+Extension.swift */; };
-		1DA7DAB22A7968B500C5E80D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA7DAB12A7968B500C5E80D /* GradientView.swift */; };
-		1DA7DAB42A79692800C5E80D /* UINavigationBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA7DAB32A79692800C5E80D /* UINavigationBar+Extension.swift */; };
 		1DD550922A5F1C6900DD5383 /* TMDBMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD550912A5F1C6900DD5383 /* TMDBMovie.swift */; };
 		1DD550942A5F1DFD00DD5383 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD550932A5F1DFD00DD5383 /* HomeViewModel.swift */; };
 		1DE4E68C2A6FFADA009CDB27 /* CategoryCellItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE4E68B2A6FFADA009CDB27 /* CategoryCellItemViewModel.swift */; };
@@ -84,8 +82,6 @@
 		1D93FEBD2A5D8D3200314762 /* TabMenuControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabMenuControl.swift; sourceTree = "<group>"; };
 		1D93FEBF2A5DA64300314762 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		1D96EBD42A7A51800057C048 /* UiView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UiView+Extension.swift"; sourceTree = "<group>"; };
-		1DA7DAB12A7968B500C5E80D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		1DA7DAB32A79692800C5E80D /* UINavigationBar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Extension.swift"; sourceTree = "<group>"; };
 		1DD550912A5F1C6900DD5383 /* TMDBMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBMovie.swift; sourceTree = "<group>"; };
 		1DD550932A5F1DFD00DD5383 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		1DE4E68B2A6FFADA009CDB27 /* CategoryCellItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellItemViewModel.swift; sourceTree = "<group>"; };
@@ -138,7 +134,6 @@
 			isa = PBXGroup;
 			children = (
 				1D0586002A77013200664193 /* CustomVerticalFlowLayout.swift */,
-				1DA7DAB12A7968B500C5E80D /* GradientView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -325,7 +320,6 @@
 			children = (
 				1D93FEB62A5D75C800314762 /* ViewController+Extension.swift */,
 				1D93FEBF2A5DA64300314762 /* UIColor+Extension.swift */,
-				1DA7DAB32A79692800C5E80D /* UINavigationBar+Extension.swift */,
 				1D96EBD42A7A51800057C048 /* UiView+Extension.swift */,
 			);
 			path = Extensions;
@@ -484,7 +478,6 @@
 				1DFFB1A72A71A61800FB4DA8 /* DetailViewModel.swift in Sources */,
 				1D3800D92A66E73B00C4729D /* SliderCellViewModel.swift in Sources */,
 				1D0585FC2A76F5D700664193 /* ShowAllViewController.swift in Sources */,
-				1DA7DAB42A79692800C5E80D /* UINavigationBar+Extension.swift in Sources */,
 				1D93FEB72A5D75C800314762 /* ViewController+Extension.swift in Sources */,
 				1D93FEAB2A5D611100314762 /* SearchViewController.swift in Sources */,
 				1D93FEAD2A5D61A000314762 /* WishListViewController.swift in Sources */,
@@ -505,7 +498,6 @@
 				1D93FEBE2A5D8D3200314762 /* TabMenuControl.swift in Sources */,
 				1D3800D42A66B36800C4729D /* SliderCell.swift in Sources */,
 				1DD550922A5F1C6900DD5383 /* TMDBMovie.swift in Sources */,
-				1DA7DAB22A7968B500C5E80D /* GradientView.swift in Sources */,
 				1D93FEAF2A5D627500314762 /* ProfileViewController.swift in Sources */,
 				1D3800DB2A6728C900C4729D /* CategoryCell.swift in Sources */,
 				1D0585FE2A76F9EB00664193 /* ShowAllViewModel.swift in Sources */,

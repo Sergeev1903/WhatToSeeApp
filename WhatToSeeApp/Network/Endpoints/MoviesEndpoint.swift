@@ -13,7 +13,7 @@ enum MovieCategory: String, CaseIterable {
   case popular = "Popular"
   case topRated = "Top Rated"
   case trending = "Trending"
-  case genres = "Movies by Genre"
+  case genres = "Genres"
 }
 
 enum MoviesEndpoint {

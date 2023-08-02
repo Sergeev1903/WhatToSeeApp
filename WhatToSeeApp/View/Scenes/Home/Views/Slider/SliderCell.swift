@@ -15,8 +15,8 @@ class SliderCell: UICollectionViewCell {
   static let reuseId = String(describing: SliderCell.self)
   
   public let imageView = UIImageView()
+  private let sliderGradient = CAGradientLayer()
   private let loadIndicator = UIActivityIndicatorView()
-  private let gradientLayer = CAGradientLayer()
   
   // MARK: - ViewModel
   var viewModel: SliderCellViewModelProtocol! {
@@ -36,7 +36,7 @@ class SliderCell: UICollectionViewCell {
     super.init(frame: frame)
     setupImageView()
     setupLoadIndicator()
-    setupGradientLayer()
+    setupSliderGradient()
   }
   
   required init?(coder: NSCoder) {
@@ -52,7 +52,7 @@ class SliderCell: UICollectionViewCell {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    gradientLayer.frame = imageView.bounds
+    sliderGradient.frame = imageView.bounds
   }
   
   
@@ -87,19 +87,13 @@ class SliderCell: UICollectionViewCell {
     ])
   }
   
-  private func setupGradientLayer() {
-    gradientLayer.colors = [UIColor.systemBackground.cgColor,
-                            UIColor.clear.cgColor,
-                            UIColor.clear.cgColor,
-                            UIColor.clear.cgColor,
-                            UIColor.systemBackground.cgColor]
-    // from top to bottom
-    gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-    gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-    
-    gradientLayer.locations = [0.0, 0.2, 0.5, 0.8, 1.0]
-    
-    imageView.layer.addSublayer(gradientLayer)
+  private func setupSliderGradient() {
+    // create & add gradient from UIView extension
+    imageView.setupGradientAddSublayer(
+      sliderGradient, colors: [.systemBackground, .clear, .clear, .clear,
+                               .systemBackground],
+      startPoint: .top, endPoint: .bottom,
+      locations: [0.0, 0.2, 0.5, 0.8, 1.0])
   }
   
 }
