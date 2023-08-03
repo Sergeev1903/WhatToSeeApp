@@ -21,24 +21,7 @@ class SliderCell: UICollectionViewCell {
   // MARK: - ViewModel
   var viewModel: SliderCellViewModelProtocol! {
     didSet {
-      
-      switch UIDevice.current.userInterfaceIdiom {
-      case .phone:
-        imageView.sd_setImage(
-          with: viewModel.mediaPosterURL,
-          placeholderImage: UIImage(named: "load_placeholder"),
-          options: .delayPlaceholder) { _,_,_,_ in
-            self.loadIndicator.stopAnimating()
-          }
-      case .pad:
-        imageView.sd_setImage(
-          with: viewModel.mediaBackdropURL,
-          placeholderImage: UIImage(named: "load_placeholder"),
-          options: .delayPlaceholder) { _,_,_,_ in
-            self.loadIndicator.stopAnimating()
-          }
-      default: break
-      }
+      setSliderCellWithData()
     }
   }
   
@@ -82,7 +65,6 @@ class SliderCell: UICollectionViewCell {
       imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
       imageView.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
-    
   }
   
   private func setupLoadIndicator() {
@@ -106,6 +88,23 @@ class SliderCell: UICollectionViewCell {
                                .systemBackground],
       startPoint: .top, endPoint: .bottom,
       locations: [0.0, 0.2, 0.5, 0.8, 1.0])
+  }
+  
+  private func setSliderCellWithData() {
+    var url = URL(string: "")
+    
+    switch UIDevice.current.userInterfaceIdiom {
+    case .phone: url = viewModel.mediaPosterURL
+    case .pad: url = viewModel.mediaBackdropURL
+    default: break
+    }
+    
+    imageView.sd_setImage(
+      with: url,
+      placeholderImage: UIImage(named: "load_placeholder"),
+      options: .delayPlaceholder) { _,_,_,_ in
+        self.loadIndicator.stopAnimating()
+      }
   }
   
 }

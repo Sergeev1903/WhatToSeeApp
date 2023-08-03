@@ -54,6 +54,7 @@ class TabMenuControl: UIControl {
     }
   }
   
+  
   // MARK: - Init
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -66,6 +67,29 @@ class TabMenuControl: UIControl {
     setupScrollView()
     setupSegmentedControl()
   }
+  
+  
+  // MARK: -
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    
+    scrollView.frame = bounds
+    scrollView.contentSize = CGSize(
+      width: calculateContentWidth(), height: frame.height)
+    
+    var xOffset: CGFloat = buttonSpacing
+    let buttonHeight = frame.height
+    
+    for button in buttons {
+      let buttonWidth = button.titleLabel?.intrinsicContentSize.width ?? 0
+      button.frame = CGRect(
+        x: xOffset, y: 0, width: buttonWidth, height: buttonHeight)
+      xOffset += buttonWidth + buttonSpacing
+    }
+    
+    updateUnderlineViewFrame()
+  }
+  
   
   // MARK: - Methods
   private func setupScrollView() {
@@ -93,26 +117,6 @@ class TabMenuControl: UIControl {
     
     scrollView.addSubview(underlineView)
     updateSegmentedControl()
-  }
-  
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    
-    scrollView.frame = bounds
-    scrollView.contentSize = CGSize(
-      width: calculateContentWidth(), height: frame.height)
-    
-    var xOffset: CGFloat = buttonSpacing
-    let buttonHeight = frame.height
-    
-    for button in buttons {
-      let buttonWidth = button.titleLabel?.intrinsicContentSize.width ?? 0
-      button.frame = CGRect(
-        x: xOffset, y: 0, width: buttonWidth, height: buttonHeight)
-      xOffset += buttonWidth + buttonSpacing
-    }
-    
-    updateUnderlineViewFrame()
   }
   
   private func calculateContentWidth() -> CGFloat {

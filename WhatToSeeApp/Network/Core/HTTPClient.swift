@@ -7,12 +7,15 @@
 
 import Foundation
 
+
 protocol HTTPClient {
   func sendRequest<T: Codable>(
     endpoint: Endpoint, responseModel: T.Type,
     completion: @escaping (Result<T, RequestError>) -> Void)
+  
   func fetchData(from url: URL) -> Data?
 }
+
 
 extension HTTPClient {
   
@@ -98,7 +101,7 @@ extension HTTPClient {
     
     // Start the task
     task.resume()
-
+    
     // Wait for the task to complete before returning the data
     _ = semaphore.wait(timeout: .distantFuture)
     return data

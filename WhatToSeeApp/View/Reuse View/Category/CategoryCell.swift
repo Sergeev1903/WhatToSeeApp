@@ -12,10 +12,11 @@ class CategoryCell: UITableViewCell {
   
   // MARK: - Propererties
   static let reuseId = String(describing: CategoryCell.self)
+  
   private var collectionView: UICollectionView!
   private let contentViewGradient = CAGradientLayer()
   
-  // MARK: - View Model
+  // MARK: - ViewModel
   var viewModel: CategoryCellViewModelProtocol! {
     didSet {
       self.collectionView.reloadData()

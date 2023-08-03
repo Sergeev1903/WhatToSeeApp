@@ -9,27 +9,33 @@ import Foundation
 
 
 protocol DetailViewModelProtocol: AnyObject {
-  var media: TMDBMovieResult { get }
   var mediaBackdropURL: URL { get }
   var mediaTitle: String { get }
   var mediaVoteAverage: String { get }
   var mediaReleaseDate: String { get }
   var mediaOverview: String { get }
-  init(media: TMDBMovieResult)
   
-  //MARK: - Movie details
+  var detailGenres: String { get }
+  var detailTrailerUrl: String { get }
+  
+  init(media: TMDBMovieResult)
   //  func getMultiplyRequest(completion: @escaping () -> Void)
   func getMovieGenres(completion: @escaping () -> Void)
   func getMovieTrailers(completion: @escaping () -> Void)
-  var detailGenres: String { get }
-  var detailTrailerUrl: String { get }
+  
 }
 
 
 class DetailViewModel: DetailViewModelProtocol {
   
   // MARK: - Properties
-  let media: TMDBMovieResult
+  private let media: TMDBMovieResult
+  
+  private var mediaGenres: [Genre] = []
+  private var mediaTrailers: [Video] = []
+  
+  private let service: MoviesServiceable
+  private let dispatchGroup = DispatchGroup()
   
   var mediaBackdropURL: URL {
     media.backdropURL
@@ -52,27 +58,6 @@ class DetailViewModel: DetailViewModelProtocol {
     media.overview ?? ""
   }
   
-  
-  // MARK: - Init
-  required init(media: TMDBMovieResult) {
-    self.media = media
-    self.service = MoviesService()
-  }
-  
-  
-  //MARK: - Movie details
-  let service: MoviesService
-  let dispatchGroup = DispatchGroup()
-  
-  var mediaGenres: [Genre] = [] {
-    didSet {
-      print(mediaGenres.forEach({ genre in
-        print(genre.name)
-      }))
-    }
-  }
-  var mediaTrailers: [Video] = []
-  
   var detailGenres: String {
     return  mediaGenres.compactMap {$0.name}.lazy.joined(separator: ", ")
   }
@@ -88,6 +73,15 @@ class DetailViewModel: DetailViewModelProtocol {
     return "https://www.youtube.com/watch?v=\(key))"
   }
   
+  
+  // MARK: - Init
+  required init(media: TMDBMovieResult) {
+    self.media = media
+    self.service = MoviesService()
+  }
+  
+  
+  // MARK: -
   //  public func getMultiplyRequest(completion: @escaping () -> Void) {
   //    dispatchGroup.enter()
   //    getMovieDetail()
@@ -99,7 +93,7 @@ class DetailViewModel: DetailViewModelProtocol {
   //    }
   //  }
   
- public func getMovieGenres(completion: @escaping () -> Void) {
+  public func getMovieGenres(completion: @escaping () -> Void) {
     service.getMedia(
       endpoint: MoviesEndpoint.movieGenres(id: media.id!),
       responseModel: Genres.self) { [weak self] result in
@@ -117,7 +111,7 @@ class DetailViewModel: DetailViewModelProtocol {
   }
   
   
- public func getMovieTrailers(completion: @escaping () -> Void) {
+  public func getMovieTrailers(completion: @escaping () -> Void) {
     service.getMedia(
       endpoint: MoviesEndpoint.movieTrailers(id: media.id!),
       responseModel: Videos.self) { [weak self] result in

@@ -14,7 +14,6 @@ protocol CategoryCellDelegate: AnyObject {
 }
 
 protocol CategoryCellViewModelProtocol {
-  var mediaItems: [TMDBMovieResult] { get }
   var delegate: CategoryCellDelegate? { get set }
   init(mediaItems: [TMDBMovieResult])
   func numberOfItemsInSection() -> Int
@@ -26,7 +25,7 @@ protocol CategoryCellViewModelProtocol {
 class CategoryCellViewModel: CategoryCellViewModelProtocol {
   
   // MARK: - Properties
-  let mediaItems: [TMDBMovieResult]
+  private let mediaItems: [TMDBMovieResult]
   
   // MARK: - Delegate
   weak var delegate: CategoryCellDelegate?
@@ -38,21 +37,21 @@ class CategoryCellViewModel: CategoryCellViewModelProtocol {
   }
   
   
-  // MARK: - Methods
-  func numberOfItemsInSection() -> Int {
+  // MARK: -
+  public func numberOfItemsInSection() -> Int {
     return mediaItems.count
   }
   
-  func cellForItemAt(
+  public func cellForItemAt(
     indexPath: IndexPath) -> CategoryCellItemViewModelProtocol {
-    let media = mediaItems[indexPath.item]
-    return CategoryCellItemViewModel(media: media)
-  }
+      let media = mediaItems[indexPath.item]
+      return CategoryCellItemViewModel(media: media)
+    }
   
-  func didSelectItemAt(
-   indexPath: IndexPath) -> DetailViewModelProtocol {
-    let media = mediaItems[indexPath.item]
-    return DetailViewModel(media: media)
-   }
+  public func didSelectItemAt(
+    indexPath: IndexPath) -> DetailViewModelProtocol {
+      let media = mediaItems[indexPath.item]
+      return DetailViewModel(media: media)
+    }
   
 }

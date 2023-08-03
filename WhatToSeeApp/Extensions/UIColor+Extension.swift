@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 extension UIImage {
   
   var averageColor: UIColor? {

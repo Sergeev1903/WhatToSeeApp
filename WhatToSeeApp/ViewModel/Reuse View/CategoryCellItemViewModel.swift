@@ -19,7 +19,7 @@ protocol CategoryCellItemViewModelProtocol {
 class CategoryCellItemViewModel: CategoryCellItemViewModelProtocol {
   
   // MARK: - Properties
-  var media: TMDBMovieResult
+  public var media: TMDBMovieResult
   
   var mediaPosterURL: URL {
     media.posterURL

@@ -16,6 +16,7 @@ enum MovieCategory: String, CaseIterable {
   case genres = "Genres"
 }
 
+
 enum MoviesEndpoint {
   case upcoming
   case nowPlaying(page: Int)
@@ -25,6 +26,7 @@ enum MoviesEndpoint {
   case movieGenres(id: Int)
   case movieTrailers(id: Int)
 }
+
 
 extension MoviesEndpoint: Endpoint {
   
@@ -65,7 +67,6 @@ extension MoviesEndpoint: Endpoint {
       ]
     }
   }
-  
   
   var queryItems: [URLQueryItem]? {
     switch self {

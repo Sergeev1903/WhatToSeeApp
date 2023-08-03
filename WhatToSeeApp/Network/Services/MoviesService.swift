@@ -12,6 +12,7 @@ protocol MoviesServiceable {
   func getMedia<T: Codable>(
     endpoint: Endpoint, responseModel: T.Type,
     completion: @escaping (Result<T, RequestError>) -> Void)
+  
   func loadData(url: URL) -> Data?
 }
 

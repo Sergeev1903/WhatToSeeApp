@@ -29,11 +29,11 @@ protocol HomeViewModelProtocol: AnyObject {
 class HomeViewModel: HomeViewModelProtocol {
   
   // MARK: - Properties
-  var upcomingMovies: [TMDBMovieResult] = []
-  var nowPlayingMovies: [TMDBMovieResult] = []
-  var popularMovies: [TMDBMovieResult] = []
-  var topRatedMovies: [TMDBMovieResult] = []
-  var trendingMovies: [TMDBMovieResult] = []
+  public var upcomingMovies: [TMDBMovieResult] = []
+  public var nowPlayingMovies: [TMDBMovieResult] = []
+  public var popularMovies: [TMDBMovieResult] = []
+  public var topRatedMovies: [TMDBMovieResult] = []
+  public var trendingMovies: [TMDBMovieResult] = []
   private let service: MoviesServiceable
   private let dispatchGroup = DispatchGroup()
   
@@ -76,7 +76,7 @@ class HomeViewModel: HomeViewModelProtocol {
       return CategoryCellViewModel(mediaItems: mediaItems)
     }
   
-  func didTapSeeAll(mediaItems: [TMDBMovieResult], category: MovieCategory) -> ShowAllViewModelProtocol {
+  public func didTapSeeAll(mediaItems: [TMDBMovieResult], category: MovieCategory) -> ShowAllViewModelProtocol {
     return ShowAllViewModel(mediaItems: mediaItems, category: category)
   }
   
@@ -102,7 +102,6 @@ extension HomeViewModel {
         strongSelf.dispatchGroup.leave()
       }
   }
-  
   
   private func getNowPlayingMovies() {
     service.getMedia(

@@ -67,7 +67,6 @@ class SliderView: UIView {
     ])
   }
   
-  
   private func setupTitleLabel() {
     titleLabel.text = "Upcoming"
     titleLabel.font = UIFont.boldSystemFont(ofSize: 36)
@@ -104,7 +103,7 @@ class SliderView: UIView {
   }
   
   // Page control change slider item
-  @objc func pageControlDidChange(_ sender: UIPageControl) {
+  @objc private func pageControlDidChange(_ sender: UIPageControl) {
     currentPageIndex = sender.currentPage
     let offsetX = CGFloat(currentPageIndex) * collectionView.frame.width
     collectionView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
@@ -174,6 +173,8 @@ extension SliderView: UICollectionViewDelegate {
   
 }
 
+
+// MARK: - UICollectionViewDelegateFlowLayout
 extension SliderView: UICollectionViewDelegateFlowLayout {
   
   func collectionView(

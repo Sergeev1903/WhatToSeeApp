@@ -8,6 +8,7 @@
 import UIKit
 import SDWebImage
 
+
 class CategoryCellItem: UICollectionViewCell {
   
   // MARK: - Properties
@@ -20,19 +21,7 @@ class CategoryCellItem: UICollectionViewCell {
   // MARK: - ViewModel
   var viewModel: CategoryCellItemViewModelProtocol! {
     didSet {
-      imageView.sd_setImage(
-        with: viewModel.mediaPosterURL,
-        placeholderImage: UIImage(named: "load_placeholder"),
-        options: .delayPlaceholder) {_,_,_,_ in
-          
-          self.loadIndicator.stopAnimating()
-          guard self.loadIndicator.isAnimating == false else { return }
-          self.voteLabel.isHidden = false
-          self.voteLabel.text = self.viewModel.mediaVoteAverage
-          self.voteLabel.backgroundColor =
-          self.viewModel.media.voteAverage ?? 0 <= 6 ?
-          #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0.8031870861): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 0.8018936258)
-        }
+      setCategoryCellItemWithData()
     }
   }
   
@@ -102,7 +91,6 @@ class CategoryCellItem: UICollectionViewCell {
       voteLabel.widthAnchor.constraint(
         equalToConstant: 24)
     ])
-    
   }
   
   private func setupLoadIndicator() {
@@ -117,6 +105,22 @@ class CategoryCellItem: UICollectionViewCell {
       loadIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
       loadIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
     ])
+  }
+  
+  private func setCategoryCellItemWithData() {
+    imageView.sd_setImage(
+      with: viewModel.mediaPosterURL,
+      placeholderImage: UIImage(named: "load_placeholder"),
+      options: .delayPlaceholder) {_,_,_,_ in
+   
+        self.loadIndicator.stopAnimating()
+        guard self.loadIndicator.isHidden == true else { return }
+        self.voteLabel.isHidden = false
+        self.voteLabel.text = self.viewModel.mediaVoteAverage
+        self.voteLabel.backgroundColor =
+        self.viewModel.media.voteAverage ?? 0 <= 6 ?
+        #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0.8031870861): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 0.8018936258)
+      }
   }
   
 }

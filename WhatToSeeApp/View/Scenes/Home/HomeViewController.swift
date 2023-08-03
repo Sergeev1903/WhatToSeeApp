@@ -14,7 +14,7 @@ class HomeViewController: UIViewController {
   // MARK: - Properties
   private let tabMenu = TabMenuControl()
   private let tableView = UITableView(frame: .zero, style: .grouped)
-  private var slider = SliderView()
+  private let slider = SliderView()
   
   // MARK: - ViewModel
   private var viewModel: HomeViewModelProtocol! {
@@ -26,6 +26,8 @@ class HomeViewController: UIViewController {
     }
   }
   
+  
+  // MARK: -
   deinit {
     SDImageCache.shared.clearMemory()
     SDImageCache.shared.clearDisk()
@@ -84,7 +86,7 @@ class HomeViewController: UIViewController {
   }
   
   // Action for tabMenu
-  @objc func tabMenuValueChanged(_ sender: TabMenuControl) {
+  @objc private func tabMenuValueChanged(_ sender: TabMenuControl) {
     print("#Debug Selected segment index: \(sender.selectedSegmentIndex)")
     
     if sender.selectedSegmentIndex == 1 {
@@ -92,7 +94,6 @@ class HomeViewController: UIViewController {
         sender.selectedSegmentIndex = 0
       }
     }
-    
   }
   
   // Plug alert
@@ -118,9 +119,11 @@ class HomeViewController: UIViewController {
       CategoryHeader.self,
       forHeaderFooterViewReuseIdentifier: CategoryHeader.reuseId)
     tableView.register(
-      CategoryCell.self, forCellReuseIdentifier: CategoryCell.reuseId)
+      CategoryCell.self,
+      forCellReuseIdentifier: CategoryCell.reuseId)
     tableView.register(
-      CategoryGenresCell.self, forCellReuseIdentifier: CategoryGenresCell.reuseId)
+      CategoryGenresCell.self,
+      forCellReuseIdentifier: CategoryGenresCell.reuseId)
     
     view.addSubview(tableView)
     
@@ -143,7 +146,6 @@ class HomeViewController: UIViewController {
     // FIXME: fix slider viewModel init
     configureSlider()
     tableView.tableHeaderView = slider
-    
   }
   
   private func configureSlider() {
@@ -290,7 +292,7 @@ extension HomeViewController: UITableViewDelegate {
   func tableView(
     _ tableView: UITableView,
     heightForHeaderInSection section: Int) -> CGFloat {
-      return section == 1 ? 8: 32
+      return section == 1 ? 0: 32
     }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

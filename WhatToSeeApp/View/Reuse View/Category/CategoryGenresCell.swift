@@ -7,13 +7,17 @@
 
 import UIKit
 
+
 class CategoryGenresCell: UITableViewCell {
   
   // MARK: - Properties
   static let reuseId = String(describing: CategoryGenresCell.self)
+  
   private let backgroundImageView = UIImageView()
   private let titleLabel = UILabel()
   
+  
+  // MARK: - Init
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     backgroundImageViewSetup()
@@ -25,6 +29,8 @@ class CategoryGenresCell: UITableViewCell {
     print("Sorry! only code, no storyboards")
   }
   
+  
+  // MARK: - Methods
   private func backgroundImageViewSetup() {
     backgroundColor = .clear
     selectionStyle = .none
@@ -36,7 +42,7 @@ class CategoryGenresCell: UITableViewCell {
     case .pad: backgroundImageView.contentMode = .top
     default: break
     }
-
+    
     backgroundImageView.layer.cornerRadius = 10
     backgroundImageView.layer.masksToBounds = true
     backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -71,7 +77,6 @@ class CategoryGenresCell: UITableViewCell {
       colorView.trailingAnchor.constraint(
         equalTo: backgroundImageView.trailingAnchor)
     ])
-    
   }
   
   private func setupTitleLabel() {

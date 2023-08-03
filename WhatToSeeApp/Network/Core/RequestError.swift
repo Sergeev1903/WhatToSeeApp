@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 enum RequestError: Error {
   case decode
   case encode

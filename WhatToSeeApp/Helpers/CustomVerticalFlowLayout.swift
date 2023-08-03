@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 final class CustomVerticalFlowLayout: UICollectionViewFlowLayout {
   
   // MARK: - Properties
@@ -15,6 +16,7 @@ final class CustomVerticalFlowLayout: UICollectionViewFlowLayout {
   private var lineSpacing: CGFloat = 8
   private var interitemSpacing: CGFloat = 8
   private var heightMultiplier: CGFloat = 1.5
+  
   
   // MARK: - Init
   init(itemsPerRow: CGFloat, margin: CGFloat, lineSpacing: CGFloat,
@@ -46,6 +48,7 @@ final class CustomVerticalFlowLayout: UICollectionViewFlowLayout {
     super.init(coder: coder)
     self.scrollDirection = .vertical
   }
+  
   
   // MARK: - Lifecycle
   override func prepare() {

@@ -14,10 +14,11 @@ protocol CategoryHeaderButtonDelegate: AnyObject {
 
 
 class CategoryHeader: UITableViewHeaderFooterView {
-
+  
   // MARK: - Properties
   static let reuseId = String(describing: CategoryHeader.self)
-  let titleLabel = UILabel()
+  
+  public let titleLabel = UILabel()
   private let button = UIButton(type: .system)
   
   // MARK: - Delegate
@@ -27,7 +28,8 @@ class CategoryHeader: UITableViewHeaderFooterView {
   // MARK: - Init
   override init(reuseIdentifier: String?) {
     super.init(reuseIdentifier: reuseIdentifier)
-    configureUI()
+    setupTitle()
+    setupButton()
   }
   
   required init?(coder: NSCoder) {
@@ -37,13 +39,8 @@ class CategoryHeader: UITableViewHeaderFooterView {
   
   
   // MARK: - Methods
-  func configure(title: String) {
+  public func configure(title: String) {
     self.titleLabel.text = title
-  }
-  
-  private func configureUI() {
-    setupTitle()
-    setupButton()
   }
   
   private func setupTitle() {
@@ -69,7 +66,7 @@ class CategoryHeader: UITableViewHeaderFooterView {
       for: .touchUpInside)
     
     contentView.addSubview(button)
-
+    
     NSLayoutConstraint.activate([
       button.trailingAnchor.constraint(
         equalTo: contentView.trailingAnchor, constant: -20),
@@ -77,10 +74,10 @@ class CategoryHeader: UITableViewHeaderFooterView {
         equalTo: contentView.centerYAnchor)])
   }
   
-  // MARK: -
-  @objc func categoryHeaderButtonAction() {
+  // category header button Action
+  @objc private func categoryHeaderButtonAction() {
     print("categoryHeaderButtonAction")
     categoryHeaderButtonDelegate?.didTabcategoryHeaderButton(self)
   }
-
+  
 }

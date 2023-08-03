@@ -28,7 +28,7 @@ protocol SliderViewModelProtocol: AnyObject {
 class SliderViewModel: SliderViewModelProtocol {
   
   // MARK: - Properties
-  var mediaItems: [TMDBMovieResult] = []
+  public var mediaItems: [TMDBMovieResult] = []
   
   // MARK: - Delegate
   weak var delegate: SliderViewDelegate?
@@ -42,18 +42,18 @@ class SliderViewModel: SliderViewModelProtocol {
   }
   
   
-  // MARK: - Configure slider collection
-  func numberOfItemsInSection() -> Int {
+  // MARK: -
+  public func numberOfItemsInSection() -> Int {
     return mediaItems.count
   }
   
-  func cellForItemAt(
+  public func cellForItemAt(
     indexPath: IndexPath) -> SliderCellViewModelProtocol {
       let media = mediaItems[indexPath.item]
       return SliderCellViewModel(media: media)
     }
   
-  func didSelectItemAt(
+  public func didSelectItemAt(
     indexPath: IndexPath) -> DetailViewModelProtocol {
       let media = mediaItems[indexPath.item]
       return DetailViewModel(media: media)

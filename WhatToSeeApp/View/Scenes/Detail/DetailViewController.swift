@@ -14,7 +14,7 @@ class DetailViewController: UIViewController {
   private let tableView = UITableView()
   private let headerView = DetailHeaderView()
   
-  // MARK: - View Model
+  // MARK: - ViewModel
   var viewModel: DetailViewModelProtocol!{
     didSet {
       
@@ -55,7 +55,7 @@ class DetailViewController: UIViewController {
     self.navigationController?.navigationBar.shadowImage = UIImage()
     self.navigationController?.navigationBar.isTranslucent = true
     self.navigationController?.navigationBar.tintColor = .white
-      
+    
     // Create a custom back button
     let backButtonImage = UIImage(systemName: "arrow.backward.circle.fill")?.withTintColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8), renderingMode: .alwaysOriginal)
     
@@ -74,30 +74,32 @@ class DetailViewController: UIViewController {
     // Create a custom wish button
     let wishButtonImage = UIImage(systemName: "heart.circle.fill")?.withTintColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8), renderingMode: .alwaysTemplate)
     let wishButtonSize = CGSize(width: 32, height: 32)
-
+    
     UIGraphicsBeginImageContextWithOptions(wishButtonSize, false, UIScreen.main.scale)
     wishButtonImage?.draw(in: CGRect(origin: .zero, size: wishButtonSize))
-
+    
     let wishResizedButtonImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
     UIGraphicsEndImageContext()
-
+    
     let wishButton = UIBarButtonItem(image: wishResizedButtonImage, style: .plain, target: self, action: #selector(wishButtonTapped))
     
     navigationItem.rightBarButtonItems = [wishButton]
     
   }
   
+  
+  // MARK: - Methods
+  
   // custom back button action
-  @objc func backButtonTapped() {
+  @objc private func backButtonTapped() {
     navigationController?.popViewController(animated: true)
   }
   
   // custom wish button action
-  @objc func wishButtonTapped() {
+  @objc private func wishButtonTapped() {
     print("wishButtonTapped")
     alert()
   }
-  
   
   private func alert() {
     let alert = UIAlertController(
@@ -110,8 +112,6 @@ class DetailViewController: UIViewController {
     present(alert, animated: true)
   }
   
-  
-  // MARK: - Methods
   private func setuptTableView() {
     tableView.delegate = self
     tableView.dataSource = self
@@ -129,7 +129,6 @@ class DetailViewController: UIViewController {
     ])
   }
   
-  
   private func setupHeaderView() {
     headerView.frame = CGRect(
       x: 0, y: 0,
@@ -144,6 +143,7 @@ class DetailViewController: UIViewController {
 
 // MARK: - UITableViewDelegate
 extension DetailViewController: UITableViewDataSource {
+  
   func tableView(
     _ tableView: UITableView,
     numberOfRowsInSection section: Int) -> Int {
@@ -192,7 +192,8 @@ extension DetailViewController: UITableViewDelegate {
 }
 
 
-extension DetailViewController: watchTrailerButtonDelegate {
+// MARK: - WatchTrailerButtonDelegate
+extension DetailViewController: WatchTrailerButtonDelegate {
   
   func didTabWatchTrailerButton(_ detailHeaderView: DetailHeaderView) {
     UIApplication.shared.open(

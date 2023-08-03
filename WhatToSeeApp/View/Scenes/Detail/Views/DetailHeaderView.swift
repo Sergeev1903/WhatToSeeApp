@@ -7,7 +7,8 @@
 
 import UIKit
 
-protocol watchTrailerButtonDelegate: AnyObject {
+
+protocol WatchTrailerButtonDelegate: AnyObject {
   func didTabWatchTrailerButton(_ detailHeaderView: DetailHeaderView)
 }
 
@@ -15,10 +16,10 @@ protocol watchTrailerButtonDelegate: AnyObject {
 class DetailHeaderView: UIView {
   
   // MARK: - Properties
-  var imageView = UIImageView()
-  var titleLabel = UILabel()
-  let watchTrailerButton = UIButton()
-  private var containerView = UIView()
+  public let imageView = UIImageView()
+  public let titleLabel = UILabel()
+  private let watchTrailerButton = UIButton()
+  private let containerView = UIView()
   private let imageViewGradient = CAGradientLayer()
   private let containerViewGradient = CAGradientLayer()
   private var containerViewHeight = NSLayoutConstraint()
@@ -26,7 +27,7 @@ class DetailHeaderView: UIView {
   private var imageViewBottom = NSLayoutConstraint()
   
   // MARK: - Delegate
-  weak var watchTrailerButtonDelegate: watchTrailerButtonDelegate?
+  weak var watchTrailerButtonDelegate: WatchTrailerButtonDelegate?
   
   
   // MARK: - Init
@@ -54,6 +55,15 @@ class DetailHeaderView: UIView {
   
   
   // MARK: - Methods
+  // Stretchy header
+  public func scrollViewDidScroll(scrollView: UIScrollView) {
+    containerViewHeight.constant = scrollView.contentInset.top
+    let offsetY = -(scrollView.contentOffset.y + scrollView.contentInset.top)
+    containerView.clipsToBounds = offsetY <= 0
+    imageViewBottom.constant = offsetY >= 0 ? 0 : -offsetY / 2
+    imageViewHeight.constant = max(offsetY + scrollView.contentInset.top, scrollView.contentInset.top)
+  }
+  
   private func setupWatchTrailerButton() {
     let imageConfig = UIImage.SymbolConfiguration(weight: .thin)
     let buttonImage = UIImage(
@@ -81,7 +91,7 @@ class DetailHeaderView: UIView {
     
   }
   
-  @objc func watchTrailerButtonAction() {
+  @objc private func watchTrailerButtonAction() {
     print("watchTrailerButtonAction")
     watchTrailerButtonDelegate?.didTabWatchTrailerButton(self)
   }
@@ -105,10 +115,8 @@ class DetailHeaderView: UIView {
   }
   
   private func createViews() {
-    // Container View
     self.addSubview(containerView)
     
-    // ImageView for background
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill
     
@@ -123,7 +131,7 @@ class DetailHeaderView: UIView {
       self.heightAnchor.constraint(equalTo: containerView.heightAnchor)
     ])
     
-    // Container View Constraints
+    // ContainerView Constraints
     containerView.translatesAutoresizingMaskIntoConstraints = false
     
     containerView.widthAnchor.constraint(
@@ -155,15 +163,6 @@ class DetailHeaderView: UIView {
       containerViewGradient, at: 1,
       colors: [.systemBackground, .clear],
       startPoint: .bottom, endPoint: .top)
-  }
-  
-  // Stretchy header
-  func scrollViewDidScroll(scrollView: UIScrollView) {
-    containerViewHeight.constant = scrollView.contentInset.top
-    let offsetY = -(scrollView.contentOffset.y + scrollView.contentInset.top)
-    containerView.clipsToBounds = offsetY <= 0
-    imageViewBottom.constant = offsetY >= 0 ? 0 : -offsetY / 2
-    imageViewHeight.constant = max(offsetY + scrollView.contentInset.top, scrollView.contentInset.top)
   }
   
 }

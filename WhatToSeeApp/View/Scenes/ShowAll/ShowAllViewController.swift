@@ -7,12 +7,13 @@
 
 import UIKit
 
+
 class ShowAllViewController: UIViewController {
   
   // MARK: - Properties
   private var collectionView: UICollectionView!
   
-  // MARK: - View Model
+  // MARK: - ViewModel
   var viewModel: ShowAllViewModelProtocol!
   
   
@@ -28,6 +29,7 @@ class ShowAllViewController: UIViewController {
     super.viewWillAppear(animated)
     self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
   }
+  
   
   // MARK: - Methods
   private func setupNavigationBar() {

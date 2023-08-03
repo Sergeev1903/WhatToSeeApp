@@ -15,7 +15,6 @@ struct TMDBMovieResponse: Codable {
   let totalPages, totalResults: Int
 }
 
-
 // MARK: - TMDBMovieResult
 struct TMDBMovieResult: Codable {
   let backdropPath: String?
@@ -26,11 +25,13 @@ struct TMDBMovieResult: Codable {
   let voteCount: Int?
   
   var backdropURL: URL {
-    return URL(string: "https://image.tmdb.org/t/p/original\(backdropPath ?? "")")!
+    return URL(
+      string: "https://image.tmdb.org/t/p/original\(backdropPath ?? "")")!
   }
   
   var posterURL: URL {
-    return URL(string: "https://image.tmdb.org/t/p/w500\(posterPath ?? "")")!
+    return URL(
+      string: "https://image.tmdb.org/t/p/w500\(posterPath ?? "")")!
   }
 }
 
@@ -48,7 +49,7 @@ struct Genre: Codable {
 
 // MARK: - Videos
 struct Videos: Codable {
-    let results: [Video]
+  let results: [Video]
 }
 
 // MARK: - Video
