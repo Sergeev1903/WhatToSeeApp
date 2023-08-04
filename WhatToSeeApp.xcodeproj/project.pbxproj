@@ -232,6 +232,7 @@
 			children = (
 				1D93FE932A5D56BB00314762 /* WhatToSeeApp */,
 				1D93FE922A5D56BB00314762 /* Products */,
+				1DB7B51E2A7BF270008F34C7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -323,6 +324,13 @@
 				1D96EBD42A7A51800057C048 /* UiView+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1DB7B51E2A7BF270008F34C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		1DE4E6892A6FE8C2009CDB27 /* View */ = {

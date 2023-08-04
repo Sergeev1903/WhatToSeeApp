@@ -20,7 +20,6 @@ class HomeViewController: UIViewController {
   private var viewModel: HomeViewModelProtocol! {
     didSet {
       viewModel.getMovieCategories {
-        self.configureSlider()
         self.tableView.reloadData()
       }
     }
@@ -42,7 +41,6 @@ class HomeViewController: UIViewController {
     setupNavigationBar()
     setupTabMenu()
     setupTableView()
-    setupSlider()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -139,19 +137,16 @@ class HomeViewController: UIViewController {
     ])
   }
   
+  // called in willDisplayHeaderView method
   private func setupSlider() {
     slider.frame = CGRect(
-      x: 0, y: 0, width: tableView.bounds.width,
-      height: 600)
-    // FIXME: fix slider viewModel init
-    configureSlider()
+      x: 0, y: 0, width: tableView.bounds.width, height: 600)
+    
     tableView.tableHeaderView = slider
-  }
-  
-  private func configureSlider() {
+    
     slider.viewModel = SliderViewModel(
-      mediaItems: viewModel.upcomingMovies,
-      delegate: self)
+      mediaItems: viewModel.upcomingMovies,delegate: self)
+    
   }
   
 }
@@ -227,11 +222,8 @@ extension HomeViewController: UITableViewDataSource {
         cell.viewModel.delegate = self
         return cell
         
-      default:
-        break
+      default: return UITableViewCell()
       }
-      
-      return UITableViewCell()
     }
   
   func tableView(
@@ -272,11 +264,10 @@ extension HomeViewController: UITableViewDataSource {
         headerView.categoryHeaderButtonDelegate = self
         return headerView
         
-      default: break
+      default:  return UIView()
       }
-      
-      return UIView()
     }
+  
 }
 
 
@@ -295,11 +286,21 @@ extension HomeViewController: UITableViewDelegate {
       return section == 1 ? 0: 32
     }
   
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+  func tableView(
+    _ tableView: UITableView,
+    didSelectRowAt indexPath: IndexPath) {
     if indexPath.section == 1 {
       let vc = GenresViewController()
       navigationController?.pushViewController(vc, animated: true)
     }
+  }
+  
+  
+  func tableView(
+    _ tableView: UITableView,
+    willDisplayHeaderView view: UIView,
+    forSection section: Int) {
+    setupSlider()
   }
   
 }
