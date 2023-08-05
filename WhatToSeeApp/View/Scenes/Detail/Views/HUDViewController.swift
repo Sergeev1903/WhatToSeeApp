@@ -9,28 +9,27 @@ import UIKit
 
 final class HUDViewController: UIViewController {
   
-  let hudView: UIView = {
-    let view = UIView()
-    view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-    view.layer.cornerRadius = 10
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
+  // MARK: - Properties
+  private let hudView = UIView()
+  private let hudLabel = UILabel()
   
-  let label: UILabel = {
-    let label = UILabel()
-    label.textColor = UIColor.white
-    label.font = UIFont.boldSystemFont(ofSize: 18)
-    label.textAlignment = .center
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
-  }()
   
+  // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .clear
+    setupHudView()
+    setupHudLabel()
+  }
+  
+  
+  // MARK: - Methods
+  private func setupHudView() {
+    hudView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+    hudView.layer.cornerRadius = 10
+    hudView.translatesAutoresizingMaskIntoConstraints = false
+    
     view.addSubview(hudView)
-    hudView.addSubview(label)
     
     NSLayoutConstraint.activate([
       hudView.topAnchor.constraint(
@@ -40,21 +39,38 @@ final class HUDViewController: UIViewController {
       hudView.leadingAnchor.constraint(
         greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
       hudView.trailingAnchor.constraint(
-        lessThanOrEqualTo: view.trailingAnchor, constant: -20),
-      
-      label.topAnchor.constraint(
+        lessThanOrEqualTo: view.trailingAnchor, constant: -20)
+    ])
+  }
+  
+  private func setupHudLabel() {
+    hudLabel.textColor = UIColor.white
+    hudLabel.font = UIFont.boldSystemFont(ofSize: 18)
+    hudLabel.textAlignment = .center
+    hudLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    hudView.addSubview(hudLabel)
+    
+    NSLayoutConstraint.activate([
+      hudLabel.topAnchor.constraint(
         equalTo: hudView.topAnchor, constant: 10),
-      label.bottomAnchor.constraint(
+      hudLabel.bottomAnchor.constraint(
         equalTo: hudView.bottomAnchor, constant: -10),
-      label.leadingAnchor.constraint(
+      hudLabel.leadingAnchor.constraint(
         equalTo: hudView.leadingAnchor, constant: 10),
-      label.trailingAnchor.constraint(
+      hudLabel.trailingAnchor.constraint(
         equalTo: hudView.trailingAnchor, constant: -10)
     ])
   }
   
+}
+
+
+extension HUDViewController {
+  
+  // MARK: - show HUD and hide
   func showHUDAndHide(withText text: String) {
-    label.text = text
+    hudLabel.text = text
     view.alpha = 0
     hudView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
     
@@ -73,9 +89,9 @@ final class HUDViewController: UIViewController {
     }
   }
   
-  
+  // MARK: - show HUD and hide to top
   func showHUDAndHideToTop(withText text: String) {
-    label.text = text
+    hudLabel.text = text
     view.alpha = 0
     
     UIView.animate(withDuration: 0.3, animations: {
@@ -96,4 +112,3 @@ final class HUDViewController: UIViewController {
   }
   
 }
-

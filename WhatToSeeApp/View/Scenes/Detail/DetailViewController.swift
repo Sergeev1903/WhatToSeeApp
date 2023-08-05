@@ -98,20 +98,10 @@ class DetailViewController: UIViewController {
   // custom wish button action
   @objc private func wishButtonTapped() {
     print("wishButtonTapped")
-    //    alert()
-    showHUD()
+        showHUD()
+//    showHUDView()
+    
   }
-  
-//  private func alert() {
-//    let alert = UIAlertController(
-//      title: "Added to wishlist",
-//      message: "Now the movie is in your collection",
-//      preferredStyle: .alert)
-//    let action = UIAlertAction(
-//      title: "OK", style: .default)
-//    alert.addAction(action)
-//    present(alert, animated: true)
-//  }
   
   private func showHUD() {
     let hudVC = HUDViewController()
@@ -119,6 +109,19 @@ class DetailViewController: UIViewController {
     hudVC.modalTransitionStyle = .crossDissolve
     hudVC.showHUDAndHideToTop(withText: "Add to collection")
     present(hudVC, animated: true, completion: nil)
+  }
+  
+  private func showHUDView() {
+    let hud = HUDView()
+    hud.showHUDAndHideToTop(with: "Add to collection")
+    hud.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      hud.heightAnchor.constraint(equalToConstant: 40),
+      hud.widthAnchor.constraint(equalToConstant: 180),
+      hud.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      hud.topAnchor.constraint(equalTo: view.topAnchor, constant: 48)
+    ])
   }
   
   
