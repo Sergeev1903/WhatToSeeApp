@@ -10,7 +10,8 @@ import UIKit
 import Network
 
 protocol NoInternetViewControllerDelegate: AnyObject {
-  func reloadData()
+    func reloadData()
+    func dismissNoInternetViewController()
 }
 
 class NoInternetViewController: UIViewController {
@@ -62,9 +63,9 @@ class NoInternetViewController: UIViewController {
     monitor.pathUpdateHandler = { path in
       if path.status == .satisfied {
         DispatchQueue.main.async {
-          self.dismiss(animated: true, completion: nil)
-          print("NoInternetViewController delegate?.reloadData()")
           self.delegate?.reloadData()
+          print("NoInternetViewController delegate?.reloadData()")
+          self.dismiss(animated: true, completion: nil)
         }
       }
     }

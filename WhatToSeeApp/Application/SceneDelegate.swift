@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // support only dark theme
     window.overrideUserInterfaceStyle = .dark
     
-    connectionMonitor()
+    starConnectionMonitor()
   }
   
   func sceneDidDisconnect(_ scene: UIScene) {
@@ -60,29 +60,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   }
   
   
-  func connectionMonitor() {
+  func starConnectionMonitor() {
     let monitor = NWPathMonitor()
     let queue = DispatchQueue(label: "InternetConnectionMonitor")
     
     monitor.pathUpdateHandler = { path in
       if path.status != .satisfied {
         DispatchQueue.main.async {
-          let viewController = NoInternetViewController()
-          
-          if let rootViewController = self.window?.rootViewController {
-            viewController.modalPresentationStyle = .overFullScreen
-            viewController.modalTransitionStyle = .crossDissolve
-            rootViewController.present(viewController, animated: true, completion: nil)
+          let noInternetVC = NoInternetViewController()
+          noInternetVC.modalPresentationStyle = .overFullScreen
+          noInternetVC.modalTransitionStyle = .crossDissolve
+          noInternetVC.delegate = self.window?.rootViewController as? NoInternetViewControllerDelegate
+          self.window?.rootViewController?.present(noInternetVC, animated: true, completion: nil)
+        }
+      } else {
+        DispatchQueue.main.async {
+          if let delegate = self.window?.rootViewController as? NoInternetViewControllerDelegate {
+            delegate.dismissNoInternetViewController()
           }
         }
       }
     }
     
     monitor.start(queue: queue)
-    
   }
   
 }
-
-
 

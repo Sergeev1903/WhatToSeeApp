@@ -37,6 +37,7 @@ class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
+    showNoInternetViewController()
     setupViewModel()
     setupNavigationBar()
     setupTabMenu()
@@ -371,13 +372,29 @@ extension HomeViewController: CategoryHeaderButtonDelegate {
 
 
 // MARK: - NoInternetViewControllerDelegate
+
 extension HomeViewController: NoInternetViewControllerDelegate {
-  func reloadData() {
-    print("start reloadData()")
-    viewModel.getMovieCategories {
-      self.tableView.reloadData()
-    }
-    print("end reloadData()")
-  }
   
+  // Present the NoInternetViewController when there's no internet connection
+      func showNoInternetViewController() {
+          let noInternetVC = NoInternetViewController()
+          noInternetVC.delegate = self // Set the delegate to self
+          present(noInternetVC, animated: true, completion: nil)
+      }
+      
+      // Implement the delegate method to reload data when the internet connection is restored
+      func reloadData() {
+          // Call your function to reload data here
+          // For example: myDataReloadingFunction()
+        print("start reloadData()")
+           viewModel.getMovieCategories {
+             self.tableView.reloadData()
+           }
+           print("end reloadData()")
+      }
+      
+      // Implement the delegate method to dismiss the NoInternetViewController
+      func dismissNoInternetViewController() {
+          dismiss(animated: true, completion: nil)
+      }
 }
