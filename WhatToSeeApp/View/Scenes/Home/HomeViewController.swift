@@ -74,7 +74,7 @@ class HomeViewController: UIViewController {
   }
   
   private func setupTabMenu() {
-    tabMenu.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 40)
+    tabMenu.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 40)
     tabMenu.segments = ["Movies", "TV Shows"]
     tabMenu.segmentTintColor = .clear
     tabMenu.underlineColor = .systemBlue
@@ -289,19 +289,19 @@ extension HomeViewController: UITableViewDelegate {
   func tableView(
     _ tableView: UITableView,
     didSelectRowAt indexPath: IndexPath) {
-    if indexPath.section == 1 {
-      let vc = GenresViewController()
-      navigationController?.pushViewController(vc, animated: true)
+      if indexPath.section == 1 {
+        let vc = GenresViewController()
+        navigationController?.pushViewController(vc, animated: true)
+      }
     }
-  }
   
   
   func tableView(
     _ tableView: UITableView,
     willDisplayHeaderView view: UIView,
     forSection section: Int) {
-    setupSlider()
-  }
+      setupSlider()
+    }
   
 }
 
@@ -365,6 +365,19 @@ extension HomeViewController: CategoryHeaderButtonDelegate {
     }
     
     navigationController?.pushViewController(vc, animated: true)
+  }
+  
+}
+
+
+// MARK: - NoInternetViewControllerDelegate
+extension HomeViewController: NoInternetViewControllerDelegate {
+  func reloadData() {
+    print("start reloadData()")
+    viewModel.getMovieCategories {
+      self.tableView.reloadData()
+    }
+    print("end reloadData()")
   }
   
 }

@@ -29,6 +29,7 @@ class HUDView: UIView {
     
     // Add label
     label.textColor = UIColor.white
+    label.font = UIFont.boldSystemFont(ofSize: 18)
     label.textAlignment = .center
     label.translatesAutoresizingMaskIntoConstraints = false
     
