@@ -98,19 +98,29 @@ class DetailViewController: UIViewController {
   // custom wish button action
   @objc private func wishButtonTapped() {
     print("wishButtonTapped")
-    alert()
+    //    alert()
+    showHUD()
   }
   
-  private func alert() {
-    let alert = UIAlertController(
-      title: "Added to wishlist",
-      message: "Now the movie is in your collection",
-      preferredStyle: .alert)
-    let action = UIAlertAction(
-      title: "OK", style: .default)
-    alert.addAction(action)
-    present(alert, animated: true)
+//  private func alert() {
+//    let alert = UIAlertController(
+//      title: "Added to wishlist",
+//      message: "Now the movie is in your collection",
+//      preferredStyle: .alert)
+//    let action = UIAlertAction(
+//      title: "OK", style: .default)
+//    alert.addAction(action)
+//    present(alert, animated: true)
+//  }
+  
+  private func showHUD() {
+    let hudVC = HUDViewController()
+    hudVC.modalPresentationStyle = .overFullScreen
+    hudVC.modalTransitionStyle = .crossDissolve
+    hudVC.showHUDAndHideToTop(withText: "Add to collection")
+    present(hudVC, animated: true, completion: nil)
   }
+  
   
   private func setuptTableView() {
     tableView.delegate = self
