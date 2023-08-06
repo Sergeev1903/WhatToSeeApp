@@ -8,6 +8,7 @@
 
 import UIKit
 import Network
+import Lottie
 
 
 protocol NoInternetViewControllerDelegate: AnyObject {
@@ -18,6 +19,15 @@ protocol NoInternetViewControllerDelegate: AnyObject {
 class NoInternetViewController: UIViewController {
   
   weak var delegate: NoInternetViewControllerDelegate?
+  
+  var noConnectionAnimation: LottieAnimationView = {
+    let animation = LottieAnimationView(name: "noconnection")
+    animation.translatesAutoresizingMaskIntoConstraints = false
+    animation.contentMode = .scaleAspectFit
+    animation.loopMode = .loop
+    animation.play()
+    return animation
+  }()
   
   let messageLabel: UILabel = {
     let label = UILabel()
@@ -43,11 +53,22 @@ class NoInternetViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
+    view.addSubview(noConnectionAnimation)
     view.addSubview(messageLabel)
     view.addSubview(tryAgainButton)
     
     // Add constraints for the label and button
     NSLayoutConstraint.activate([
+      
+      noConnectionAnimation.topAnchor.constraint(
+        equalTo: view.safeAreaLayoutGuide.topAnchor),
+      noConnectionAnimation.leadingAnchor.constraint(
+        equalTo: view.leadingAnchor),
+      noConnectionAnimation.trailingAnchor.constraint(
+        equalTo: view.trailingAnchor),
+      noConnectionAnimation.bottomAnchor.constraint(
+        equalTo: messageLabel.topAnchor),
+      
       messageLabel.centerXAnchor.constraint(
         equalTo: view.centerXAnchor),
       messageLabel.centerYAnchor.constraint(
