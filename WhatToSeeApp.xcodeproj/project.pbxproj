@@ -42,7 +42,7 @@
 		1DA20DF52A7E2D58005B434A /* HUDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA20DF42A7E2D58005B434A /* HUDViewController.swift */; };
 		1DA20DF72A7E391B005B434A /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA20DF62A7E391B005B434A /* HUDView.swift */; };
 		1DA20DF92A7E5163005B434A /* NoInternetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA20DF82A7E5163005B434A /* NoInternetViewController.swift */; };
-		1DA20DFB2A7F8069005B434A /* InternetConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA20DFA2A7F8069005B434A /* InternetConnectionManager.swift */; };
+		1DA20DFB2A7F8069005B434A /* InternetNWPathMonitorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA20DFA2A7F8069005B434A /* InternetNWPathMonitorManager.swift */; };
 		1DD550922A5F1C6900DD5383 /* TMDBMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD550912A5F1C6900DD5383 /* TMDBMovie.swift */; };
 		1DD550942A5F1DFD00DD5383 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD550932A5F1DFD00DD5383 /* HomeViewModel.swift */; };
 		1DE4E68C2A6FFADA009CDB27 /* CategoryCellItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE4E68B2A6FFADA009CDB27 /* CategoryCellItemViewModel.swift */; };
@@ -89,7 +89,7 @@
 		1DA20DF42A7E2D58005B434A /* HUDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDViewController.swift; sourceTree = "<group>"; };
 		1DA20DF62A7E391B005B434A /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		1DA20DF82A7E5163005B434A /* NoInternetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetViewController.swift; sourceTree = "<group>"; };
-		1DA20DFA2A7F8069005B434A /* InternetConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetConnectionManager.swift; sourceTree = "<group>"; };
+		1DA20DFA2A7F8069005B434A /* InternetNWPathMonitorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetNWPathMonitorManager.swift; sourceTree = "<group>"; };
 		1DD550912A5F1C6900DD5383 /* TMDBMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBMovie.swift; sourceTree = "<group>"; };
 		1DD550932A5F1DFD00DD5383 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		1DE4E68B2A6FFADA009CDB27 /* CategoryCellItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellItemViewModel.swift; sourceTree = "<group>"; };
@@ -117,6 +117,7 @@
 				1D35B9A12A6456CA009A6CB9 /* Core */,
 				1D35B9A52A645CAE009A6CB9 /* Endpoints */,
 				1D35B9AB2A645DE1009A6CB9 /* Services */,
+				1DA20DFF2A7FBB4D005B434A /* NWPathMonitor */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -144,8 +145,6 @@
 				1DA20DF42A7E2D58005B434A /* HUDViewController.swift */,
 				1DA20DF62A7E391B005B434A /* HUDView.swift */,
 				1D0586002A77013200664193 /* CustomVerticalFlowLayout.swift */,
-				1DA20DF82A7E5163005B434A /* NoInternetViewController.swift */,
-				1DA20DFA2A7F8069005B434A /* InternetConnectionManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -338,6 +337,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		1DA20DFF2A7FBB4D005B434A /* NWPathMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				1DA20DF82A7E5163005B434A /* NoInternetViewController.swift */,
+				1DA20DFA2A7F8069005B434A /* InternetNWPathMonitorManager.swift */,
+			);
+			path = NWPathMonitor;
+			sourceTree = "<group>";
+		};
 		1DB7B51E2A7BF270008F34C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -507,7 +515,7 @@
 				1D96EBD52A7A51800057C048 /* UiView+Extension.swift in Sources */,
 				1D93FE992A5D56BB00314762 /* HomeViewController.swift in Sources */,
 				1D88A58F2A7939EE0016D9DB /* GenresViewController.swift in Sources */,
-				1DA20DFB2A7F8069005B434A /* InternetConnectionManager.swift in Sources */,
+				1DA20DFB2A7F8069005B434A /* InternetNWPathMonitorManager.swift in Sources */,
 				1D0370072A7844D300913726 /* CategoryGenresCell.swift in Sources */,
 				1D3800D22A669F7800C4729D /* SliderView.swift in Sources */,
 				1D0586012A77013200664193 /* CustomVerticalFlowLayout.swift in Sources */,

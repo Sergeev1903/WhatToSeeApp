@@ -371,14 +371,12 @@ extension HomeViewController: CategoryHeaderButtonDelegate {
 
 
 // MARK: - NoInternetViewControllerDelegate
-
 extension HomeViewController: NoInternetViewControllerDelegate {
   
-  func reloadData() {
-    print("start reloadData()")
+  func reloadData(_ noInternetViewController: NoInternetViewController) {
     viewModel.getMovieCategories {
       self.tableView.reloadData()
     }
-    print("end reloadData()")
   }
+  
 }

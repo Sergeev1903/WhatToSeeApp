@@ -29,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     window.overrideUserInterfaceStyle = .dark
     
     // Start monitoring internet connectivity
-    InternetConnectionManager.shared.startMonitoring()
+    InternetNWPathMonitorManager.shared.startMonitoring()
     
   }
   

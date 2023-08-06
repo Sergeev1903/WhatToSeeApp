@@ -9,9 +9,11 @@
 import UIKit
 import Network
 
+
 protocol NoInternetViewControllerDelegate: AnyObject {
-  func reloadData()
+  func reloadData(_ noInternetViewController: NoInternetViewController)
 }
+
 
 class NoInternetViewController: UIViewController {
   
@@ -30,10 +32,14 @@ class NoInternetViewController: UIViewController {
     let button = UIButton(type: .system)
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitle("Try Again", for: .normal)
-    button.addTarget(self, action: #selector(tryAgainButtonTapped), for: .touchUpInside)
+    button.addTarget(self,
+                     action: #selector(tryAgainButtonTapped),
+                     for: .touchUpInside)
     return button
   }()
   
+  
+  // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
@@ -42,28 +48,33 @@ class NoInternetViewController: UIViewController {
     
     // Add constraints for the label and button
     NSLayoutConstraint.activate([
-      messageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      messageLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+      messageLabel.centerXAnchor.constraint(
+        equalTo: view.centerXAnchor),
+      messageLabel.centerYAnchor.constraint(
+        equalTo: view.centerYAnchor),
       
-      tryAgainButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      tryAgainButton.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 20)
+      tryAgainButton.centerXAnchor.constraint(
+        equalTo: view.centerXAnchor),
+      tryAgainButton.topAnchor.constraint(
+        equalTo: messageLabel.bottomAnchor, constant: 20)
     ])
   }
   
+  // try again button action
   @objc func tryAgainButtonTapped() {
-    print("tryAgainButtonTapped()")
     checkInternetConnection()
   }
   
-  func checkInternetConnection() {
+  
+  // MARK: - Methods
+  private func checkInternetConnection() {
     let monitor = NWPathMonitor()
     let queue = DispatchQueue(label: "InternetConnectionMonitor")
     
     monitor.pathUpdateHandler = { path in
       if path.status == .satisfied {
         DispatchQueue.main.async {
-          self.delegate?.reloadData()
-          print("NoInternetViewController delegate?.reloadData()")
+          self.delegate?.reloadData(self)
           self.dismiss(animated: true, completion: nil)
         }
       }
@@ -71,4 +82,5 @@ class NoInternetViewController: UIViewController {
     
     monitor.start(queue: queue)
   }
+  
 }

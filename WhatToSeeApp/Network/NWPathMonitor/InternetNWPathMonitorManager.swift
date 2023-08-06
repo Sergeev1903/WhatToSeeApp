@@ -8,23 +8,27 @@
 import UIKit
 import Network
 
-class InternetConnectionManager {
+
+class InternetNWPathMonitorManager {
   
-  static let shared = InternetConnectionManager()
-  private init() {}
+  // MARK: - Properties
+  static let shared = InternetNWPathMonitorManager()
   
-  let monitor = NWPathMonitor()
-  let queue = DispatchQueue(label: "InternetConnectionMonitor")
+  private let monitor = NWPathMonitor()
+  private let queue = DispatchQueue(label: "InternetConnectionMonitor")
+  
+  // MARK: - Delegate
   weak var noInternetViewController: NoInternetViewController?
   
-  func startMonitoring() {
+  
+  // MARK: - Init
+  private init() {}
+  
+  
+  // MARK: - Methods
+  public func startMonitoring() {
     monitor.pathUpdateHandler = { path in
-      if path.status == .satisfied {
-        DispatchQueue.main.async {
-          // If internet is available
-          self.noInternetViewController?.dismiss(animated: true, completion: nil)
-        }
-      } else {
+      if path.status == .unsatisfied {
         DispatchQueue.main.async {
           // If internet is not available
           if let topViewController = UIApplication.topViewController() {
@@ -44,7 +48,7 @@ class InternetConnectionManager {
     monitor.start(queue: queue)
   }
   
-  func stopMonitoring() {
+  public func stopMonitoring() {
     monitor.cancel()
   }
   

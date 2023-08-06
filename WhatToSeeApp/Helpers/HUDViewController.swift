@@ -25,7 +25,7 @@ final class HUDViewController: UIViewController {
   
   // MARK: - Methods
   private func setupHudView() {
-    hudView.backgroundColor = .systemBackground.withAlphaComponent(0.7)
+    hudView.backgroundColor = .white.withAlphaComponent(0.7)
     hudView.layer.cornerRadius = 10
     hudView.translatesAutoresizingMaskIntoConstraints = false
     
@@ -44,7 +44,7 @@ final class HUDViewController: UIViewController {
   }
   
   private func setupHudLabel() {
-    hudLabel.textColor = .label
+    hudLabel.textColor = .systemBackground
     hudLabel.font = .boldSystemFont(ofSize: 18)
     hudLabel.textAlignment = .center
     hudLabel.translatesAutoresizingMaskIntoConstraints = false

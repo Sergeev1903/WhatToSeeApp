@@ -100,7 +100,6 @@ class DetailViewController: UIViewController {
     print("wishButtonTapped")
         showHUD()
 //    showHUDView()
-    
   }
   
   private func showHUD() {
