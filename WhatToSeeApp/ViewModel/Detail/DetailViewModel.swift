@@ -30,7 +30,7 @@ class DetailViewModel: DetailViewModelProtocol {
   
   // MARK: - Properties
   private let media: TMDBMovieResult
-  
+
   private var mediaGenres: [Genre] = []
   private var mediaTrailers: [Video] = []
   
@@ -81,7 +81,7 @@ class DetailViewModel: DetailViewModelProtocol {
   }
   
   
-  // MARK: -
+  // MARK: - Methods
   //  public func getMultiplyRequest(completion: @escaping () -> Void) {
   //    dispatchGroup.enter()
   //    getMovieDetail()
@@ -109,7 +109,6 @@ class DetailViewModel: DetailViewModelProtocol {
         completion()
       }
   }
-  
   
   public func getMovieTrailers(completion: @escaping () -> Void) {
     service.getMedia(

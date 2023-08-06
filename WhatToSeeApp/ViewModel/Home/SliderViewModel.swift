@@ -42,7 +42,7 @@ class SliderViewModel: SliderViewModelProtocol {
   }
   
   
-  // MARK: -
+  // MARK: - Methods
   public func numberOfItemsInSection() -> Int {
     return mediaItems.count
   }

@@ -60,24 +60,22 @@ class NoInternetViewController: UIViewController {
     // Add constraints for the label and button
     NSLayoutConstraint.activate([
       
-      noConnectionAnimation.topAnchor.constraint(
-        equalTo: view.safeAreaLayoutGuide.topAnchor),
       noConnectionAnimation.leadingAnchor.constraint(
         equalTo: view.leadingAnchor),
       noConnectionAnimation.trailingAnchor.constraint(
         equalTo: view.trailingAnchor),
-      noConnectionAnimation.bottomAnchor.constraint(
-        equalTo: messageLabel.topAnchor),
+      noConnectionAnimation.centerYAnchor.constraint(
+        equalTo: view.centerYAnchor, constant: -50),
       
       messageLabel.centerXAnchor.constraint(
         equalTo: view.centerXAnchor),
-      messageLabel.centerYAnchor.constraint(
-        equalTo: view.centerYAnchor),
+      messageLabel.topAnchor.constraint(
+        equalTo: view.centerYAnchor, constant: 100),
       
       tryAgainButton.centerXAnchor.constraint(
         equalTo: view.centerXAnchor),
       tryAgainButton.topAnchor.constraint(
-        equalTo: messageLabel.bottomAnchor, constant: 20)
+        equalTo: messageLabel.bottomAnchor, constant: 16)
     ])
   }
   

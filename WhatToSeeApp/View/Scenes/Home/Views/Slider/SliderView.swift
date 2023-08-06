@@ -52,8 +52,8 @@ class SliderView: UIView {
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.isPagingEnabled = true
     collectionView.bounces = false
-    collectionView.delegate = self
     collectionView.dataSource = self
+    collectionView.delegate = self
     collectionView.register(
       SliderCell.self, forCellWithReuseIdentifier: SliderCell.reuseId)
     
@@ -76,17 +76,15 @@ class SliderView: UIView {
     addSubview(titleLabel)
     
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(
-        equalTo: topAnchor, constant: 32),
-      titleLabel.leadingAnchor.constraint(
-        equalTo: leadingAnchor, constant: 32)
+      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 32),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
     ])
   }
   
   private func setupPageControl() {
     pageControl.currentPage = 0
-    pageControl.pageIndicatorTintColor = UIColor.lightGray
-    pageControl.currentPageIndicatorTintColor = UIColor.darkGray
+    pageControl.pageIndicatorTintColor = .lightGray
+    pageControl.currentPageIndicatorTintColor = .darkGray
     pageControl.translatesAutoresizingMaskIntoConstraints = false
     
     pageControl.addTarget(
@@ -95,9 +93,9 @@ class SliderView: UIView {
     addSubview(pageControl)
     
     NSLayoutConstraint.activate([
-      pageControl.centerXAnchor.constraint(equalTo: centerXAnchor),
       pageControl.heightAnchor.constraint(equalToConstant: 40),
       pageControl.widthAnchor.constraint(equalToConstant: 160),
+      pageControl.centerXAnchor.constraint(equalTo: centerXAnchor),
       pageControl.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8)
     ])
   }

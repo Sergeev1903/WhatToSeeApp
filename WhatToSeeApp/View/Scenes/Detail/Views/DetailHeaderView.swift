@@ -153,7 +153,7 @@ class DetailHeaderView: UIView {
   private func setupImageViewGradient() {
     imageView.addGradientAddSublayer(
       imageViewGradient,
-      colors: [.systemBackground.withAlphaComponent(0.2), .clear, .clear],
+      colors: [.black.withAlphaComponent(0.2), .clear, .clear],
       startPoint: .top, endPoint: .bottom,
       locations: [0, 0.5, 1])
   }
@@ -161,7 +161,7 @@ class DetailHeaderView: UIView {
   private func setupContainerViewGradient() {
     containerView.addGradientInsertSublayer(
       containerViewGradient, at: 1,
-      colors: [.systemBackground, .clear],
+      colors: [.black, .clear],
       startPoint: .bottom, endPoint: .top)
   }
   

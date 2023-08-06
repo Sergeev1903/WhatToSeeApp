@@ -40,7 +40,7 @@ class ShowAllViewModel: ShowAllViewModelProtocol {
   }
   
   
-  // MARK: -
+  // MARK: - Methods
   public func loadMoreItems(completion: @escaping () -> Void) {
     // FIXME: -
     var categoryEndpoint = MoviesEndpoint.upcoming
@@ -75,8 +75,6 @@ class ShowAllViewModel: ShowAllViewModelProtocol {
       }
   }
   
-  
-  // MARK: -
   public func numberOfItemsInSection() -> Int {
     return mediaItems.count
   }

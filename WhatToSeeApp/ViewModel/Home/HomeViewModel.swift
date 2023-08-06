@@ -34,6 +34,7 @@ class HomeViewModel: HomeViewModelProtocol {
   public var popularMovies: [TMDBMovieResult] = []
   public var topRatedMovies: [TMDBMovieResult] = []
   public var trendingMovies: [TMDBMovieResult] = []
+  
   private let service: MoviesServiceable
   private let dispatchGroup = DispatchGroup()
   
@@ -76,7 +77,9 @@ class HomeViewModel: HomeViewModelProtocol {
       return CategoryCellViewModel(mediaItems: mediaItems)
     }
   
-  public func didTapSeeAll(mediaItems: [TMDBMovieResult], category: MovieCategory) -> ShowAllViewModelProtocol {
+  public func didTapSeeAll(
+    mediaItems: [TMDBMovieResult],
+    category: MovieCategory) -> ShowAllViewModelProtocol {
     return ShowAllViewModel(mediaItems: mediaItems, category: category)
   }
   
@@ -94,8 +97,8 @@ extension HomeViewModel {
           return
         }
         switch result {
-        case .success(let result):
-          strongSelf.upcomingMovies = result.results
+        case .success(let response):
+          strongSelf.upcomingMovies = response.results
         case .failure(let error):
           print(error.customMessage)
         }
@@ -111,8 +114,8 @@ extension HomeViewModel {
           return
         }
         switch result {
-        case .success(let result):
-          strongSelf.nowPlayingMovies = result.results
+        case .success(let response):
+          strongSelf.nowPlayingMovies = response.results
         case .failure(let error):
           print(error.customMessage)
         }
@@ -128,8 +131,8 @@ extension HomeViewModel {
           return
         }
         switch result {
-        case .success(let result):
-          strongSelf.popularMovies = result.results
+        case .success(let response):
+          strongSelf.popularMovies = response.results
         case .failure(let error):
           print(error.customMessage)
         }
@@ -145,8 +148,8 @@ extension HomeViewModel {
           return
         }
         switch result {
-        case .success(let result):
-          strongSelf.topRatedMovies = result.results
+        case .success(let response):
+          strongSelf.topRatedMovies = response.results
         case .failure(let error):
           print(error.customMessage)
         }
@@ -162,8 +165,8 @@ extension HomeViewModel {
           return
         }
         switch result {
-        case .success(let result):
-          strongSelf.trendingMovies = result.results
+        case .success(let response):
+          strongSelf.trendingMovies = response.results
         case .failure(let error):
           print(error.customMessage)
         }

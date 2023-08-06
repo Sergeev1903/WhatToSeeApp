@@ -109,9 +109,9 @@ class HomeViewController: UIViewController {
   }
   
   private func setupTableView() {
-    tableView.delegate = self
-    tableView.dataSource = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
+    tableView.dataSource = self
+    tableView.delegate = self
     tableView.separatorStyle = .none
     tableView.register(
       CategoryHeader.self,
