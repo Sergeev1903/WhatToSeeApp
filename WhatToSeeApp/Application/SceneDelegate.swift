@@ -28,7 +28,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // support only dark theme
     window.overrideUserInterfaceStyle = .dark
     
-    starConnectionMonitor()
+    // Start monitoring internet connectivity
+    InternetConnectionManager.shared.startMonitoring()
+    
   }
   
   func sceneDidDisconnect(_ scene: UIScene) {
@@ -57,32 +59,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // Called as the scene transitions from the foreground to the background.
     // Use this method to save data, release shared resources, and store enough scene-specific state information
     // to restore the scene back to its current state.
-  }
-  
-  
-  func starConnectionMonitor() {
-    let monitor = NWPathMonitor()
-    let queue = DispatchQueue(label: "InternetConnectionMonitor")
-    
-    monitor.pathUpdateHandler = { path in
-      if path.status != .satisfied {
-        DispatchQueue.main.async {
-          let noInternetVC = NoInternetViewController()
-          noInternetVC.modalPresentationStyle = .overFullScreen
-          noInternetVC.modalTransitionStyle = .crossDissolve
-          noInternetVC.delegate = self.window?.rootViewController as? NoInternetViewControllerDelegate
-          self.window?.rootViewController?.present(noInternetVC, animated: true, completion: nil)
-        }
-      } else {
-        DispatchQueue.main.async {
-          if let delegate = self.window?.rootViewController as? NoInternetViewControllerDelegate {
-            delegate.dismissNoInternetViewController()
-          }
-        }
-      }
-    }
-    
-    monitor.start(queue: queue)
   }
   
 }

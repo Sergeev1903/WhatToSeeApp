@@ -10,8 +10,7 @@ import UIKit
 import Network
 
 protocol NoInternetViewControllerDelegate: AnyObject {
-    func reloadData()
-    func dismissNoInternetViewController()
+  func reloadData()
 }
 
 class NoInternetViewController: UIViewController {
