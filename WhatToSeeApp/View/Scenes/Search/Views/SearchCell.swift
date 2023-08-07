@@ -110,7 +110,7 @@ class SearchCell: UITableViewCell {
   private func setupMediaVoteLabel() {
     mediaVoteLabel.textAlignment = .center
     mediaVoteLabel.numberOfLines = 0
-    mediaVoteLabel.font = UIFont.systemFont(ofSize: 12)
+    mediaVoteLabel.font = .systemFont(ofSize: 12)
     mediaVoteLabel.translatesAutoresizingMaskIntoConstraints = false
     
     containerView.addSubview(mediaVoteLabel)

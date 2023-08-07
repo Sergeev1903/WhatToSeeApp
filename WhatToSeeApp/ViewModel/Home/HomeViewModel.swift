@@ -80,8 +80,8 @@ class HomeViewModel: HomeViewModelProtocol {
   public func didTapSeeAll(
     mediaItems: [TMDBMovieResult],
     category: MovieCategory) -> ShowAllViewModelProtocol {
-    return ShowAllViewModel(mediaItems: mediaItems, category: category)
-  }
+      return ShowAllViewModel(mediaItems: mediaItems, category: category)
+    }
   
 }
 

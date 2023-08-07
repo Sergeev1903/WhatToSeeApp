@@ -86,7 +86,7 @@ class DetailHeaderView: UIView {
       watchTrailerButton.centerXAnchor.constraint(
         equalTo: containerView.centerXAnchor),
       watchTrailerButton.centerYAnchor.constraint(
-        equalTo: containerView.centerYAnchor)
+        equalTo: containerView.centerYAnchor, constant: -50)
     ])
     
   }
@@ -110,7 +110,7 @@ class DetailHeaderView: UIView {
       titleLabel.trailingAnchor.constraint(
         equalTo: containerView.trailingAnchor, constant: -16),
       titleLabel.bottomAnchor.constraint(
-        equalTo: containerView.bottomAnchor, constant: -32),
+        equalTo: containerView.bottomAnchor, constant: -16),
     ])
   }
   

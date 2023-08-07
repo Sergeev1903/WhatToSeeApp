@@ -17,25 +17,13 @@ class SearchViewController: UIViewController {
   
   // MARK: - ViewModel
   private var viewModel: SearchViewModelProtocol!
-  
-  
-  // MARK: - Init
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    super.init(nibName: nil, bundle: nil)
-    view.backgroundColor = .systemBackground
-    title = "Search"
-    viewModel = SearchViewModel(service: MoviesService())
-  }
-  
-  required init?(coder: NSCoder) {
-    super.init(coder: coder)
-    print("Sorry! only code, no storyboards")
-  }
-  
+
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = "Search"
+    setupViewModel()
     setupNavigationBar()
     setupSearchbar()
     setupTableView()
@@ -48,6 +36,10 @@ class SearchViewController: UIViewController {
   
   
   // MARK: - Methods
+  private func setupViewModel() {
+    viewModel = SearchViewModel(service: MoviesService())
+  }
+  
   private func setupNavigationBar() {
     navigationController?.navigationBar.prefersLargeTitles = true
     navigationController?.navigationBar.setBackgroundImage(nil, for: .default)

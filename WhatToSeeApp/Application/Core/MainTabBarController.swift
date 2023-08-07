@@ -21,10 +21,9 @@ class MainTabBarController: UITabBarController {
   // MARK: - Setup methods
   private func setupTabBarItem() {
     viewControllers = [
-      createTabBarItem(
-        HomeViewController(),
-        titleName: "Home",
-        imageName: "house"),
+      createTabBarItem(HomeViewController(),
+                       titleName: "Home",
+                       imageName: "house"),
       createTabBarItem(SearchViewController(),
                        titleName: "Search",
                        imageName: "magnifyingglass"),
@@ -56,25 +55,25 @@ class MainTabBarController: UITabBarController {
 }
 
 /*
-// MARK: - ViewControllerRepresentable
-import SwiftUI
-
-struct ViewControllerRepresentable: UIViewControllerRepresentable {
-  typealias UIViewControllerType = MainTabBarController
-  func makeUIViewController(
-    context: Context) -> MainTabBarController {
-      MainTabBarController()
-    }
-  
-  func updateUIViewController(
-    _ uiViewController: MainTabBarController,
-    context: Context) {
-    }
-}
-
-struct ViewController_Previews: PreviewProvider {
-  static var previews: some View {
-    ViewControllerRepresentable()
-  }
-}
-*/
+ // MARK: - ViewControllerRepresentable
+ import SwiftUI
+ 
+ struct ViewControllerRepresentable: UIViewControllerRepresentable {
+ typealias UIViewControllerType = MainTabBarController
+ func makeUIViewController(
+ context: Context) -> MainTabBarController {
+ MainTabBarController()
+ }
+ 
+ func updateUIViewController(
+ _ uiViewController: MainTabBarController,
+ context: Context) {
+ }
+ }
+ 
+ struct ViewController_Previews: PreviewProvider {
+ static var previews: some View {
+ ViewControllerRepresentable()
+ }
+ }
+ */

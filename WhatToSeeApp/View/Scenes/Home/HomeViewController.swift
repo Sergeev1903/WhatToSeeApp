@@ -36,17 +36,16 @@ class HomeViewController: UIViewController {
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .systemBackground
     setupViewModel()
     setupNavigationBar()
     setupTabMenu()
     setupTableView()
+    configureNavigationBar()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-    navigationController?.navigationBar.prefersLargeTitles = false
+    setupNavigationBar()
   }
   
   
@@ -56,7 +55,12 @@ class HomeViewController: UIViewController {
   }
   
   private func setupNavigationBar() {
+    navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
     navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.prefersLargeTitles = false
+  }
+  
+  private func configureNavigationBar() {
     navigationItem.titleView = tabMenu
     
     let profileButton = createBarButton(
@@ -137,7 +141,7 @@ class HomeViewController: UIViewController {
     ])
   }
   
-  // called in willDisplayHeaderView method
+  // Called in willDisplayHeaderView method
   private func setupSlider() {
     slider.frame = CGRect(
       x: 0, y: 0, width: tableView.bounds.width, height: 600)
@@ -146,7 +150,6 @@ class HomeViewController: UIViewController {
     
     slider.viewModel = SliderViewModel(
       mediaItems: viewModel.upcomingMovies,delegate: self)
-    
   }
   
 }
@@ -294,7 +297,6 @@ extension HomeViewController: UITableViewDelegate {
         navigationController?.pushViewController(vc, animated: true)
       }
     }
-  
   
   func tableView(
     _ tableView: UITableView,

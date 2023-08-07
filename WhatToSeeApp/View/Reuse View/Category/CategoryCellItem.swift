@@ -65,7 +65,6 @@ class CategoryCellItem: UICollectionViewCell {
     ])
   }
   
-  // FIXME: bug with size if change border color!
   private func setupVoteLabel() {
     voteLabel.textAlignment = .center
     voteLabel.numberOfLines = 0
