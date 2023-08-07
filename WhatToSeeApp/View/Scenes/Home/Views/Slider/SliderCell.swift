@@ -21,7 +21,7 @@ class SliderCell: UICollectionViewCell {
   // MARK: - ViewModel
   var viewModel: SliderCellViewModelProtocol! {
     didSet {
-      setSliderCellWithData()
+      configureSliderCell()
     }
   }
   
@@ -90,7 +90,7 @@ class SliderCell: UICollectionViewCell {
       locations: [0.0, 0.2, 0.5, 0.8, 1.0])
   }
   
-  private func setSliderCellWithData() {
+  private func configureSliderCell() {
     var url = URL(string: "")
     
     switch UIDevice.current.userInterfaceIdiom {

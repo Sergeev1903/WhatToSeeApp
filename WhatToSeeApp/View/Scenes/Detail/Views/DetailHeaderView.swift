@@ -80,9 +80,9 @@ class DetailHeaderView: UIView {
     
     NSLayoutConstraint.activate([
       watchTrailerButton.heightAnchor.constraint(
-        equalToConstant: 200),
+        equalToConstant: 100),
       watchTrailerButton.widthAnchor.constraint(
-        equalToConstant: 200),
+        equalToConstant: 100),
       watchTrailerButton.centerXAnchor.constraint(
         equalTo: containerView.centerXAnchor),
       watchTrailerButton.centerYAnchor.constraint(

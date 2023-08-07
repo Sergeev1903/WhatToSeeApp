@@ -68,7 +68,7 @@ class SearchViewController: UIViewController {
     tableView.delegate = self
     tableView.separatorStyle = .none
     tableView.register(
-      UITableViewCell.self, forCellReuseIdentifier: "Cell")
+      SearchCell.self, forCellReuseIdentifier: SearchCell.reuseId)
     
     view.addSubview(tableView)
   }
@@ -89,9 +89,10 @@ extension SearchViewController: UITableViewDataSource {
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       
-      let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-      let item = viewModel.searchItems[indexPath.row]
-      cell.textLabel?.text = item.title
+      let cell = tableView.dequeueReusableCell(
+        withIdentifier: SearchCell.reuseId, for: indexPath) as! SearchCell
+      
+      cell.viewModel = viewModel.cellForRowAt(indexPath: indexPath)
       return cell
     }
   
@@ -104,7 +105,7 @@ extension SearchViewController: UITableViewDelegate {
   func tableView(
     _ tableView: UITableView,
     heightForRowAt indexPath: IndexPath) -> CGFloat {
-      return 32
+      return 200
     }
   
   func tableView(

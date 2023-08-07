@@ -18,8 +18,7 @@ protocol SearchViewModelProtocol: AnyObject {
     completion: @escaping () -> Void)
   func numberOfRowsInSection() -> Int
   func cellForRowAt(
-    indexPath: IndexPath,
-    mediaItems: [TMDBMovieResult]) -> SearchCellViewModelProtocol
+    indexPath: IndexPath) -> SearchCellViewModelProtocol
   func didSelectItemAt(indexPath: IndexPath) -> DetailViewModelProtocol
 }
 
@@ -32,7 +31,7 @@ class SearchViewModel: SearchViewModelProtocol {
   var searchItems: [TMDBMovieResult] = []
   var currentPage: Int = 1
   var totalPages: Int = 1
-  
+
   
   // MARK: - Init
   init(service: MoviesServiceable) {
@@ -52,7 +51,7 @@ class SearchViewModel: SearchViewModelProtocol {
         switch result {
         case .success(let response):
           strongSelf.totalPages = response.totalPages
-          strongSelf.searchItems = response.results
+          strongSelf.searchItems = response.results.filter { $0.backdropPath != nil }
         case .failure(let error):
           print(error.customMessage)
         }
@@ -65,8 +64,7 @@ class SearchViewModel: SearchViewModelProtocol {
   }
   
   public func cellForRowAt(
-    indexPath: IndexPath,
-    mediaItems: [TMDBMovieResult]) -> SearchCellViewModelProtocol {
+    indexPath: IndexPath) -> SearchCellViewModelProtocol {
       let media = searchItems[indexPath.row]
       return SearchCellViewModel(media: media)
     }

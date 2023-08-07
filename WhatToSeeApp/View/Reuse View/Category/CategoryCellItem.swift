@@ -21,7 +21,7 @@ class CategoryCellItem: UICollectionViewCell {
   // MARK: - ViewModel
   var viewModel: CategoryCellItemViewModelProtocol! {
     didSet {
-      setCategoryCellItemWithData()
+      configureCategoryCellItem()
     }
   }
   
@@ -51,12 +51,11 @@ class CategoryCellItem: UICollectionViewCell {
   // MARK: - Methods
   private func setupImageView() {
     imageView.contentMode = .scaleAspectFill
+    imageView.layer.cornerRadius = 10
+    imageView.layer.masksToBounds = true
     imageView.translatesAutoresizingMaskIntoConstraints = false
     
     addSubview(imageView)
-    
-    imageView.layer.cornerRadius = 10
-    imageView.layer.masksToBounds = true
     
     NSLayoutConstraint.activate([
       imageView.topAnchor.constraint(equalTo: topAnchor),
@@ -107,12 +106,12 @@ class CategoryCellItem: UICollectionViewCell {
     ])
   }
   
-  private func setCategoryCellItemWithData() {
+  private func configureCategoryCellItem() {
     imageView.sd_setImage(
       with: viewModel.mediaPosterURL,
       placeholderImage: UIImage(named: "load_placeholder"),
       options: .delayPlaceholder) {_,_,_,_ in
-   
+        
         self.loadIndicator.stopAnimating()
         guard self.loadIndicator.isHidden == true else { return }
         self.voteLabel.isHidden = false

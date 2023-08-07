@@ -145,7 +145,7 @@ class DetailViewController: UIViewController {
     headerView.frame = CGRect(
       x: 0, y: 0,
       width: self.view.bounds.width,
-      height: 500)
+      height: 300)
     headerView.watchTrailerButtonDelegate = self
     tableView.tableHeaderView = headerView
   }

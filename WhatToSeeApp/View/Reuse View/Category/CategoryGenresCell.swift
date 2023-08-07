@@ -20,7 +20,7 @@ class CategoryGenresCell: UITableViewCell {
   // MARK: - Init
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    backgroundImageViewSetup()
+    setupBackgroundImageView()
     setupTitleLabel()
   }
   
@@ -31,7 +31,7 @@ class CategoryGenresCell: UITableViewCell {
   
   
   // MARK: - Methods
-  private func backgroundImageViewSetup() {
+  private func setupBackgroundImageView() {
     backgroundColor = .clear
     selectionStyle = .none
     
