@@ -104,13 +104,16 @@ class DetailHeaderView: UIView {
     
     containerView.addSubview(titleLabel)
     
+    // FIXME: - NSLayoutConstraint error in console
     NSLayoutConstraint.activate([
+      titleLabel.topAnchor.constraint(
+        equalTo: containerView.centerYAnchor, constant: 8),
       titleLabel.leadingAnchor.constraint(
-        equalTo: containerView.leadingAnchor, constant: 16),
+        equalTo: containerView.leadingAnchor, constant: 8),
       titleLabel.trailingAnchor.constraint(
-        equalTo: containerView.trailingAnchor, constant: -16),
+        equalTo: containerView.trailingAnchor, constant: -8),
       titleLabel.bottomAnchor.constraint(
-        equalTo: containerView.bottomAnchor, constant: -16),
+        equalTo: containerView.bottomAnchor, constant: -8),
     ])
   }
   
