@@ -37,20 +37,20 @@ class DetailHeaderView: UIView {
     setViewConstraints()
     setupWatchTrailerButton()
     setupTitleLabel()
-    setupImageViewGradient()
-    setupContainerViewGradient()
+    
   }
   
   required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
+    print("Sorry! only code, no storyboards")
+    return nil
   }
   
   
   // MARK: -
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    imageViewGradient.frame = imageView.bounds
-    containerViewGradient.frame = containerView.bounds
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    setupImageViewGradient()
+    setupContainerViewGradient()
   }
   
   

@@ -33,8 +33,8 @@ class CategoryHeader: UITableViewHeaderFooterView {
   }
   
   required init?(coder: NSCoder) {
-    super.init(coder: coder)
     print("Sorry! only code, no storyboards")
+    return nil
   }
   
   

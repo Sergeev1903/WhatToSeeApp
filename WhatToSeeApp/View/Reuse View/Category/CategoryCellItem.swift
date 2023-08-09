@@ -35,13 +35,14 @@ class CategoryCellItem: UICollectionViewCell {
   }
   
   required init?(coder: NSCoder) {
-    super.init(coder: coder)
     print("Sorry! only code, no storyboards")
+    return nil
   }
   
   
   // MARK: -
   override func prepareForReuse() {
+    super.prepareForReuse()
     imageView.image = nil
     voteLabel.text = nil
     voteLabel.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 0.8014279801)

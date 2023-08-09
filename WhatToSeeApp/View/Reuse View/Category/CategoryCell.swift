@@ -28,19 +28,18 @@ class CategoryCell: UITableViewCell {
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupCollectionView()
-    setupContentViewGradient()
   }
   
   required init?(coder: NSCoder) {
-    super.init(coder: coder)
     print("Sorry! only code, no storyboards")
+    return nil
   }
   
   
   // MARK: -
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    contentViewGradient.frame = contentView.bounds
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    setupContentViewGradient()
   }
   
   

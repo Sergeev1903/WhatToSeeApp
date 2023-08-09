@@ -31,7 +31,6 @@ class SliderCell: UICollectionViewCell {
     super.init(frame: frame)
     setupImageView()
     setupLoadIndicator()
-    setupSliderGradient()
   }
   
   required init?(coder: NSCoder) {
@@ -42,14 +41,14 @@ class SliderCell: UICollectionViewCell {
   
   // MARK: -
   override func prepareForReuse() {
+    super.prepareForReuse()
     imageView.image = nil
   }
-  
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    sliderGradient.frame = imageView.bounds
+
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    setupSliderGradient()
   }
-  
   
   // MARK: - Methods
   private func setupImageView() {

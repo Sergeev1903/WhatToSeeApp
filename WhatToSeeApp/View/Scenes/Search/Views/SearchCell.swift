@@ -33,20 +33,28 @@ class SearchCell: UITableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupContainerView()
     setupMediaImageView()
-    setupGradient()
     setupMediaTitle()
     setupMediaVoteLabel()
   }
   
   required init?(coder: NSCoder) {
-    super.init(coder: coder)
     print("Sorry! only code, no storyboards")
+    return nil
   }
   
   
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    gradient.frame = mediaImageView.bounds
+  // MARK: -
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    setupGradient()
+  }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    mediaImageView.image = nil
+    mediaTitle.text = nil
+    mediaVoteLabel.text = nil
+    mediaVoteLabel.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 0.8014279801)
   }
   
   

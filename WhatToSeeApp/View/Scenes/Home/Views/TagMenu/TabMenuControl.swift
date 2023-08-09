@@ -63,9 +63,7 @@ class TabMenuControl: UIControl {
   }
   
   required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-    setupScrollView()
-    setupSegmentedControl()
+    return nil
   }
   
   
