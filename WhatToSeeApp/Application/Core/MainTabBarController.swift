@@ -21,10 +21,12 @@ class MainTabBarController: UITabBarController {
   // MARK: - Setup methods
   private func setupTabBarItem() {
     viewControllers = [
-      createTabBarItem(HomeViewController(),
+      createTabBarItem(HomeViewController(
+        HomeViewModel(service: MoviesService())),
                        titleName: "Home",
                        imageName: "house"),
-      createTabBarItem(SearchViewController(),
+      createTabBarItem(SearchViewController(
+        SearchViewModel(service: MoviesService())),
                        titleName: "Search",
                        imageName: "magnifyingglass"),
       createTabBarItem(WishListViewController(),

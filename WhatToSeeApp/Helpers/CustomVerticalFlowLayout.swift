@@ -50,7 +50,7 @@ final class CustomVerticalFlowLayout: UICollectionViewFlowLayout {
   }
   
   
-  // MARK: - Lifecycle
+  // MARK: - Methods
   override func prepare() {
     super.prepare()
     // MARK: Calculate items size
