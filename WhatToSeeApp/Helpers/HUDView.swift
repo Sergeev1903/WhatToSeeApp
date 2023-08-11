@@ -7,48 +7,55 @@
 
 import UIKit
 
-class HUDView: UIView {
+
+final class HUDView: UIView {
   
+  // MARK: - Properties
   private let label = UILabel()
   
+  
+  // MARK: - Init
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupViews()
   }
   
   required init?(coder: NSCoder) {
-    super.init(coder: coder)
-    setupViews()
+    print("Sorry! only code, no storyboards")
+    return nil
   }
   
+  
+  // MARK: - Setup views
   private func setupViews() {
-    // Customize your HUD appearance here
-    backgroundColor = UIColor.black.withAlphaComponent(0.7)
-    layer.cornerRadius = 8.0
+    // HUDView
+    backgroundColor = .white.withAlphaComponent(0.7)
+    layer.cornerRadius = 10
     clipsToBounds = true
     
-    // Add label
-    label.textColor = UIColor.white
-    label.font = UIFont.boldSystemFont(ofSize: 18)
+    // Label
+    label.textColor = .black.withAlphaComponent(0.7)
+    label.font = .boldSystemFont(ofSize: 18)
     label.textAlignment = .center
+    label.numberOfLines = 0
     label.translatesAutoresizingMaskIntoConstraints = false
     
     addSubview(label)
     
     NSLayoutConstraint.activate([
+      
+      self.widthAnchor.constraint(
+        lessThanOrEqualToConstant: UIScreen.main.bounds.width / 2),
+      
       label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
       label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-      label.centerYAnchor.constraint(equalTo: centerYAnchor)
+      label.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+      label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
     ])
   }
   
-}
-
-
-extension HUDView {
-  
-  // MARK: -
-  func showHUDAndHide(with text: String) {
+  // MARK: - show HUD and hide
+ public func showHUD(withText text: String, andIsHideToTop: Bool) {
     label.text = text
     alpha = 0
     
@@ -59,50 +66,38 @@ extension HUDView {
     
     containerView.addSubview(self)
     
-    UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
       self.alpha = 1.0
-    }) { (_) in
-      self.perform(#selector(self.hide), with: nil, afterDelay: 2.0)
+    }) { _ in
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        
+        switch andIsHideToTop {
+        case true:
+          self.hideToTop()
+        case false:
+          self.hide()
+        }
+      }
     }
   }
   
-  // action for showHUDAndHide
+  // action for showHUD hide
   @objc private func hide() {
-    UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+    UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
       self.alpha = 0
-    }) { (_) in
+    }) { _ in
       self.removeFromSuperview()
     }
   }
   
-  // MARK: -
-  func showHUDAndHideToTop(with text: String) {
-    label.text = text
-    alpha = 0
-    
-    guard let topViewController = UIApplication.shared.windows.first?.rootViewController?.topMostViewController(),
-          let containerView = topViewController.view else {
-      return
-    }
-    
-    containerView.addSubview(self)
-    
-    UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-      self.alpha = 1.0
-      self.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-    }) { (_) in
-      self.perform(#selector(self.hideToTop), with: nil, afterDelay: 2.0)
-    }
-  }
-  
-  // action for showHUDAndHideToTop
+  // action for showHUD hide to top
   @objc private func hideToTop() {
-    UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+    UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
       self.alpha = 0
       self.transform = CGAffineTransform(translationX: 0, y: -self.frame.height)
-    }) { (_) in
-      self.removeFromSuperview()
+    }) { _ in
       self.transform = .identity
+      self.removeFromSuperview()
     }
   }
   
@@ -111,6 +106,7 @@ extension HUDView {
 
 // MARK: -
 extension UIViewController {
+  
   func topMostViewController() -> UIViewController {
     if let presented = presentedViewController {
       return presented.topMostViewController()
@@ -126,4 +122,5 @@ extension UIViewController {
     
     return self
   }
+  
 }

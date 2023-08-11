@@ -31,7 +31,7 @@ class ShowAllViewModel: ShowAllViewModelProtocol {
   
   
   // MARK: - Init
-  required init(mediaItems: [TMDBMovieResult], category: MovieCategory) {
+  init(mediaItems: [TMDBMovieResult], category: MovieCategory) {
     self.mediaItems = mediaItems
     self.category = category.rawValue
     self.service = MoviesService()

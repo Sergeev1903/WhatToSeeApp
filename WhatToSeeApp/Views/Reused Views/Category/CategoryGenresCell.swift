@@ -35,6 +35,8 @@ class CategoryGenresCell: UITableViewCell {
     backgroundColor = .clear
     selectionStyle = .none
     
+    backgroundImageView.image = UIImage(named: "movie_genre_cell")
+    
     switch UIDevice.current.userInterfaceIdiom {
     case .phone: backgroundImageView.contentMode = .scaleAspectFill
     case .pad: backgroundImageView.contentMode = .top
@@ -79,7 +81,7 @@ class CategoryGenresCell: UITableViewCell {
   
   private func setupTitleLabel() {
     titleLabel.text = MovieCategory.genres.rawValue
-    titleLabel.font = UIFont.boldSystemFont(ofSize: 100)
+    titleLabel.font = .boldSystemFont(ofSize: 100)
     titleLabel.numberOfLines = 0
     titleLabel.textAlignment = .center
     titleLabel.textColor = UIColor(

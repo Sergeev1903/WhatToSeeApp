@@ -22,7 +22,7 @@ class CategoryCellViewModel: CategoryCellViewModelProtocol {
   
   
   // MARK: - Init
-  required init(mediaItems: [TMDBMovieResult]) {
+  init(mediaItems: [TMDBMovieResult]) {
     self.mediaItems = mediaItems
   }
   

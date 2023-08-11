@@ -17,11 +17,7 @@ protocol DetailViewModelProtocol: AnyObject {
   
   var detailGenres: String { get }
   var detailTrailerUrl: String { get }
-  
-  //  func getMultiplyRequest(completion: @escaping () -> Void)
-  func getMovieGenres(completion: @escaping () -> Void)
-  func getMovieTrailers(completion: @escaping () -> Void)
-  
+  func getMultiplyRequest(completion: @escaping () -> Void)
 }
 
 
@@ -74,25 +70,31 @@ class DetailViewModel: DetailViewModelProtocol {
   
   
   // MARK: - Init
-  required init(mediaItem: TMDBMovieResult) {
+  init(mediaItem: TMDBMovieResult) {
     self.mediaItem = mediaItem
     self.service = MoviesService()
   }
   
   
   // MARK: - Methods
-  //  public func getMultiplyRequest(completion: @escaping () -> Void) {
-  //    dispatchGroup.enter()
-  //    getMovieDetail()
-  //    dispatchGroup.enter()
-  //    getMovieTrailers()
-  //
-  //    dispatchGroup.notify(queue: .main) {
-  //      completion()
-  //    }
-  //  }
+  public func getMultiplyRequest(completion: @escaping () -> Void) {
+    dispatchGroup.enter()
+    getMovieGenres()
+    dispatchGroup.enter()
+    getMovieTrailers()
+    
+    dispatchGroup.notify(queue: .main) {
+      completion()
+    }
+  }
   
-  public func getMovieGenres(completion: @escaping () -> Void) {
+}
+
+
+// MARK: - Network requests
+extension DetailViewModel {
+  
+  private func getMovieGenres() {
     service.getMedia(
       endpoint: MoviesEndpoint.movieGenres(id: mediaItem.id!),
       responseModel: Genres.self) { [weak self] result in
@@ -104,12 +106,11 @@ class DetailViewModel: DetailViewModelProtocol {
         case .failure(let error):
           print(error.customMessage)
         }
-        //      strongSelf.dispatchGroup.enter()
-        completion()
+        strongSelf.dispatchGroup.leave()
       }
   }
   
-  public func getMovieTrailers(completion: @escaping () -> Void) {
+  private func getMovieTrailers() {
     service.getMedia(
       endpoint: MoviesEndpoint.movieTrailers(id: mediaItem.id!),
       responseModel: Videos.self) { [weak self] result in
@@ -121,8 +122,7 @@ class DetailViewModel: DetailViewModelProtocol {
         case .failure(let error):
           print(error.customMessage)
         }
-        //      strongSelf.dispatchGroup.enter()
-        completion()
+        strongSelf.dispatchGroup.leave()
       }
   }
   

@@ -29,7 +29,7 @@ class SearchViewModel: SearchViewModelProtocol {
   
   
   // MARK: - Init
-  required init(service: MoviesServiceable) {
+  init(service: MoviesServiceable) {
     self.service = service
   }
   

@@ -40,7 +40,7 @@ class HomeViewModel: HomeViewModelProtocol {
   
   
   // MARK: - Init
-  required init(service: MoviesServiceable) {
+  init(service: MoviesServiceable) {
     self.service = service
   }
   

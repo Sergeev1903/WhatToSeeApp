@@ -51,7 +51,7 @@ class SearchCellViewModel: SearchCellViewModelProtocol {
   
   
   // MARK: - Init
-  required init(mediaItem: TMDBMovieResult) {
+  init(mediaItem: TMDBMovieResult) {
     self.mediaItem = mediaItem
   }
   

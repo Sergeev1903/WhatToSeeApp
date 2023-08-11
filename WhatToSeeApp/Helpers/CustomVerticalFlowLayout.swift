@@ -27,7 +27,7 @@ final class CustomVerticalFlowLayout: UICollectionViewFlowLayout {
     case .pad: self.itemsPerRow = itemsPerRow + 2
     default: break
     }
-
+    
     self.margin = margin
     self.lineSpacing = lineSpacing
     self.interitemSpacing = interitemSpacing
@@ -37,7 +37,7 @@ final class CustomVerticalFlowLayout: UICollectionViewFlowLayout {
     sectionInsetReference = .fromSafeArea
     self.scrollDirection = .vertical
   }
-
+  
   override init() {
     super.init()
     sectionInsetReference = .fromSafeArea
@@ -45,8 +45,8 @@ final class CustomVerticalFlowLayout: UICollectionViewFlowLayout {
   }
   
   required init?(coder: NSCoder) {
-    super.init(coder: coder)
-    self.scrollDirection = .vertical
+    print("Sorry! only code, no storyboards")
+    return nil
   }
   
   

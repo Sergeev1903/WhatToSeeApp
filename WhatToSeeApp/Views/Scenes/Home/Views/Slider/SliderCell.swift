@@ -82,7 +82,7 @@ class SliderCell: UICollectionViewCell {
   
   private func setupSliderGradient() {
     // create & add gradient from UIView extension
-    imageView.addGradientAddSublayer(
+    self.addGradientAddSublayer(
       sliderGradient, colors: [.systemBackground, .clear, .clear, .clear,
                                .systemBackground],
       startPoint: .top, endPoint: .bottom,

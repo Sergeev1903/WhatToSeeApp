@@ -29,7 +29,7 @@ class SliderCellViewModel: SliderCellViewModelProtocol {
   
   
   // MARK: - Init
-  required init(mediaItem: TMDBMovieResult) {
+  init(mediaItem: TMDBMovieResult) {
     self.mediaItem = mediaItem
   }
   

@@ -17,25 +17,11 @@ class DetailViewController: UIViewController {
   // MARK: - ViewModel
   var viewModel: DetailViewModelProtocol!{
     didSet {
-      
-      //      viewModel.getMultiplyRequest {
-      //        self.tableView.reloadData()
-      //      }
-      
-      viewModel.getMovieGenres {
-        DispatchQueue.main.async {
-          self.tableView.reloadData()
-        }
+      viewModel.getMultiplyRequest {
+        self.tableView.reloadData()
       }
       
-      viewModel.getMovieTrailers {
-        DispatchQueue.main.async {
-          self.tableView.reloadData()
-        }
-      }
-      
-      tableHeaderView.imageView.sd_setImage(with: viewModel.mediaBackdropURL)
-      tableHeaderView.titleLabel.text = self.viewModel.mediaTitle
+      configureHeaderView()
     }
   }
   
@@ -57,6 +43,17 @@ class DetailViewController: UIViewController {
     self.navigationController?.navigationBar.tintColor = .white
     
     // Create a custom back button
+    let backButton = createBackButton()
+    navigationItem.leftBarButtonItem = backButton
+    
+    // Create a custom wish button
+    let wishButton = createWishButton()
+    navigationItem.rightBarButtonItems = [wishButton]
+  }
+  
+  
+  // MARK: - Methods
+  private func createBackButton() -> UIBarButtonItem {
     let backButtonImage = UIImage(systemName: "arrow.backward.circle.fill")?.withTintColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8), renderingMode: .alwaysOriginal)
     
     let buttonSize = CGSize(width: 32, height: 32)
@@ -68,10 +65,10 @@ class DetailViewController: UIViewController {
     
     let backButton = UIBarButtonItem(image: resizedButtonImage, style: .plain, target: self, action: #selector(backButtonTapped))
     
-    navigationItem.leftBarButtonItem = backButton
-    
-    
-    // Create a custom wish button
+    return backButton
+  }
+  
+  private func createWishButton() -> UIBarButtonItem {
     let wishButtonImage = UIImage(systemName: "heart.circle.fill")?.withTintColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8), renderingMode: .alwaysTemplate)
     let wishButtonSize = CGSize(width: 32, height: 32)
     
@@ -81,14 +78,11 @@ class DetailViewController: UIViewController {
     let wishResizedButtonImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
     UIGraphicsEndImageContext()
     
-    let wishButton = UIBarButtonItem(image: wishResizedButtonImage, style: .plain, target: self, action: #selector(wishButtonTapped))
+    let wishButton = UIBarButtonItem(image: wishResizedButtonImage, style: .plain, target: self, action: #selector(wishButtonTapped(_:) ))
     
-    navigationItem.rightBarButtonItems = [wishButton]
-    
+    return wishButton
   }
   
-  
-  // MARK: - Methods
   
   // custom back button action
   @objc private func backButtonTapped() {
@@ -96,28 +90,17 @@ class DetailViewController: UIViewController {
   }
   
   // custom wish button action
-  @objc private func wishButtonTapped() {
+  @objc private func wishButtonTapped(_ sender: UIBarButtonItem) {
     print("wishButtonTapped")
-    showHUD()
-    //    showHUDView()
-  }
-  
-  private func showHUD() {
-    let hudVC = HUDViewController()
-    hudVC.modalPresentationStyle = .overFullScreen
-    hudVC.modalTransitionStyle = .crossDissolve
-    hudVC.showHUDAndHideToTop(withText: "Add to collection")
-    present(hudVC, animated: true, completion: nil)
+    showHUDView()
   }
   
   private func showHUDView() {
     let hud = HUDView()
-    hud.showHUDAndHideToTop(with: "Add to collection")
+    hud.showHUD(withText: "Add to collection", andIsHideToTop: true)
     hud.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      hud.heightAnchor.constraint(equalToConstant: 40),
-      hud.widthAnchor.constraint(equalToConstant: 180),
       hud.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       hud.topAnchor.constraint(equalTo: view.topAnchor, constant: 48)
     ])
@@ -145,6 +128,11 @@ class DetailViewController: UIViewController {
       x: 0, y: 0, width: self.view.bounds.width, height: 300)
     tableHeaderView.delegate = self
     tableView.tableHeaderView = tableHeaderView
+  }
+  
+  private func configureHeaderView() {
+    tableHeaderView.imageView.sd_setImage(with: viewModel.mediaBackdropURL)
+    tableHeaderView.titleLabel.text = self.viewModel.mediaTitle
   }
   
 }

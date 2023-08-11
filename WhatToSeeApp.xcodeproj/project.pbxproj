@@ -40,7 +40,6 @@
 		1D93FEBE2A5D8D3200314762 /* TabMenuControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D93FEBD2A5D8D3200314762 /* TabMenuControl.swift */; };
 		1D93FEC02A5DA64300314762 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D93FEBF2A5DA64300314762 /* UIColor+Extension.swift */; };
 		1D96EBD52A7A51800057C048 /* UiView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D96EBD42A7A51800057C048 /* UiView+Extension.swift */; };
-		1DA20DF52A7E2D58005B434A /* HUDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA20DF42A7E2D58005B434A /* HUDViewController.swift */; };
 		1DA20DF72A7E391B005B434A /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA20DF62A7E391B005B434A /* HUDView.swift */; };
 		1DA20DF92A7E5163005B434A /* NoInternetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA20DF82A7E5163005B434A /* NoInternetViewController.swift */; };
 		1DA20DFB2A7F8069005B434A /* InternetNWPathMonitorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA20DFA2A7F8069005B434A /* InternetNWPathMonitorManager.swift */; };
@@ -93,7 +92,6 @@
 		1D93FEBD2A5D8D3200314762 /* TabMenuControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabMenuControl.swift; sourceTree = "<group>"; };
 		1D93FEBF2A5DA64300314762 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		1D96EBD42A7A51800057C048 /* UiView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UiView+Extension.swift"; sourceTree = "<group>"; };
-		1DA20DF42A7E2D58005B434A /* HUDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDViewController.swift; sourceTree = "<group>"; };
 		1DA20DF62A7E391B005B434A /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		1DA20DF82A7E5163005B434A /* NoInternetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetViewController.swift; sourceTree = "<group>"; };
 		1DA20DFA2A7F8069005B434A /* InternetNWPathMonitorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetNWPathMonitorManager.swift; sourceTree = "<group>"; };
@@ -154,7 +152,6 @@
 		1D1BC43C2A770DC300BFF67A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				1DA20DF42A7E2D58005B434A /* HUDViewController.swift */,
 				1DA20DF62A7E391B005B434A /* HUDView.swift */,
 				1D0586002A77013200664193 /* CustomVerticalFlowLayout.swift */,
 			);
@@ -560,7 +557,6 @@
 				1D3800D92A66E73B00C4729D /* SliderCellViewModel.swift in Sources */,
 				1D0585FC2A76F5D700664193 /* ShowAllViewController.swift in Sources */,
 				1D93FEB72A5D75C800314762 /* ViewController+Extension.swift in Sources */,
-				1DA20DF52A7E2D58005B434A /* HUDViewController.swift in Sources */,
 				1D93FEAB2A5D611100314762 /* SearchViewController.swift in Sources */,
 				1D93FEAD2A5D61A000314762 /* WishListViewController.swift in Sources */,
 				1D35B9A02A64569B009A6CB9 /* HTTPClient.swift in Sources */,

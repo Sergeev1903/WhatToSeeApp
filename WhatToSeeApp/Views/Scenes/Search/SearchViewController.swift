@@ -57,6 +57,8 @@ class SearchViewController: UIViewController {
     searchController.searchResultsUpdater = self
     searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.placeholder = "Search Movies"
+    // plug start text
+    searchController.searchBar.text = "Terminator"
     navigationItem.searchController = searchController
     definesPresentationContext = true
   }

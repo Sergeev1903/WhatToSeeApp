@@ -56,7 +56,7 @@ class MainTabBarController: UITabBarController {
   }
 }
 
-/*
+
  // MARK: - ViewControllerRepresentable
  import SwiftUI
  
@@ -78,4 +78,4 @@ class MainTabBarController: UITabBarController {
  ViewControllerRepresentable()
  }
  }
- */
+

@@ -18,11 +18,11 @@ protocol SliderViewModelProtocol: AnyObject {
 class SliderViewModel: SliderViewModelProtocol {
   
   // MARK: - Properties
-  private var mediaItems: [TMDBMovieResult] = []
+  private var mediaItems: [TMDBMovieResult]
   
   
   // MARK: - Init
-  required init(mediaItems: [TMDBMovieResult]) {
+  init(mediaItems: [TMDBMovieResult]) {
     self.mediaItems = mediaItems
   }
   

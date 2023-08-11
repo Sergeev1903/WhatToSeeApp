@@ -68,7 +68,7 @@ class CategoryCellItem: UICollectionViewCell {
   private func setupVoteLabel() {
     voteLabel.textAlignment = .center
     voteLabel.numberOfLines = 0
-    voteLabel.font = UIFont.systemFont(ofSize: 8)
+    voteLabel.font = .systemFont(ofSize: 8)
     voteLabel.isHidden = true
     voteLabel.translatesAutoresizingMaskIntoConstraints = false
     
