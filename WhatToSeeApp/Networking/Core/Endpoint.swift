@@ -11,6 +11,7 @@ import Foundation
 protocol Endpoint {
   var apiKey: String { get }
   var accessToken: String { get }
+  var accountID: String { get }
   var scheme: String { get }
   var host: String { get }
   var path: String { get }
@@ -30,16 +31,16 @@ extension Endpoint {
     return "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZjU4NmUyMGFlYWRhNTRhODIwYTU2YmE1ODc1MTc0NyIsInN1YiI6IjY0MDc3NDdmM2UyZWM4MDA3OTA5MzYxNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UtWPCFt9Ix-nvuSFEiIDz_HXWtKWHKYLKItB_INdSk0"
   }
   
+  var accountID: String {
+    return "18078644"
+  }
+  
   var scheme: String {
     return "https"
   }
   
   var host: String {
     return "api.themoviedb.org"
-  }
-  
-  var body: [String: String]? {
-    return nil
   }
   
 }

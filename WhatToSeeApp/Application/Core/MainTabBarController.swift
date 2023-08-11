@@ -29,9 +29,10 @@ class MainTabBarController: UITabBarController {
         SearchViewModel(service: MoviesService())),
                        titleName: "Search",
                        imageName: "magnifyingglass"),
-      createTabBarItem(WishListViewController(),
-                       titleName: "Wishlist",
-                       imageName: "bookmark"),
+      createTabBarItem(FavoriteViewController(
+        FavoriteViewModel(service: MoviesService())),
+                       titleName: "Favorite",
+                       imageName: "heart"),
       createTabBarItem(ProfileViewController(),
                        titleName: "Profile",
                        imageName: "person.crop.circle")

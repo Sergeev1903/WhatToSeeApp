@@ -1,28 +1,43 @@
 //
-//  ShowAllViewController.swift
+//  WishListViewController.swift
 //  WhatToSeeApp
 //
-//  Created by Артем Сергеев on 30.07.2023.
+//  Created by Артем Сергеев on 11.07.2023.
 //
 
 import UIKit
 
 
-class ShowAllViewController: UIViewController {
+class FavoriteViewController: UIViewController {
   
   // MARK: - Properties
   private var collectionView: UICollectionView!
   
   // MARK: - ViewModel
-  var viewModel: ShowAllViewModelProtocol!
+  var viewModel: FavoriteViewModelProtocol
+  
+  
+  // MARK: - Init
+  init(_ viewModel: FavoriteViewModelProtocol) {
+    self.viewModel = viewModel
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder: NSCoder) {
+    print("Sorry! only code, no storyboards")
+    return nil
+  }
   
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.title = viewModel.category
+    self.title = "Favorite"
     setupNavigationBar()
     setupCollectionView()
+    configureViewModel()
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(handleNotification), name: Notification.Name("UpdateFavorite"), object: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -53,18 +68,24 @@ class ShowAllViewController: UIViewController {
     view.addSubview(collectionView)
   }
   
+  
+  private func configureViewModel() {
+    viewModel.getFavoriteMovies {
+        self.collectionView.reloadData()
+    }
+  }
+  
 }
 
 
 // MARK: - UICollectionViewDataSource
-extension ShowAllViewController: UICollectionViewDataSource {
+extension FavoriteViewController: UICollectionViewDataSource {
   
   func collectionView(
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int) -> Int {
       return viewModel.numberOfItemsInSection()
     }
-  
   
   func collectionView(
     _ collectionView: UICollectionView,
@@ -79,7 +100,7 @@ extension ShowAllViewController: UICollectionViewDataSource {
 
 
 // MARK: - UICollectionViewDelegate
-extension ShowAllViewController: UICollectionViewDelegate {
+extension FavoriteViewController: UICollectionViewDelegate {
   
   func collectionView(
     _ collectionView: UICollectionView,
@@ -91,18 +112,14 @@ extension ShowAllViewController: UICollectionViewDelegate {
       navigationController?.pushViewController(vc, animated: true)
     }
   
+}
+
+
+// MARK: -
+extension FavoriteViewController {
   
-  // MARK: - Load more movies
-  func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    //     Load more movies when reaching the last item
-    if indexPath.item == viewModel.numberOfItemsInSection()
-        - 1 && viewModel.currentPage <= viewModel.totalPages {
-      viewModel.currentPage += 1
-      viewModel.loadMoreItems {
-          self.collectionView.reloadData()
-      }
-    }
+  @objc func handleNotification() {
+    configureViewModel()
   }
   
 }
-

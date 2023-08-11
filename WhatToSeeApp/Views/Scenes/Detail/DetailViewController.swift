@@ -14,6 +14,7 @@ class DetailViewController: UIViewController {
   private let tableView = UITableView()
   private let tableHeaderView = DetailHeaderView()
   
+  
   // MARK: - ViewModel
   var viewModel: DetailViewModelProtocol!{
     didSet {
@@ -47,7 +48,7 @@ class DetailViewController: UIViewController {
     navigationItem.leftBarButtonItem = backButton
     
     // Create a custom wish button
-    let wishButton = createWishButton()
+    let wishButton = createFavoriteButton()
     navigationItem.rightBarButtonItems = [wishButton]
   }
   
@@ -68,19 +69,19 @@ class DetailViewController: UIViewController {
     return backButton
   }
   
-  private func createWishButton() -> UIBarButtonItem {
-    let wishButtonImage = UIImage(systemName: "heart.circle.fill")?.withTintColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8), renderingMode: .alwaysTemplate)
-    let wishButtonSize = CGSize(width: 32, height: 32)
+  private func createFavoriteButton() -> UIBarButtonItem {
+    let favoriteButtonImage = UIImage(systemName: "heart.circle.fill")?.withTintColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8), renderingMode: .alwaysTemplate)
+    let favoriteButtonSize = CGSize(width: 32, height: 32)
     
-    UIGraphicsBeginImageContextWithOptions(wishButtonSize, false, UIScreen.main.scale)
-    wishButtonImage?.draw(in: CGRect(origin: .zero, size: wishButtonSize))
+    UIGraphicsBeginImageContextWithOptions(favoriteButtonSize, false, UIScreen.main.scale)
+    favoriteButtonImage?.draw(in: CGRect(origin: .zero, size: favoriteButtonSize))
     
-    let wishResizedButtonImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
+    let favoriteResizedButtonImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
     UIGraphicsEndImageContext()
     
-    let wishButton = UIBarButtonItem(image: wishResizedButtonImage, style: .plain, target: self, action: #selector(wishButtonTapped(_:) ))
+    let favoriteButton = UIBarButtonItem(image: favoriteResizedButtonImage, style: .plain, target: self, action: #selector(favoriteButtonTapped(_:) ))
     
-    return wishButton
+    return favoriteButton
   }
   
   
@@ -89,15 +90,23 @@ class DetailViewController: UIViewController {
     navigationController?.popViewController(animated: true)
   }
   
-  // custom wish button action
-  @objc private func wishButtonTapped(_ sender: UIBarButtonItem) {
-    print("wishButtonTapped")
-    showHUDView()
+  // custom favorite button action
+  @objc private func favoriteButtonTapped(_ sender: UIBarButtonItem) {
+    viewModel.addToFovorite(movieId: viewModel.mediaItemId) {
+      self.showHUDView()
+      NotificationCenter.default.post(name: Notification.Name("UpdateFavorite"), object: nil)
+    }
+    
+//    viewModel.removeFromFovorite(movieId: viewModel.mediaItemId) {
+//      self.showHUDView()
+//      NotificationCenter.default.post(name: Notification.Name("UpdateFavorite"), object: nil)
+//    }
+    
   }
   
   private func showHUDView() {
     let hud = HUDView()
-    hud.showHUD(withText: "Add to collection", andIsHideToTop: true)
+    hud.showHUD(withText: viewModel.favoriteStatus, andIsHideToTop: true)
     hud.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([

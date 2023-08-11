@@ -9,6 +9,8 @@ import Foundation
 
 
 protocol DetailViewModelProtocol: AnyObject {
+  var favoriteStatus: String { get }
+  var mediaItemId: Int { get }
   var mediaBackdropURL: URL { get }
   var mediaTitle: String { get }
   var mediaVoteAverage: String { get }
@@ -18,6 +20,9 @@ protocol DetailViewModelProtocol: AnyObject {
   var detailGenres: String { get }
   var detailTrailerUrl: String { get }
   func getMultiplyRequest(completion: @escaping () -> Void)
+  
+  func addToFovorite(movieId: Int, completion: @escaping () -> Void)
+  func removeFromFovorite(movieId: Int, completion: @escaping () -> Void) 
 }
 
 
@@ -31,6 +36,13 @@ class DetailViewModel: DetailViewModelProtocol {
   
   private let service: MoviesServiceable
   private let dispatchGroup = DispatchGroup()
+  
+  
+  var favoriteStatus: String = ""
+  
+  var mediaItemId: Int {
+    mediaItem.id!
+  }
   
   var mediaBackdropURL: URL {
     mediaItem.backdropURL
@@ -87,6 +99,40 @@ class DetailViewModel: DetailViewModelProtocol {
       completion()
     }
   }
+  
+  
+  public func addToFovorite(movieId: Int, completion: @escaping () -> Void) {
+    service.getMedia(endpoint: MoviesEndpoint.addFavoriteMovie(movieId: movieId), responseModel: TMDBMovieResult.self) {[weak self] response in
+      guard let strongSelf = self else { return }
+      
+      switch response {
+      case .success:
+        print("success added")
+        strongSelf.favoriteStatus = "Added to favorite"
+      case .failure(let error):
+        print(error.customMessage)
+        strongSelf.favoriteStatus = "\(error.customMessage)"
+      }
+      completion()
+    }
+  }
+  
+  // FIXME: -
+  public func removeFromFovorite(movieId: Int, completion: @escaping () -> Void) {
+    service.getMedia(endpoint: MoviesEndpoint.removeFavoriteMovie(movieId: movieId), responseModel: TMDBMovieResult.self) {[weak self] response in
+       guard let strongSelf = self else { return }
+       
+       switch response {
+       case .success:
+         print("success removed")
+         strongSelf.favoriteStatus = "Removed to favorite"
+       case .failure(let error):
+         print(error.customMessage)
+         strongSelf.favoriteStatus = "\(error.customMessage)"
+       }
+      completion()
+     }
+   }
   
 }
 

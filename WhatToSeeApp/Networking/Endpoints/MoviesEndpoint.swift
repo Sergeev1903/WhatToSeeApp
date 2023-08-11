@@ -26,11 +26,15 @@ enum MoviesEndpoint {
   case movieGenres(id: Int)
   case movieTrailers(id: Int)
   case searchMovie(searchText: String, page: Int)
+  case favoriteMovies(page: Int)
+  case addFavoriteMovie(movieId: Int)
+  case removeFavoriteMovie(movieId: Int)
 }
 
 extension MoviesEndpoint: Endpoint {
   
   var path: String {
+    
     switch self {
     case .nowPlaying:
       return "/3/movie/now_playing"
@@ -48,39 +52,74 @@ extension MoviesEndpoint: Endpoint {
       return "/3/movie/\(id)/videos"
     case .searchMovie:
       return "/3/search/movie"
+    case .favoriteMovies:
+     return "/3/account/\(accountID)/favorite/movies"
+    case .addFavoriteMovie, .removeFavoriteMovie:
+     return "/3/account/\(accountID)/favorite"
     }
   }
   
   var method: RequestMethod {
     switch self {
+      
     case .nowPlaying, .popular, .topRated,
-        .upcoming, .trending, .movieGenres, .movieTrailers, .searchMovie:
+        .upcoming, .trending, .movieGenres,
+        .movieTrailers, .searchMovie, .favoriteMovies:
       return .get
+      
+    case .addFavoriteMovie, .removeFavoriteMovie:
+      return .post
     }
   }
   
   var header: [String: String]? {
     switch self {
+      
     case .nowPlaying, .popular, .topRated,
-        .upcoming, .trending, .movieGenres, .movieTrailers, .searchMovie:
+        .upcoming, .trending, .movieGenres,
+        .movieTrailers, .searchMovie,
+        .favoriteMovies, .addFavoriteMovie, .removeFavoriteMovie:
       return [
         "Authorization": "Bearer \(accessToken)",
         "Content-Type": "application/json;charset=utf-8"
       ]
+      
     }
   }
   
   var queryItems: [URLQueryItem]? {
     switch self {
+      
     case .nowPlaying(let page), .popular(let page),
-        .topRated(let page), .trending(let page):
+        .topRated(let page), .trending(let page), .favoriteMovies(let page):
       return [URLQueryItem(name: "page", value: "\(page)")]
       
-    case .upcoming, .movieGenres, .movieTrailers:
+    case .upcoming, .movieGenres, .movieTrailers,
+        .addFavoriteMovie, .removeFavoriteMovie:
       return nil
+      
     case .searchMovie(searchText: let searchText, page: let page ):
       return [URLQueryItem(name: "query", value: "\(searchText)"),
               URLQueryItem(name: "page", value: "\(page)")]
+      
+    }
+  }
+  
+  var body: [String : String]? {
+    switch self {
+      
+    case .nowPlaying, .popular, .topRated,
+        .upcoming, .trending, .movieGenres,
+        .movieTrailers, .searchMovie, .favoriteMovies:
+      return nil
+      
+    case .addFavoriteMovie(let movieId):
+      return ["media_type": "movie", "media_id": "\(movieId)", "favorite": "true"]
+      
+      
+      // FIXME: -
+    case .removeFavoriteMovie(let movieId):
+      return ["media_type": "movie", "media_id": "\(movieId)", "favorite": "false"]
     }
   }
   
