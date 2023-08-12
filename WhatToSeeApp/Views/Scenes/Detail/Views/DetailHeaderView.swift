@@ -70,7 +70,7 @@ class DetailHeaderView: UIView {
       systemName: "play.circle", withConfiguration: imageConfig)
     
     watchTrailerButton.setBackgroundImage(buttonImage, for: .normal)
-    watchTrailerButton.tintColor = .white.withAlphaComponent(0.4)
+    watchTrailerButton.tintColor = .white.withAlphaComponent(0.7)
     watchTrailerButton.translatesAutoresizingMaskIntoConstraints = false
     
     watchTrailerButton.addTarget(

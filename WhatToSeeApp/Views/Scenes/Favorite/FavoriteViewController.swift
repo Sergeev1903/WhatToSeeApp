@@ -32,7 +32,7 @@ class FavoriteViewController: UIViewController {
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.title = "Favorite"
+    self.title = "Favorites"
     setupNavigationBar()
     setupCollectionView()
     configureViewModel()

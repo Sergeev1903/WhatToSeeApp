@@ -37,14 +37,14 @@ extension HTTPClient {
       
       if endpoint.method == .post,
          let body = endpoint.body {
-        let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
         do {
-          request.httpBody = try encoder.encode(body)
+          request.httpBody = try JSONSerialization.data(
+            withJSONObject: body, options: [])
         } catch {
           return completion(.failure(.encode))
         }
       }
+      
       
       let task = URLSession.shared.dataTask(
         with: request) { (data, response, error) in

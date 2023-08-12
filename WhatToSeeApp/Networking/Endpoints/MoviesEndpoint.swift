@@ -105,7 +105,7 @@ extension MoviesEndpoint: Endpoint {
     }
   }
   
-  var body: [String : String]? {
+  var body: [String : Any]? {
     switch self {
       
     case .nowPlaying, .popular, .topRated,
@@ -114,12 +114,10 @@ extension MoviesEndpoint: Endpoint {
       return nil
       
     case .addFavoriteMovie(let movieId):
-      return ["media_type": "movie", "media_id": "\(movieId)", "favorite": "true"]
+      return ["media_type": "movie", "media_id": movieId, "favorite": true]
       
-      
-      // FIXME: -
     case .removeFavoriteMovie(let movieId):
-      return ["media_type": "movie", "media_id": "\(movieId)", "favorite": "false"]
+      return ["media_type": "movie", "media_id": movieId, "favorite": false]
     }
   }
   

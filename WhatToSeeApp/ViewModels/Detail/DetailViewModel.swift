@@ -100,39 +100,33 @@ class DetailViewModel: DetailViewModelProtocol {
     }
   }
   
-  
   public func addToFovorite(movieId: Int, completion: @escaping () -> Void) {
     service.getMedia(endpoint: MoviesEndpoint.addFavoriteMovie(movieId: movieId), responseModel: TMDBMovieResult.self) {[weak self] response in
       guard let strongSelf = self else { return }
       
       switch response {
       case .success:
-        print("success added")
         strongSelf.favoriteStatus = "Added to favorite"
       case .failure(let error):
-        print(error.customMessage)
         strongSelf.favoriteStatus = "\(error.customMessage)"
       }
       completion()
     }
   }
   
-  // FIXME: -
   public func removeFromFovorite(movieId: Int, completion: @escaping () -> Void) {
     service.getMedia(endpoint: MoviesEndpoint.removeFavoriteMovie(movieId: movieId), responseModel: TMDBMovieResult.self) {[weak self] response in
-       guard let strongSelf = self else { return }
-       
-       switch response {
-       case .success:
-         print("success removed")
-         strongSelf.favoriteStatus = "Removed to favorite"
-       case .failure(let error):
-         print(error.customMessage)
-         strongSelf.favoriteStatus = "\(error.customMessage)"
-       }
+      guard let strongSelf = self else { return }
+      
+      switch response {
+      case .success:
+        strongSelf.favoriteStatus = "Removed from favorite"
+      case .failure(let error):
+        strongSelf.favoriteStatus = "\(error.customMessage)"
+      }
       completion()
-     }
-   }
+    }
+  }
   
 }
 

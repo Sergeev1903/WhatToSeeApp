@@ -13,10 +13,12 @@ class DetailViewController: UIViewController {
   // MARK: - Properties
   private let tableView = UITableView()
   private let tableHeaderView = DetailHeaderView()
+  private let backNavButton = UIButton(type: .custom)
+  private let favoriteNavButton = UIButton(type: .custom)
   
   
   // MARK: - ViewModel
-  var viewModel: DetailViewModelProtocol!{
+  var viewModel: DetailViewModelProtocol! {
     didSet {
       viewModel.getMultiplyRequest {
         self.tableView.reloadData()
@@ -32,6 +34,8 @@ class DetailViewController: UIViewController {
     super.viewDidLoad()
     setuptTableView()
     setupHeaderView()
+    setupBackNavButton()
+    setupFavoriteNavButton()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -43,64 +47,52 @@ class DetailViewController: UIViewController {
     self.navigationController?.navigationBar.isTranslucent = true
     self.navigationController?.navigationBar.tintColor = .white
     
-    // Create a custom back button
-    let backButton = createBackButton()
-    navigationItem.leftBarButtonItem = backButton
+    // Custom back button
+    navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backNavButton)
     
-    // Create a custom wish button
-    let wishButton = createFavoriteButton()
-    navigationItem.rightBarButtonItems = [wishButton]
+    // Custom favorite button
+    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: favoriteNavButton)
   }
   
   
   // MARK: - Methods
-  private func createBackButton() -> UIBarButtonItem {
-    let backButtonImage = UIImage(systemName: "arrow.backward.circle.fill")?.withTintColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8), renderingMode: .alwaysOriginal)
-    
-    let buttonSize = CGSize(width: 32, height: 32)
-    UIGraphicsBeginImageContextWithOptions(buttonSize, false, 0.0)
-    backButtonImage?.draw(in: CGRect(origin: .zero, size: buttonSize))
-    
-    let resizedButtonImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
-    UIGraphicsEndImageContext()
-    
-    let backButton = UIBarButtonItem(image: resizedButtonImage, style: .plain, target: self, action: #selector(backButtonTapped))
-    
-    return backButton
+  private func setupBackNavButton() {
+    backNavButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
+    let image = UIImage(systemName: "arrow.left")
+    backNavButton.setImage(image, for: .normal)
+    backNavButton.layer.cornerRadius = backNavButton.frame.height / 2
+    backNavButton.backgroundColor = .white.withAlphaComponent(0.7)
+    backNavButton.tintColor = .darkGray.withAlphaComponent(0.7)
+    backNavButton.addTarget(
+      self, action: #selector(backButtonTapped), for: .touchUpInside)
   }
-  
-  private func createFavoriteButton() -> UIBarButtonItem {
-    let favoriteButtonImage = UIImage(systemName: "heart.circle.fill")?.withTintColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8), renderingMode: .alwaysTemplate)
-    let favoriteButtonSize = CGSize(width: 32, height: 32)
-    
-    UIGraphicsBeginImageContextWithOptions(favoriteButtonSize, false, UIScreen.main.scale)
-    favoriteButtonImage?.draw(in: CGRect(origin: .zero, size: favoriteButtonSize))
-    
-    let favoriteResizedButtonImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
-    UIGraphicsEndImageContext()
-    
-    let favoriteButton = UIBarButtonItem(image: favoriteResizedButtonImage, style: .plain, target: self, action: #selector(favoriteButtonTapped(_:) ))
-    
-    return favoriteButton
-  }
-  
-  
   // custom back button action
   @objc private func backButtonTapped() {
     navigationController?.popViewController(animated: true)
   }
   
+  private func setupFavoriteNavButton() {
+    favoriteNavButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
+    let image = UIImage(systemName: "heart.fill")
+    favoriteNavButton.setImage(image, for: .normal)
+    favoriteNavButton.layer.cornerRadius = favoriteNavButton.frame.height / 2
+    favoriteNavButton.backgroundColor = .white.withAlphaComponent(0.7)
+    favoriteNavButton.tintColor = .darkGray.withAlphaComponent(0.7)
+    favoriteNavButton.addTarget(
+      self, action: #selector(favoriteButtonTapped(_:) ), for: .touchUpInside)
+  }
   // custom favorite button action
   @objc private func favoriteButtonTapped(_ sender: UIBarButtonItem) {
     viewModel.addToFovorite(movieId: viewModel.mediaItemId) {
       self.showHUDView()
       NotificationCenter.default.post(name: Notification.Name("UpdateFavorite"), object: nil)
     }
+    favoriteNavButton.tintColor = .red.withAlphaComponent(0.7)
     
-//    viewModel.removeFromFovorite(movieId: viewModel.mediaItemId) {
-//      self.showHUDView()
-//      NotificationCenter.default.post(name: Notification.Name("UpdateFavorite"), object: nil)
-//    }
+    //    viewModel.removeFromFovorite(movieId: viewModel.mediaItemId) {
+    //      self.showHUDView()
+    //      NotificationCenter.default.post(name: Notification.Name("UpdateFavorite"), object: nil)
+    //    }
     
   }
   
@@ -116,20 +108,13 @@ class DetailViewController: UIViewController {
   }
   
   private func setuptTableView() {
+    tableView.frame = view.bounds
     tableView.delegate = self
     tableView.dataSource = self
     tableView.separatorStyle = .none
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-    tableView.translatesAutoresizingMaskIntoConstraints = false
     
     view.addSubview(tableView)
-    
-    NSLayoutConstraint.activate([
-      tableView.topAnchor.constraint(equalTo: view.topAnchor),
-      tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-      tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-    ])
   }
   
   private func setupHeaderView() {
