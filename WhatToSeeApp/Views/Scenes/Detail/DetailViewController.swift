@@ -77,9 +77,7 @@ class DetailViewController: UIViewController {
     favoriteNavButton.setImage(image, for: .normal)
     favoriteNavButton.backgroundColor = .white.withAlphaComponent(0.7)
     
-    let isFavorite = MovieFavoritesManager.shared.isFavorite(movieID: viewModel.mediaItemId)
-    
-    switch isFavorite {
+    switch viewModel.isFavorite {
     case true:
       favoriteNavButton.tintColor = .red.withAlphaComponent(0.7)
     case false:
@@ -93,28 +91,17 @@ class DetailViewController: UIViewController {
   // custom favorite button action
   @objc private func favoriteButtonTapped(_ sender: UIBarButtonItem) {
     
-    // Checking if a movie is a favorite
-    let isFavorite = MovieFavoritesManager.shared.isFavorite(movieID: viewModel.mediaItemId)
-    
-    switch isFavorite {
-      
+    switch viewModel.isFavorite {
     case true:
-      viewModel.removeFromFovorite(movieId: viewModel.mediaItemId) {
-        self.showHUDView()
-        NotificationCenter.default.post(name: Notification.Name("UpdateFavorite"), object: nil)
+      viewModel.removeFromFovorite {
+        self.changeFavoriteState()
       }
-      MovieFavoritesManager.shared.removeFromFavorites(movieID: viewModel.mediaItemId)
-      favoriteNavButton.tintColor = .darkGray.withAlphaComponent(0.7)
-      
     case false:
-      viewModel.addToFovorite(movieId: viewModel.mediaItemId) {
-        self.showHUDView()
-        NotificationCenter.default.post(name: Notification.Name("UpdateFavorite"), object: nil)
+      viewModel.addToFovorite {
+        self.changeFavoriteState()
       }
-      MovieFavoritesManager.shared.addToFavorites(movieID: viewModel.mediaItemId)
-      favoriteNavButton.tintColor = .red.withAlphaComponent(0.7)
     }
-
+    
   }
   
   private func showHUDView() {
@@ -148,6 +135,20 @@ class DetailViewController: UIViewController {
   private func configureHeaderView() {
     tableHeaderView.imageView.sd_setImage(with: viewModel.mediaBackdropURL)
     tableHeaderView.titleLabel.text = self.viewModel.mediaTitle
+  }
+  
+  private func changeFavoriteState() {
+    showHUDView()
+    
+    NotificationCenter.default.post(
+      name: Notification.Name("UpdateFavorite"), object: nil)
+    
+    switch viewModel.isFavorite {
+    case true:
+      favoriteNavButton.tintColor = .red.withAlphaComponent(0.7)
+    case false:
+      favoriteNavButton.tintColor = .darkGray.withAlphaComponent(0.7)
+    }
   }
   
 }

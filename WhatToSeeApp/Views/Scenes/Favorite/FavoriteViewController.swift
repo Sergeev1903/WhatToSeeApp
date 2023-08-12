@@ -36,8 +36,7 @@ class FavoriteViewController: UIViewController {
     setupNavigationBar()
     setupCollectionView()
     configureViewModel()
-    
-    NotificationCenter.default.addObserver(self, selector: #selector(handleNotification), name: Notification.Name("UpdateFavorite"), object: nil)
+    trackingFavoriteState()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +72,10 @@ class FavoriteViewController: UIViewController {
     viewModel.getFavoriteMovies {
         self.collectionView.reloadData()
     }
+  }
+  
+  private func trackingFavoriteState() {
+    NotificationCenter.default.addObserver(self, selector: #selector(handleNotification), name: Notification.Name("UpdateFavorite"), object: nil)
   }
   
 }

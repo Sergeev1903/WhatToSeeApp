@@ -19,11 +19,7 @@ protocol FavoriteViewModelProtocol: AnyObject {
 class FavoriteViewModel: FavoriteViewModelProtocol {
   
   // MARK: - Properties
-  private var mediaItems: [TMDBMovieResult] = [] {
-    didSet {
-      print(mediaItems.count)
-    }
-  }
+  private var mediaItems: [TMDBMovieResult] = []
   private let service: MoviesServiceable
   
   
