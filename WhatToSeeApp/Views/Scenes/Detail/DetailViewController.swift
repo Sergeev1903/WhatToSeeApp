@@ -60,9 +60,9 @@ class DetailViewController: UIViewController {
     backNavButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
     let image = UIImage(systemName: "arrow.left")
     backNavButton.setImage(image, for: .normal)
-    backNavButton.layer.cornerRadius = backNavButton.frame.height / 2
     backNavButton.backgroundColor = .white.withAlphaComponent(0.7)
     backNavButton.tintColor = .darkGray.withAlphaComponent(0.7)
+    backNavButton.layer.cornerRadius = backNavButton.frame.height / 2
     backNavButton.addTarget(
       self, action: #selector(backButtonTapped), for: .touchUpInside)
   }
@@ -75,25 +75,46 @@ class DetailViewController: UIViewController {
     favoriteNavButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
     let image = UIImage(systemName: "heart.fill")
     favoriteNavButton.setImage(image, for: .normal)
-    favoriteNavButton.layer.cornerRadius = favoriteNavButton.frame.height / 2
     favoriteNavButton.backgroundColor = .white.withAlphaComponent(0.7)
-    favoriteNavButton.tintColor = .darkGray.withAlphaComponent(0.7)
+    
+    let isFavorite = MovieFavoritesManager.shared.isFavorite(movieID: viewModel.mediaItemId)
+    
+    switch isFavorite {
+    case true:
+      favoriteNavButton.tintColor = .red.withAlphaComponent(0.7)
+    case false:
+      favoriteNavButton.tintColor = .darkGray.withAlphaComponent(0.7)
+    }
+    
+    favoriteNavButton.layer.cornerRadius = favoriteNavButton.frame.height / 2
     favoriteNavButton.addTarget(
       self, action: #selector(favoriteButtonTapped(_:) ), for: .touchUpInside)
   }
   // custom favorite button action
   @objc private func favoriteButtonTapped(_ sender: UIBarButtonItem) {
-    viewModel.addToFovorite(movieId: viewModel.mediaItemId) {
-      self.showHUDView()
-      NotificationCenter.default.post(name: Notification.Name("UpdateFavorite"), object: nil)
+    
+    // Checking if a movie is a favorite
+    let isFavorite = MovieFavoritesManager.shared.isFavorite(movieID: viewModel.mediaItemId)
+    
+    switch isFavorite {
+      
+    case true:
+      viewModel.removeFromFovorite(movieId: viewModel.mediaItemId) {
+        self.showHUDView()
+        NotificationCenter.default.post(name: Notification.Name("UpdateFavorite"), object: nil)
+      }
+      MovieFavoritesManager.shared.removeFromFavorites(movieID: viewModel.mediaItemId)
+      favoriteNavButton.tintColor = .darkGray.withAlphaComponent(0.7)
+      
+    case false:
+      viewModel.addToFovorite(movieId: viewModel.mediaItemId) {
+        self.showHUDView()
+        NotificationCenter.default.post(name: Notification.Name("UpdateFavorite"), object: nil)
+      }
+      MovieFavoritesManager.shared.addToFavorites(movieID: viewModel.mediaItemId)
+      favoriteNavButton.tintColor = .red.withAlphaComponent(0.7)
     }
-    favoriteNavButton.tintColor = .red.withAlphaComponent(0.7)
-    
-    //    viewModel.removeFromFovorite(movieId: viewModel.mediaItemId) {
-    //      self.showHUDView()
-    //      NotificationCenter.default.post(name: Notification.Name("UpdateFavorite"), object: nil)
-    //    }
-    
+
   }
   
   private func showHUDView() {

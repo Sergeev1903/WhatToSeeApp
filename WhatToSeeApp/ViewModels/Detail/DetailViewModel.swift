@@ -106,7 +106,7 @@ class DetailViewModel: DetailViewModelProtocol {
       
       switch response {
       case .success:
-        strongSelf.favoriteStatus = "Added to favorite"
+        strongSelf.favoriteStatus = "Added"
       case .failure(let error):
         strongSelf.favoriteStatus = "\(error.customMessage)"
       }
@@ -120,7 +120,7 @@ class DetailViewModel: DetailViewModelProtocol {
       
       switch response {
       case .success:
-        strongSelf.favoriteStatus = "Removed from favorite"
+        strongSelf.favoriteStatus = "Removed"
       case .failure(let error):
         strongSelf.favoriteStatus = "\(error.customMessage)"
       }
