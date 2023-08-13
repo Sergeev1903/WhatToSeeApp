@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol CategoryCellItemViewModelProtocol {
-  var mediaPosterURL: URL { get }
+  var mediaPosterURL: URL? { get }
   var mediaVoteCount: Double { get }
   var mediaVoteAverage: String { get }
 }
@@ -20,7 +20,7 @@ class CategoryCellItemViewModel: CategoryCellItemViewModelProtocol {
   // MARK: - Properties
   private let mediaItem: TMDBMovieResult
   
-  var mediaPosterURL: URL {
+  var mediaPosterURL: URL? {
     mediaItem.posterURL
   }
   

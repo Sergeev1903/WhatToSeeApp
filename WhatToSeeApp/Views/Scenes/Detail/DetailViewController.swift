@@ -20,7 +20,7 @@ class DetailViewController: UIViewController {
   // MARK: - ViewModel
   var viewModel: DetailViewModelProtocol! {
     didSet {
-      viewModel.getMultiplyRequest {
+      viewModel.getMovieDetails {
         self.tableView.reloadData()
       }
       
@@ -104,9 +104,9 @@ class DetailViewController: UIViewController {
     
   }
   
-  private func showHUDView() {
+  private func showHUDView(with text: String) {
     let hud = HUDView()
-    hud.showHUD(withText: viewModel.favoriteStatus, andIsHideToTop: true)
+    hud.showHUD(withText: text, andIsHideToTop: true)
     hud.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
@@ -138,7 +138,7 @@ class DetailViewController: UIViewController {
   }
   
   private func changeFavoriteState() {
-    showHUDView()
+    showHUDView(with: viewModel.favoriteStatusText)
     
     NotificationCenter.default.post(
       name: Notification.Name("UpdateFavorite"), object: nil)
@@ -183,7 +183,7 @@ extension DetailViewController: UITableViewDataSource {
       case 3:
         cell.textLabel?.text = viewModel.mediaOverview
       case 4:
-        cell.textLabel?.text = viewModel.detailTrailerUrl
+        cell.textLabel?.text = "\(viewModel.detailTrailerUrl)"
       default:
         break
       }
@@ -209,10 +209,16 @@ extension DetailViewController: UITableViewDelegate {
 extension DetailViewController: WatchTrailerButtonDelegate {
   
   func didTabWatchTrailerButton(_ detailHeaderView: DetailHeaderView) {
-    UIApplication.shared.open(
-      URL(string: viewModel.detailTrailerUrl)!,
-      options: [:],
-      completionHandler: nil)
+    
+    guard let trailerUrl = viewModel.detailTrailerUrl else {
+     
+      // FIXME: -
+      detailHeaderView.watchTrailerButton.isEnabled = false
+      showHUDView(with: "Sorry! No official trailers")
+      return
+    }
+    
+    UIApplication.shared.open(trailerUrl)
   }
   
 }

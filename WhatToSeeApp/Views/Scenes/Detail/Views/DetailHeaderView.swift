@@ -18,7 +18,7 @@ class DetailHeaderView: UIView {
   // MARK: - Properties
   public let imageView = UIImageView()
   public let titleLabel = UILabel()
-  private let watchTrailerButton = UIButton()
+  public let watchTrailerButton = UIButton()
   private let containerView = UIView()
   private let imageViewGradient = CAGradientLayer()
   private let containerViewGradient = CAGradientLayer()

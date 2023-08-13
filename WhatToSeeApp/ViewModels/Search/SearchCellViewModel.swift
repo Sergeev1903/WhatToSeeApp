@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol SearchCellViewModelProtocol: AnyObject {
-  var mediaBackdropURL: URL { get }
+  var mediaBackdropURL: URL? { get }
   var mediaTitleWithReleaseYear: String { get }
   var mediaTitle: String { get }
   var mediaVoteCount: Double { get }
@@ -23,7 +23,7 @@ class SearchCellViewModel: SearchCellViewModelProtocol {
   // MARK: - Properties
   private let mediaItem: TMDBMovieResult
   
-  var mediaBackdropURL: URL {
+  var mediaBackdropURL: URL? {
     mediaItem.backdropURL
   }
   

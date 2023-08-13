@@ -10,29 +10,35 @@ import Foundation
 
 // MARK: - TMDBMovieResponse
 struct TMDBMovieResponse: Codable {
-  let page: Int
   let results: [TMDBMovieResult]
-  let totalPages, totalResults: Int
+  let totalResults: Int
+  let page: Int
+  let totalPages: Int
 }
 
 // MARK: - TMDBMovieResult
 struct TMDBMovieResult: Codable {
-  let backdropPath: String?
   let id: Int?
-  let originalTitle, overview: String?
-  let posterPath, releaseDate, title: String?
+  let title: String?
+  let originalTitle: String?
+  let posterPath: String?
+  let backdropPath: String?
+  let releaseDate: String?
   let voteAverage: Double?
-  let voteCount: Int?
+  let overview: String?
+  let genres: [Genre]?
+  let videos: Videos?
   
-  var backdropURL: URL {
+  var posterURL: URL? {
     return URL(
-      string: "https://image.tmdb.org/t/p/original\(backdropPath ?? "")")!
+      string: "https://image.tmdb.org/t/p/w500\(posterPath ?? "")")
   }
   
-  var posterURL: URL {
+  var backdropURL: URL? {
     return URL(
-      string: "https://image.tmdb.org/t/p/w500\(posterPath ?? "")")!
+      string: "https://image.tmdb.org/t/p/original\(backdropPath ?? "")")
   }
+  
 }
 
 
@@ -56,8 +62,9 @@ struct Videos: Codable {
 struct Video: Codable {
   let key: String
   let name: String
-  var keyURL: URL {
-    return URL(string: "https://www.youtube.com/watch?v=\(key)")!
+  let official: Bool
+  var keyURL: URL? {
+    return URL(string: "https://www.youtube.com/watch?v=\(key)")
   }
   
 }

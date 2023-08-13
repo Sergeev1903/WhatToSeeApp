@@ -31,25 +31,24 @@ class SearchViewModel: SearchViewModelProtocol {
   
   
   // MARK: - Methods
-  public func searchMovies(searchText: String,
-                           page: Int,
-                           completion: @escaping () -> Void) {
-    service.getMedia(
-      endpoint: MoviesEndpoint.searchMovie(
-        searchText: searchText, page: 1),
-      responseModel: TMDBMovieResponse.self) {[weak self] result in
-        guard let strongSelf = self else {
-          return
+  public func searchMovies(
+    searchText: String, page: Int, completion: @escaping () -> Void) {
+      service.getMedia(
+        endpoint: MoviesEndpoint.searchMovie(
+          searchText: searchText, page: 1),
+        responseModel: TMDBMovieResponse.self) {[weak self] result in
+          
+          guard let strongSelf = self else { return }
+          
+          switch result {
+          case .success(let response):
+            strongSelf.searchItems = response.results.filter { $0.backdropPath != nil }
+          case .failure(let error):
+            print(error.customMessage)
+          }
+          completion()
         }
-        switch result {
-        case .success(let response):
-          strongSelf.searchItems = response.results.filter { $0.backdropPath != nil }
-        case .failure(let error):
-          print(error.customMessage)
-        }
-        completion()
-      }
-  }
+    }
   
   public func numberOfRowsInSection() -> Int {
     return searchItems.count

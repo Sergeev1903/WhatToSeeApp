@@ -23,8 +23,7 @@ enum MoviesEndpoint {
   case popular(page: Int)
   case topRated(page: Int)
   case trending(page: Int)
-  case movieGenres(id: Int)
-  case movieTrailers(id: Int)
+  case movieDetails(id: Int)
   case searchMovie(searchText: String, page: Int)
   case favoriteMovies(page: Int)
   case addFavoriteMovie(movieId: Int)
@@ -46,16 +45,14 @@ extension MoviesEndpoint: Endpoint {
       return "/3/movie/upcoming"
     case .trending:
       return "/3/trending/movie/day"
-    case .movieGenres(id: let id):
+    case .movieDetails(id: let id):
       return "/3/movie/\(id)"
-    case .movieTrailers(id: let id):
-      return "/3/movie/\(id)/videos"
     case .searchMovie:
       return "/3/search/movie"
     case .favoriteMovies:
-     return "/3/account/\(accountID)/favorite/movies"
+      return "/3/account/\(accountID)/favorite/movies"
     case .addFavoriteMovie, .removeFavoriteMovie:
-     return "/3/account/\(accountID)/favorite"
+      return "/3/account/\(accountID)/favorite"
     }
   }
   
@@ -63,8 +60,8 @@ extension MoviesEndpoint: Endpoint {
     switch self {
       
     case .nowPlaying, .popular, .topRated,
-        .upcoming, .trending, .movieGenres,
-        .movieTrailers, .searchMovie, .favoriteMovies:
+        .upcoming, .trending, .movieDetails,
+        .searchMovie, .favoriteMovies:
       return .get
       
     case .addFavoriteMovie, .removeFavoriteMovie:
@@ -76,8 +73,8 @@ extension MoviesEndpoint: Endpoint {
     switch self {
       
     case .nowPlaying, .popular, .topRated,
-        .upcoming, .trending, .movieGenres,
-        .movieTrailers, .searchMovie,
+        .upcoming, .trending, .movieDetails,
+        .searchMovie,
         .favoriteMovies, .addFavoriteMovie, .removeFavoriteMovie:
       return [
         "Authorization": "Bearer \(accessToken)",
@@ -94,8 +91,11 @@ extension MoviesEndpoint: Endpoint {
         .topRated(let page), .trending(let page), .favoriteMovies(let page):
       return [URLQueryItem(name: "page", value: "\(page)")]
       
-    case .upcoming, .movieGenres, .movieTrailers,
-        .addFavoriteMovie, .removeFavoriteMovie:
+    case .movieDetails:
+      return [URLQueryItem(name: "append_to_response", value: "videos")]
+      
+      
+    case .upcoming, .addFavoriteMovie, .removeFavoriteMovie:
       return nil
       
     case .searchMovie(searchText: let searchText, page: let page ):
@@ -109,8 +109,8 @@ extension MoviesEndpoint: Endpoint {
     switch self {
       
     case .nowPlaying, .popular, .topRated,
-        .upcoming, .trending, .movieGenres,
-        .movieTrailers, .searchMovie, .favoriteMovies:
+        .upcoming, .trending, .movieDetails,
+        .searchMovie, .favoriteMovies:
       return nil
       
     case .addFavoriteMovie(let movieId):

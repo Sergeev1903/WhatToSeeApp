@@ -93,9 +93,9 @@ extension HomeViewModel {
     service.getMedia(
       endpoint: MoviesEndpoint.upcoming,
       responseModel: TMDBMovieResponse.self) {[weak self] result in
-        guard let strongSelf = self else {
-          return
-        }
+        
+        guard let strongSelf = self else { return }
+        
         switch result {
         case .success(let response):
           strongSelf.upcomingMovies = response.results
@@ -110,9 +110,9 @@ extension HomeViewModel {
     service.getMedia(
       endpoint: MoviesEndpoint.nowPlaying(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
-        guard let strongSelf = self else {
-          return
-        }
+        
+        guard let strongSelf = self else { return }
+        
         switch result {
         case .success(let response):
           strongSelf.nowPlayingMovies = response.results
@@ -127,9 +127,9 @@ extension HomeViewModel {
     service.getMedia(
       endpoint: MoviesEndpoint.popular(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
-        guard let strongSelf = self else {
-          return
-        }
+        
+        guard let strongSelf = self else { return }
+        
         switch result {
         case .success(let response):
           strongSelf.popularMovies = response.results
@@ -144,9 +144,9 @@ extension HomeViewModel {
     service.getMedia(
       endpoint: MoviesEndpoint.topRated(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
-        guard let strongSelf = self else {
-          return
-        }
+   
+        guard let strongSelf = self else { return }
+        
         switch result {
         case .success(let response):
           strongSelf.topRatedMovies = response.results
@@ -161,9 +161,9 @@ extension HomeViewModel {
     service.getMedia(
       endpoint: MoviesEndpoint.trending(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
-        guard let strongSelf = self else {
-          return
-        }
+        
+        guard let strongSelf = self else { return }
+        
         switch result {
         case .success(let response):
           strongSelf.trendingMovies = response.results

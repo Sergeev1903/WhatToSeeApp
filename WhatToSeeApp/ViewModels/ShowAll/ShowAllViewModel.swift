@@ -40,7 +40,6 @@ class ShowAllViewModel: ShowAllViewModelProtocol {
   
   // MARK: - Methods
   public func loadMoreItems(completion: @escaping () -> Void) {
-    // FIXME: -
     var categoryEndpoint = MoviesEndpoint.upcoming
     
     switch category {
@@ -55,7 +54,7 @@ class ShowAllViewModel: ShowAllViewModelProtocol {
     default:
       break
     }
-    // FIXME: -
+    
     service.getMedia(
       endpoint: categoryEndpoint,
       responseModel: TMDBMovieResponse.self) {[weak self] result in

@@ -9,8 +9,8 @@ import Foundation
 
 
 protocol SliderCellViewModelProtocol: AnyObject {
-  var mediaPosterURL: URL { get }
-  var mediaBackdropURL: URL { get }
+  var mediaPosterURL: URL? { get }
+  var mediaBackdropURL: URL? { get }
 }
 
 
@@ -19,11 +19,11 @@ class SliderCellViewModel: SliderCellViewModelProtocol {
   // MARK: - Properties
   private var mediaItem: TMDBMovieResult
   
-  var mediaPosterURL: URL {
+  var mediaPosterURL: URL? {
     mediaItem.posterURL
   }
   
-  var mediaBackdropURL: URL {
+  var mediaBackdropURL: URL? {
     mediaItem.backdropURL
   }
   

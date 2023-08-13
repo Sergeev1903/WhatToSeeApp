@@ -9,46 +9,39 @@ import Foundation
 
 
 protocol DetailViewModelProtocol: AnyObject {
-  var favoriteStatus: String { get }
+  var favoriteStatusText: String { get set }
   var isFavorite: Bool { get }
-  
-  var mediaBackdropURL: URL { get }
   var mediaTitle: String { get }
+  var mediaBackdropURL: URL? { get }
   var mediaVoteAverage: String { get }
   var mediaReleaseDate: String { get }
   var mediaOverview: String { get }
-  
-  
-  // FIXME: -
   var detailGenres: String { get }
-  var detailTrailerUrl: String { get }
-  func getMultiplyRequest(completion: @escaping () -> Void)
-  
+  var detailTrailerUrl: URL? { get }
+  func getMovieDetails(completion: @escaping () -> Void)
   func addToFovorite(completion: @escaping () -> Void)
   func removeFromFovorite(completion: @escaping () -> Void)
-  // FIXME: -
 }
 
 
 class DetailViewModel: DetailViewModelProtocol {
   
+  
   // MARK: - Properties
   private let mediaItem: TMDBMovieResult
-  
   private var mediaGenres: [Genre] = []
   private var mediaTrailers: [Video] = []
-  
+
   private let service: MoviesServiceable
-  private let dispatchGroup = DispatchGroup()
   
-  
-  var favoriteStatus: String = ""
-  
+  public var favoriteStatusText: String = ""
+
+
   var isFavorite: Bool {
     MovieFavoritesManager.shared.isFavorite(movieID: mediaItem.id!)
   }
   
-  var mediaBackdropURL: URL {
+  var mediaBackdropURL: URL? {
     mediaItem.backdropURL
   }
   
@@ -73,15 +66,17 @@ class DetailViewModel: DetailViewModelProtocol {
     return  mediaGenres.compactMap {$0.name}.lazy.joined(separator: ", ")
   }
   
-  var detailTrailerUrl: String {
-    var key = ""
-    for trailer in mediaTrailers {
-      switch trailer.name {
-      case "Official Trailer": key = trailer.key
-      case _ : key = trailer.key
+  var detailTrailerUrl: URL? {
+      var url: URL?
+    
+      mediaTrailers.forEach { trailer in
+          if trailer.official || trailer.name.contains("Official Trailer") {
+              url = trailer.keyURL
+              return // Exit the loop closure once a suitable URL is found
+          }
       }
-    }
-    return "https://www.youtube.com/watch?v=\(key))"
+      
+      return url
   }
   
   
@@ -93,29 +88,37 @@ class DetailViewModel: DetailViewModelProtocol {
   
   
   // MARK: - Methods
-  public func getMultiplyRequest(completion: @escaping () -> Void) {
-    dispatchGroup.enter()
-    getMovieGenres()
-    dispatchGroup.enter()
-    getMovieTrailers()
-    
-    dispatchGroup.notify(queue: .main) {
-      completion()
-    }
+  public func getMovieDetails(completion: @escaping () -> Void) {
+    service.getMedia(
+      endpoint: MoviesEndpoint.movieDetails(id: mediaItem.id!),
+      responseModel: TMDBMovieResult.self) { [weak self] result in
+        
+        guard let strongSelf = self else { return }
+        
+        switch result {
+        case .success(let details):
+          strongSelf.mediaGenres = details.genres ?? []
+          strongSelf.mediaTrailers = details.videos?.results ?? []
+        case .failure(let error):
+          print(error.customMessage)
+        }
+        completion()
+      }
   }
   
   public func addToFovorite(completion: @escaping () -> Void) {
     service.getMedia(endpoint: MoviesEndpoint.addFavoriteMovie(movieId: mediaItem.id!), responseModel: TMDBMovieResult.self) {[weak self] response in
+      
       guard let strongSelf = self else { return }
       
       switch response {
       case .success:
-        strongSelf.favoriteStatus = "Added to favorite"
+        strongSelf.favoriteStatusText = "Added"
         MovieFavoritesManager.shared.addToFavorites(
           movieID: strongSelf.mediaItem.id!)
         
       case .failure(let error):
-        strongSelf.favoriteStatus = "\(error.customMessage)"
+        strongSelf.favoriteStatusText = "\(error.customMessage)"
       }
       completion()
     }
@@ -123,57 +126,20 @@ class DetailViewModel: DetailViewModelProtocol {
   
   public func removeFromFovorite(completion: @escaping () -> Void) {
     service.getMedia(endpoint: MoviesEndpoint.removeFavoriteMovie(movieId: mediaItem.id!), responseModel: TMDBMovieResult.self) {[weak self] response in
+      
       guard let strongSelf = self else { return }
       
       switch response {
       case .success:
-        strongSelf.favoriteStatus = "Removed"
+        strongSelf.favoriteStatusText = "Removed"
         MovieFavoritesManager.shared.removeFromFavorites(
           movieID: strongSelf.mediaItem.id!)
         
       case .failure(let error):
-        strongSelf.favoriteStatus = "\(error.customMessage)"
+        strongSelf.favoriteStatusText = "\(error.customMessage)"
       }
       completion()
     }
-  }
-  
-}
-
-
-// MARK: - Network requests
-extension DetailViewModel {
-  
-  private func getMovieGenres() {
-    service.getMedia(
-      endpoint: MoviesEndpoint.movieGenres(id: mediaItem.id!),
-      responseModel: Genres.self) { [weak self] result in
-        guard let strongSelf = self else { return }
-        
-        switch result {
-        case .success(let genres):
-          strongSelf.mediaGenres = genres.genres
-        case .failure(let error):
-          print(error.customMessage)
-        }
-        strongSelf.dispatchGroup.leave()
-      }
-  }
-  
-  private func getMovieTrailers() {
-    service.getMedia(
-      endpoint: MoviesEndpoint.movieTrailers(id: mediaItem.id!),
-      responseModel: Videos.self) { [weak self] result in
-        guard let strongSelf = self else { return }
-        
-        switch result {
-        case .success(let trailers):
-          strongSelf.mediaTrailers = trailers.results
-        case .failure(let error):
-          print(error.customMessage)
-        }
-        strongSelf.dispatchGroup.leave()
-      }
   }
   
 }

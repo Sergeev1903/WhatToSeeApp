@@ -34,9 +34,8 @@ class FavoriteViewModel: FavoriteViewModelProtocol {
     service.getMedia(
       endpoint: MoviesEndpoint.favoriteMovies(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
-        guard let strongSelf = self else {
-          return
-        }
+        
+        guard let strongSelf = self else { return }
         
         switch result {
         case .success(let response):
