@@ -12,7 +12,6 @@ protocol HTTPClient {
   func sendRequest<T: Codable>(
     endpoint: Endpoint, responseModel: T.Type,
     completion: @escaping (Result<T, RequestError>) -> Void)
-  func fetchData(from url: URL) -> Data?
 }
 
 extension HTTPClient {
@@ -77,33 +76,6 @@ extension HTTPClient {
         }
       task.resume()
     }
-  
-  
-  func fetchData(from url: URL) -> Data? {
-    // Create a semaphore to wait for the completion of the URLSessionDataTask
-    let semaphore = DispatchSemaphore(value: 0)
-    
-    var data: Data?
-    
-    // Create a URLSessionDataTask to load the data from the URL
-    let task = URLSession.shared.dataTask(with: url) { responseData, response, error in
-      if let error = error {
-        print("Error loading data: \(error.localizedDescription)")
-      } else if let responseData = responseData {
-        data = responseData
-      }
-      
-      // Signal the semaphore to indicate that the task is complete
-      semaphore.signal()
-    }
-    
-    // Start the task
-    task.resume()
-    
-    // Wait for the task to complete before returning the data
-    _ = semaphore.wait(timeout: .distantFuture)
-    return data
-  }
   
 }
 

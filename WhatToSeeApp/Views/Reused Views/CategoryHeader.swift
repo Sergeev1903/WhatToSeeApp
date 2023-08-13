@@ -76,7 +76,6 @@ class CategoryHeader: UITableViewHeaderFooterView {
   
   // category header button Action
   @objc private func categoryHeaderButtonAction() {
-    print("categoryHeaderButtonAction")
     delegate?.didTabCategoryHeaderButton(self)
   }
   

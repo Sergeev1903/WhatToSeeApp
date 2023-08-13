@@ -37,7 +37,7 @@ class ShowAllViewController: UIViewController {
   }
   
   private func setupCollectionView() {
-    let layout = CustomVerticalFlowLayout(
+    let layout = CollectionVerticalFlowLayout(
       itemsPerRow: 3, margin: 8, lineSpacing: 8,
       interitemSpacing: 8, heightMultiplier: 1.5)
     

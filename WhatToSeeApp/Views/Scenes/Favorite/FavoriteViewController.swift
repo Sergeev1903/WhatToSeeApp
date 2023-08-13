@@ -51,7 +51,7 @@ class FavoriteViewController: UIViewController {
   }
   
   private func setupCollectionView() {
-    let layout = CustomVerticalFlowLayout(
+    let layout = CollectionVerticalFlowLayout(
       itemsPerRow: 3, margin: 8, lineSpacing: 8,
       interitemSpacing: 8, heightMultiplier: 1.5)
     
@@ -67,7 +67,6 @@ class FavoriteViewController: UIViewController {
     view.addSubview(collectionView)
   }
   
-  
   private func configureViewModel() {
     viewModel.getFavoriteMovies {
         self.collectionView.reloadData()
@@ -75,7 +74,8 @@ class FavoriteViewController: UIViewController {
   }
   
   private func trackingFavoriteState() {
-    NotificationCenter.default.addObserver(self, selector: #selector(handleNotification), name: Notification.Name("UpdateFavorite"), object: nil)
+    NotificationCenter.default.addObserver(
+      self, selector: #selector(handleNotification), name: Notification.Name("UpdateFavorite"), object: nil)
   }
   
 }

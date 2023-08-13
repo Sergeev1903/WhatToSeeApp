@@ -43,6 +43,7 @@ class MainTabBarController: UITabBarController {
     _ viewController: UIViewController,
     titleName: String,
     imageName: String) -> UIViewController {
+      
       let navigationController = UINavigationController(
         rootViewController: viewController)
       navigationController.tabBarItem.title = titleName
@@ -55,28 +56,34 @@ class MainTabBarController: UITabBarController {
   private func setupAppearance() {
     UITabBar.appearance().backgroundColor = .systemBackground
   }
+  
 }
 
 
- // MARK: - ViewControllerRepresentable
- import SwiftUI
- 
- struct ViewControllerRepresentable: UIViewControllerRepresentable {
- typealias UIViewControllerType = MainTabBarController
- func makeUIViewController(
- context: Context) -> MainTabBarController {
- MainTabBarController()
- }
- 
- func updateUIViewController(
- _ uiViewController: MainTabBarController,
- context: Context) {
- }
- }
- 
- struct ViewController_Previews: PreviewProvider {
- static var previews: some View {
- ViewControllerRepresentable()
- }
- }
+// MARK: - ViewControllerRepresentable
+import SwiftUI
+
+struct ViewControllerRepresentable: UIViewControllerRepresentable {
+  
+  typealias UIViewControllerType = MainTabBarController
+  
+  func makeUIViewController(
+    context: Context) -> MainTabBarController {
+      MainTabBarController()
+    }
+  
+  func updateUIViewController(
+    _ uiViewController: MainTabBarController,
+    context: Context) {
+    }
+  
+}
+
+struct ViewController_Previews: PreviewProvider {
+  
+  static var previews: some View {
+    ViewControllerRepresentable()
+  }
+  
+}
 

@@ -12,7 +12,6 @@ protocol MoviesServiceable {
   func getMedia<T: Codable>(
     endpoint: Endpoint, responseModel: T.Type,
     completion: @escaping (Result<T, RequestError>) -> Void)
-  func loadData(url: URL) -> Data?
 }
 
 
@@ -31,12 +30,6 @@ struct MoviesService: HTTPClient, MoviesServiceable {
         }
       }
     }
-  }
-  
-  
-  // MARK: - Load data GCD: semaphores
-  func loadData(url: URL) -> Data? {
-    return fetchData(from: url)
   }
   
 }

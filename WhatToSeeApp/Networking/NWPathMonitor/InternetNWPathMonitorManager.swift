@@ -58,6 +58,7 @@ class InternetNWPathMonitorManager {
 extension UIApplication {
   
   class func topViewController(controller: UIViewController? = UIApplication.shared.windows.first?.rootViewController) -> UIViewController? {
+    
     if let navigationController = controller as? UINavigationController {
       return topViewController(controller: navigationController.visibleViewController)
     }

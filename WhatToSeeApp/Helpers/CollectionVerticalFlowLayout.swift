@@ -8,7 +8,7 @@
 import UIKit
 
 
-final class CustomVerticalFlowLayout: UICollectionViewFlowLayout {
+final class CollectionVerticalFlowLayout: UICollectionViewFlowLayout {
   
   // MARK: - Properties
   private var itemsPerRow: CGFloat = 2

@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol AppCoordinatorProtocol: AnyObject {}
+protocol Coordinator: AnyObject {}
 
-class AppCoordinator: AppCoordinatorProtocol {}
+class AppCoordinator: Coordinator {}

@@ -9,9 +9,8 @@ import Foundation
 
 
 protocol SearchViewModelProtocol: AnyObject {
-  var currentPage: Int { get set }
-  var totalPages: Int { get set }
-  func searchMovies(searchText: String, page: Int, completion: @escaping () -> Void)
+  func searchMovies(
+    searchText: String, page: Int, completion: @escaping () -> Void)
   func numberOfRowsInSection() -> Int
   func cellForRowAt(indexPath: IndexPath) -> SearchCellViewModelProtocol
   func didSelectItemAt(indexPath: IndexPath) -> DetailViewModelProtocol
@@ -21,9 +20,6 @@ protocol SearchViewModelProtocol: AnyObject {
 class SearchViewModel: SearchViewModelProtocol {
   
   // MARK: - Properties
-  public var currentPage: Int = 1
-  public var totalPages: Int = 1
-  
   private let service: MoviesServiceable
   private var searchItems: [TMDBMovieResult] = []
   
@@ -40,14 +36,13 @@ class SearchViewModel: SearchViewModelProtocol {
                            completion: @escaping () -> Void) {
     service.getMedia(
       endpoint: MoviesEndpoint.searchMovie(
-        searchText: searchText, page: currentPage),
+        searchText: searchText, page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
         guard let strongSelf = self else {
           return
         }
         switch result {
         case .success(let response):
-          strongSelf.totalPages = response.totalPages
           strongSelf.searchItems = response.results.filter { $0.backdropPath != nil }
         case .failure(let error):
           print(error.customMessage)
