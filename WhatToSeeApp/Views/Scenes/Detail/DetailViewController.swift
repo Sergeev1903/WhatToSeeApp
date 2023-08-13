@@ -104,9 +104,9 @@ class DetailViewController: UIViewController {
     
   }
   
-  private func showHUDView(with text: String) {
+  private func showHUDView(with message: String) {
     let hud = HUDView()
-    hud.showHUD(withText: text, andIsHideToTop: true)
+    hud.showHUD(with: message, andIsHideToTop: true)
     hud.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
@@ -138,7 +138,7 @@ class DetailViewController: UIViewController {
   }
   
   private func changeFavoriteState() {
-    showHUDView(with: viewModel.favoriteStatusText)
+    showHUDView(with: viewModel.favoriteStatusMessage)
     
     NotificationCenter.default.post(
       name: Notification.Name("UpdateFavorite"), object: nil)
@@ -160,7 +160,7 @@ extension DetailViewController: UITableViewDataSource {
   func tableView(
     _ tableView: UITableView,
     numberOfRowsInSection section: Int) -> Int {
-      return 5
+      return 4
     }
   
   func tableView(
@@ -182,8 +182,6 @@ extension DetailViewController: UITableViewDataSource {
         cell.textLabel?.text = viewModel.mediaReleaseDate
       case 3:
         cell.textLabel?.text = viewModel.mediaOverview
-      case 4:
-        cell.textLabel?.text = "\(viewModel.detailTrailerUrl)"
       default:
         break
       }
@@ -214,7 +212,7 @@ extension DetailViewController: WatchTrailerButtonDelegate {
      
       // FIXME: -
       detailHeaderView.watchTrailerButton.isEnabled = false
-      showHUDView(with: "Sorry! No official trailers")
+      showHUDView(with: "Sorry! \n No trailers")
       return
     }
     

@@ -25,11 +25,11 @@ class CategoryCellItemViewModel: CategoryCellItemViewModelProtocol {
   }
   
   var mediaVoteCount: Double {
-    return mediaItem.voteAverage ?? 0
+    mediaItem.voteAverage ?? 0
   }
   
   var mediaVoteAverage: String {
-    return mediaItem.voteAverage == 0 ? "New":
+    mediaItem.voteAverage == 0 ? "New":
     String(format: "%.1f", mediaItem.voteAverage!)
   }
   

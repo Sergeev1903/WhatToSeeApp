@@ -66,14 +66,14 @@ class ShowAllViewModel: ShowAllViewModelProtocol {
           strongSelf.totalPages = response.totalPages
           strongSelf.mediaItems.append(contentsOf: response.results)
         case .failure(let error):
-          print(error.customMessage)
+          print(error.message)
         }
         completion()
       }
   }
   
   public func numberOfItemsInSection() -> Int {
-    return mediaItems.count
+    mediaItems.count
   }
   
   public func cellForItemAt(

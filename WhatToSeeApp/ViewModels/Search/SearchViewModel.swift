@@ -44,14 +44,14 @@ class SearchViewModel: SearchViewModelProtocol {
           case .success(let response):
             strongSelf.searchItems = response.results.filter { $0.backdropPath != nil }
           case .failure(let error):
-            print(error.customMessage)
+            print(error.message)
           }
           completion()
         }
     }
   
   public func numberOfRowsInSection() -> Int {
-    return searchItems.count
+    searchItems.count
   }
   
   public func cellForRowAt(

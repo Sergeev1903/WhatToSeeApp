@@ -41,14 +41,14 @@ class FavoriteViewModel: FavoriteViewModelProtocol {
         case .success(let response):
           strongSelf.mediaItems = response.results
         case .failure(let error):
-          print(error.customMessage)
+          print(error.message)
         }
         completion()
       }
   }
   
   public func numberOfItemsInSection() -> Int {
-    return mediaItems.count
+    mediaItems.count
   }
   
   public func cellForItemAt(

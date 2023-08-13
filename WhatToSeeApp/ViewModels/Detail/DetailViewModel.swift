@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol DetailViewModelProtocol: AnyObject {
-  var favoriteStatusText: String { get set }
+  var favoriteStatusMessage: String { get }
   var isFavorite: Bool { get }
   var mediaTitle: String { get }
   var mediaBackdropURL: URL? { get }
@@ -26,17 +26,17 @@ protocol DetailViewModelProtocol: AnyObject {
 
 class DetailViewModel: DetailViewModelProtocol {
   
-  
   // MARK: - Properties
   private let mediaItem: TMDBMovieResult
   private var mediaGenres: [Genre] = []
   private var mediaTrailers: [Video] = []
-
   private let service: MoviesServiceable
+  private var favoriteStatus: FavoriteStatus!
   
-  public var favoriteStatusText: String = ""
-
-
+  var favoriteStatusMessage: String {
+    favoriteStatus.message
+  }
+  
   var isFavorite: Bool {
     MovieFavoritesManager.shared.isFavorite(movieID: mediaItem.id!)
   }
@@ -50,7 +50,7 @@ class DetailViewModel: DetailViewModelProtocol {
   }
   
   var mediaVoteAverage: String {
-    return mediaItem.voteAverage == 0 ? "New":
+    mediaItem.voteAverage == 0 ? "New":
     String(format: "%.1f", mediaItem.voteAverage!)
   }
   
@@ -63,20 +63,22 @@ class DetailViewModel: DetailViewModelProtocol {
   }
   
   var detailGenres: String {
-    return  mediaGenres.compactMap {$0.name}.lazy.joined(separator: ", ")
+    mediaGenres.compactMap {$0.name}.lazy.joined(separator: ", ")
   }
   
   var detailTrailerUrl: URL? {
-      var url: URL?
+    var url: URL?
     
-      mediaTrailers.forEach { trailer in
-          if trailer.official || trailer.name.contains("Official Trailer") {
-              url = trailer.keyURL
-              return // Exit the loop closure once a suitable URL is found
-          }
+    mediaTrailers.forEach { trailer in
+      if trailer.official || trailer.name.contains("Official Trailer") {
+        url = trailer.keyURL
+        return // Exit the loop closure once a suitable URL is found
+      } else {
+        url = trailer.keyURL
       }
-      
-      return url
+    }
+    
+    return url
   }
   
   
@@ -100,7 +102,7 @@ class DetailViewModel: DetailViewModelProtocol {
           strongSelf.mediaGenres = details.genres ?? []
           strongSelf.mediaTrailers = details.videos?.results ?? []
         case .failure(let error):
-          print(error.customMessage)
+          print(error.message)
         }
         completion()
       }
@@ -113,12 +115,12 @@ class DetailViewModel: DetailViewModelProtocol {
       
       switch response {
       case .success:
-        strongSelf.favoriteStatusText = "Added"
+        strongSelf.favoriteStatus = .added
         MovieFavoritesManager.shared.addToFavorites(
           movieID: strongSelf.mediaItem.id!)
         
       case .failure(let error):
-        strongSelf.favoriteStatusText = "\(error.customMessage)"
+        strongSelf.favoriteStatus = .error(error.message)
       }
       completion()
     }
@@ -131,12 +133,12 @@ class DetailViewModel: DetailViewModelProtocol {
       
       switch response {
       case .success:
-        strongSelf.favoriteStatusText = "Removed"
+        strongSelf.favoriteStatus = .removed
         MovieFavoritesManager.shared.removeFromFavorites(
           movieID: strongSelf.mediaItem.id!)
         
       case .failure(let error):
-        strongSelf.favoriteStatusText = "\(error.customMessage)"
+        strongSelf.favoriteStatus = .error(error.message)
       }
       completion()
     }

@@ -55,8 +55,8 @@ final class HUDView: UIView {
   }
   
   // MARK: - show HUD and hide
- public func showHUD(withText text: String, andIsHideToTop: Bool) {
-    label.text = text
+ public func showHUD(with message: String, andIsHideToTop: Bool) {
+    label.text = message
     alpha = 0
     
     guard let topViewController = UIApplication.shared.windows.first?.rootViewController?.topMostViewController(),

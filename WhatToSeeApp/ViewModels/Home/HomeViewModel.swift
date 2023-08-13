@@ -64,7 +64,7 @@ class HomeViewModel: HomeViewModelProtocol {
   }
   
   public func numberOfSections() -> Int {
-    return MovieCategory.allCases.count
+    MovieCategory.allCases.count
   }
   
   public func numberOfRowsInSection() -> Int {
@@ -100,7 +100,7 @@ extension HomeViewModel {
         case .success(let response):
           strongSelf.upcomingMovies = response.results
         case .failure(let error):
-          print(error.customMessage)
+          print(error.message)
         }
         strongSelf.dispatchGroup.leave()
       }
@@ -117,7 +117,7 @@ extension HomeViewModel {
         case .success(let response):
           strongSelf.nowPlayingMovies = response.results
         case .failure(let error):
-          print(error.customMessage)
+          print(error.message)
         }
         strongSelf.dispatchGroup.leave()
       }
@@ -134,7 +134,7 @@ extension HomeViewModel {
         case .success(let response):
           strongSelf.popularMovies = response.results
         case .failure(let error):
-          print(error.customMessage)
+          print(error.message)
         }
         strongSelf.dispatchGroup.leave()
       }
@@ -144,14 +144,14 @@ extension HomeViewModel {
     service.getMedia(
       endpoint: MoviesEndpoint.topRated(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
-   
+        
         guard let strongSelf = self else { return }
         
         switch result {
         case .success(let response):
           strongSelf.topRatedMovies = response.results
         case .failure(let error):
-          print(error.customMessage)
+          print(error.message)
         }
         strongSelf.dispatchGroup.leave()
       }
@@ -168,7 +168,7 @@ extension HomeViewModel {
         case .success(let response):
           strongSelf.trendingMovies = response.results
         case .failure(let error):
-          print(error.customMessage)
+          print(error.message)
         }
         strongSelf.dispatchGroup.leave()
       }

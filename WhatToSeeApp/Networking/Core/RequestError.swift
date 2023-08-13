@@ -17,7 +17,7 @@ enum RequestError: Error {
   case unexpectedStatusCode(code: Int)
   case unknown
   
-  var customMessage: String {
+  var message: String {
     var result = ""
     switch self {
     case .decode:

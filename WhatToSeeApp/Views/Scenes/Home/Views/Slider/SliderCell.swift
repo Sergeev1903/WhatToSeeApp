@@ -90,7 +90,7 @@ class SliderCell: UICollectionViewCell {
   }
   
   private func configureSliderCell() {
-    var url = URL(string: "")
+    var url: URL?
     
     switch UIDevice.current.userInterfaceIdiom {
     case .phone: url = viewModel.mediaPosterURL
