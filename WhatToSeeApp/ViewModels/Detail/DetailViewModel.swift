@@ -92,7 +92,7 @@ class DetailViewModel: DetailViewModelProtocol {
   // MARK: - Methods
   public func getMovieDetails(completion: @escaping () -> Void) {
     service.getMedia(
-      endpoint: MoviesEndpoint.movieDetails(id: mediaItem.id!),
+      endpoint: MovieEndpoint.movieDetails(id: mediaItem.id!),
       responseModel: TMDBMovieResult.self) { [weak self] result in
         
         guard let strongSelf = self else { return }
@@ -109,7 +109,7 @@ class DetailViewModel: DetailViewModelProtocol {
   }
   
   public func addToFovorite(completion: @escaping () -> Void) {
-    service.getMedia(endpoint: MoviesEndpoint.addFavoriteMovie(movieId: mediaItem.id!), responseModel: TMDBMovieResult.self) {[weak self] response in
+    service.getMedia(endpoint: MovieEndpoint.addFavoriteMovie(movieId: mediaItem.id!), responseModel: TMDBMovieResult.self) {[weak self] response in
       
       guard let strongSelf = self else { return }
       
@@ -127,7 +127,7 @@ class DetailViewModel: DetailViewModelProtocol {
   }
   
   public func removeFromFovorite(completion: @escaping () -> Void) {
-    service.getMedia(endpoint: MoviesEndpoint.removeFavoriteMovie(movieId: mediaItem.id!), responseModel: TMDBMovieResult.self) {[weak self] response in
+    service.getMedia(endpoint: MovieEndpoint.removeFavoriteMovie(movieId: mediaItem.id!), responseModel: TMDBMovieResult.self) {[weak self] response in
       
       guard let strongSelf = self else { return }
       

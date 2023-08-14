@@ -43,7 +43,6 @@ class HomeViewController: UIViewController {
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    setupNavigationBar()
     setupTabMenu()
     setupTableView()
     configureNavigationBar()
@@ -64,7 +63,7 @@ class HomeViewController: UIViewController {
   
   private func setupNavigationBar() {
     navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-    navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.shadowImage = nil
     navigationController?.navigationBar.prefersLargeTitles = false
   }
   
@@ -328,7 +327,7 @@ extension HomeViewController: CategoryCellDelegate {
 extension HomeViewController: SliderViewDelegate {
   
   func didTapSliderView(
-    _ categoryCell: SliderView, viewModel: DetailViewModelProtocol) {
+    _ sliderView: SliderView, viewModel: DetailViewModelProtocol) {
       let vc = DetailViewController()
       vc.viewModel = viewModel as? DetailViewModel
       navigationController?.pushViewController(vc, animated: true)

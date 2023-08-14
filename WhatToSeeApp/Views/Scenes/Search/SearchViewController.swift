@@ -35,7 +35,6 @@ class SearchViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     title = "Search"
-    setupNavigationBar()
     setupSearchbar()
     setupTableView()
   }
@@ -48,9 +47,9 @@ class SearchViewController: UIViewController {
   
   // MARK: - Methods
   private func setupNavigationBar() {
-    navigationController?.navigationBar.prefersLargeTitles = true
     navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-    navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.shadowImage = nil
+    navigationController?.navigationBar.prefersLargeTitles = true
   }
   
   private func setupSearchbar() {
@@ -112,8 +111,8 @@ extension SearchViewController: UITableViewDelegate {
     _ tableView: UITableView,
     didSelectRowAt indexPath: IndexPath) {
       
-      let vc = DetailViewController()
       let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
+      let vc = DetailViewController()
       vc.viewModel = detailViewModel
       navigationController?.pushViewController(vc, animated: true)
       tableView.deselectRow(at: indexPath, animated: true)

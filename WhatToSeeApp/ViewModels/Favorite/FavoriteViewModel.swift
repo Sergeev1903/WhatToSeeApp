@@ -32,7 +32,7 @@ class FavoriteViewModel: FavoriteViewModelProtocol {
   // MARK: - Methods
   public func getFavoriteMovies(completion: @escaping () -> Void) {
     service.getMedia(
-      endpoint: MoviesEndpoint.favoriteMovies(page: 1),
+      endpoint: MovieEndpoint.favoriteMovies(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
         
         guard let strongSelf = self else { return }

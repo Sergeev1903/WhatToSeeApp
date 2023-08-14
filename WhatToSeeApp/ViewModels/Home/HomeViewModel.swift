@@ -91,7 +91,7 @@ extension HomeViewModel {
   
   private func getUpcomingMovies() {
     service.getMedia(
-      endpoint: MoviesEndpoint.upcoming,
+      endpoint: MovieEndpoint.upcoming,
       responseModel: TMDBMovieResponse.self) {[weak self] result in
         
         guard let strongSelf = self else { return }
@@ -108,7 +108,7 @@ extension HomeViewModel {
   
   private func getNowPlayingMovies() {
     service.getMedia(
-      endpoint: MoviesEndpoint.nowPlaying(page: 1),
+      endpoint: MovieEndpoint.nowPlaying(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
         
         guard let strongSelf = self else { return }
@@ -125,7 +125,7 @@ extension HomeViewModel {
   
   private func getPopularMovies() {
     service.getMedia(
-      endpoint: MoviesEndpoint.popular(page: 1),
+      endpoint: MovieEndpoint.popular(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
         
         guard let strongSelf = self else { return }
@@ -142,7 +142,7 @@ extension HomeViewModel {
   
   private func getTopRatedMovies() {
     service.getMedia(
-      endpoint: MoviesEndpoint.topRated(page: 1),
+      endpoint: MovieEndpoint.topRated(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
         
         guard let strongSelf = self else { return }
@@ -159,7 +159,7 @@ extension HomeViewModel {
   
   private func getTrendingMovies() {
     service.getMedia(
-      endpoint: MoviesEndpoint.trending(page: 1),
+      endpoint: MovieEndpoint.trending(page: 1),
       responseModel: TMDBMovieResponse.self) {[weak self] result in
         
         guard let strongSelf = self else { return }

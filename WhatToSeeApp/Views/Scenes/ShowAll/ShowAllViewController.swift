@@ -21,18 +21,20 @@ class ShowAllViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.title = viewModel.category
-    setupNavigationBar()
     setupCollectionView()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+    setupNavigationBar()
   }
   
   
   // MARK: - Methods
   private func setupNavigationBar() {
+    navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+    navigationController?.navigationBar.shadowImage = nil
+    navigationController?.navigationBar.tintColor = nil
     navigationController?.navigationBar.prefersLargeTitles = true
   }
   
@@ -70,7 +72,8 @@ extension ShowAllViewController: UICollectionViewDataSource {
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
       
-      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCellItem.reuseId, for: indexPath) as! CategoryCellItem
+      let cell = collectionView.dequeueReusableCell(
+        withReuseIdentifier: CategoryCellItem.reuseId, for: indexPath) as! CategoryCellItem
       cell.viewModel = viewModel.cellForItemAt(indexPath: indexPath)
       return cell
     }
@@ -93,7 +96,10 @@ extension ShowAllViewController: UICollectionViewDelegate {
   
   
   // MARK: - Load more movies
-  func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+      
     //     Load more movies when reaching the last item
     if indexPath.item == viewModel.numberOfItemsInSection()
         - 1 && viewModel.currentPage <= viewModel.totalPages {

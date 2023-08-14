@@ -16,8 +16,7 @@ enum MovieCategory: String, CaseIterable {
   case genres = "Genres"
 }
 
-
-enum MoviesEndpoint {
+enum MovieEndpoint {
   case upcoming
   case nowPlaying(page: Int)
   case popular(page: Int)
@@ -30,7 +29,7 @@ enum MoviesEndpoint {
   case removeFavoriteMovie(movieId: Int)
 }
 
-extension MoviesEndpoint: Endpoint {
+extension MovieEndpoint: Endpoint {
   
   var path: String {
     
@@ -72,9 +71,8 @@ extension MoviesEndpoint: Endpoint {
   var header: [String: String]? {
     switch self {
       
-    case .nowPlaying, .popular, .topRated,
-        .upcoming, .trending, .movieDetails,
-        .searchMovie,
+    case .nowPlaying, .popular, .topRated, .upcoming,
+        .trending, .movieDetails, .searchMovie,
         .favoriteMovies, .addFavoriteMovie, .removeFavoriteMovie:
       return [
         "Authorization": "Bearer \(accessToken)",
@@ -93,7 +91,6 @@ extension MoviesEndpoint: Endpoint {
       
     case .movieDetails:
       return [URLQueryItem(name: "append_to_response", value: "videos")]
-      
       
     case .upcoming, .addFavoriteMovie, .removeFavoriteMovie:
       return nil

@@ -40,12 +40,18 @@ class DetailViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
+    setupNavigationBar()
+  }
+  
+  
+  // MARK: - Methods
+  
+  private func setupNavigationBar() {
     // Make the Navigation Bar background transparent
-    self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-    self.navigationController?.navigationBar.shadowImage = UIImage()
-    self.navigationController?.navigationBar.isTranslucent = true
-    self.navigationController?.navigationBar.tintColor = .white
+    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.isTranslucent = true
+    navigationController?.navigationBar.tintColor = .white
     
     // Custom back button
     navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backNavButton)
@@ -55,7 +61,6 @@ class DetailViewController: UIViewController {
   }
   
   
-  // MARK: - Methods
   private func setupBackNavButton() {
     backNavButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
     let image = UIImage(systemName: "arrow.left")

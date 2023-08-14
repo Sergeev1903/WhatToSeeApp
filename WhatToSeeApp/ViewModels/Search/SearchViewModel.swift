@@ -34,7 +34,7 @@ class SearchViewModel: SearchViewModelProtocol {
   public func searchMovies(
     searchText: String, page: Int, completion: @escaping () -> Void) {
       service.getMedia(
-        endpoint: MoviesEndpoint.searchMovie(
+        endpoint: MovieEndpoint.searchMovie(
           searchText: searchText, page: 1),
         responseModel: TMDBMovieResponse.self) {[weak self] result in
           

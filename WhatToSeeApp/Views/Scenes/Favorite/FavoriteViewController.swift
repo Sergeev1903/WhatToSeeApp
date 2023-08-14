@@ -33,7 +33,6 @@ class FavoriteViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.title = "Favorites"
-    setupNavigationBar()
     setupCollectionView()
     configureViewModel()
     trackingFavoriteState()
@@ -41,12 +40,14 @@ class FavoriteViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+    setupNavigationBar()
   }
   
   
   // MARK: - Methods
   private func setupNavigationBar() {
+    navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+    navigationController?.navigationBar.shadowImage = nil
     navigationController?.navigationBar.prefersLargeTitles = true
   }
   

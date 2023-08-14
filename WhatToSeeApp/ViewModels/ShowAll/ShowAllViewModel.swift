@@ -29,6 +29,25 @@ class ShowAllViewModel: ShowAllViewModelProtocol {
   private var mediaItems: [TMDBMovieResult]
   private let service: MoviesServiceable
   
+  private var categoryEndpoint: MovieEndpoint {
+    var endpoint: MovieEndpoint = .upcoming
+    
+    switch category {
+    case MovieCategory.nowPlaying.rawValue:
+      endpoint = MovieEndpoint.nowPlaying(page: currentPage)
+    case MovieCategory.popular.rawValue:
+      endpoint =  MovieEndpoint.popular(page: currentPage)
+    case MovieCategory.topRated.rawValue:
+      endpoint = MovieEndpoint.topRated(page: currentPage)
+    case MovieCategory.trending.rawValue:
+      endpoint = MovieEndpoint.trending(page: currentPage)
+    default:
+      break
+    }
+    
+    return endpoint
+  }
+  
   
   // MARK: - Init
   init(mediaItems: [TMDBMovieResult], category: MovieCategory) {
@@ -40,21 +59,6 @@ class ShowAllViewModel: ShowAllViewModelProtocol {
   
   // MARK: - Methods
   public func loadMoreItems(completion: @escaping () -> Void) {
-    var categoryEndpoint = MoviesEndpoint.upcoming
-    
-    switch category {
-    case MovieCategory.nowPlaying.rawValue:
-      categoryEndpoint = MoviesEndpoint.nowPlaying(page: currentPage)
-    case MovieCategory.popular.rawValue:
-      categoryEndpoint = MoviesEndpoint.popular(page: currentPage)
-    case MovieCategory.topRated.rawValue:
-      categoryEndpoint = MoviesEndpoint.topRated(page: currentPage)
-    case MovieCategory.trending.rawValue:
-      categoryEndpoint = MoviesEndpoint.trending(page: currentPage)
-    default:
-      break
-    }
-    
     service.getMedia(
       endpoint: categoryEndpoint,
       responseModel: TMDBMovieResponse.self) {[weak self] result in

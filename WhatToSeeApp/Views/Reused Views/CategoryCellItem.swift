@@ -68,7 +68,7 @@ class CategoryCellItem: UICollectionViewCell {
   private func setupVoteLabel() {
     voteLabel.textAlignment = .center
     voteLabel.numberOfLines = 0
-    voteLabel.font = .systemFont(ofSize: 8)
+    voteLabel.font = .systemFont(ofSize: 12)
     voteLabel.isHidden = true
     voteLabel.translatesAutoresizingMaskIntoConstraints = false
     
@@ -76,7 +76,7 @@ class CategoryCellItem: UICollectionViewCell {
     
     voteLabel.layer.borderWidth = 1
     voteLabel.layer.borderColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 0.8014279801)
-    voteLabel.layer.cornerRadius = 12
+    voteLabel.layer.cornerRadius = 16
     voteLabel.layer.masksToBounds = true
     
     NSLayoutConstraint.activate([
@@ -85,9 +85,9 @@ class CategoryCellItem: UICollectionViewCell {
       voteLabel.topAnchor.constraint(
         equalTo: contentView.topAnchor, constant: 4),
       voteLabel.heightAnchor.constraint(
-        equalToConstant: 24),
+        equalToConstant: 32),
       voteLabel.widthAnchor.constraint(
-        equalToConstant: 24)
+        equalToConstant: 32)
     ])
   }
   
