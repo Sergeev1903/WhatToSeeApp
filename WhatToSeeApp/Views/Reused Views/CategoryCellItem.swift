@@ -45,7 +45,8 @@ class CategoryCellItem: UICollectionViewCell {
     super.prepareForReuse()
     imageView.image = nil
     voteLabel.text = nil
-    voteLabel.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 0.8014279801)
+    voteLabel.backgroundColor = .lightGray.withAlphaComponent(0.5)
+    imageView.backgroundColor = .darkGray.withAlphaComponent(0.5)
   }
   
   

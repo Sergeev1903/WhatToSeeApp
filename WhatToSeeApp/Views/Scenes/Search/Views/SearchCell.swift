@@ -35,6 +35,7 @@ class SearchCell: UITableViewCell {
     setupMediaImageView()
     setupMediaTitle()
     setupMediaVoteLabel()
+    setupLoadIndicator()
   }
   
   required init?(coder: NSCoder) {
@@ -54,7 +55,8 @@ class SearchCell: UITableViewCell {
     mediaImageView.image = nil
     mediaTitle.text = nil
     mediaVoteLabel.text = nil
-    mediaVoteLabel.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 0.8014279801)
+    mediaVoteLabel.backgroundColor = .lightGray.withAlphaComponent(0.5)
+    mediaImageView.backgroundColor = .darkGray.withAlphaComponent(0.5)
   }
   
   
@@ -139,18 +141,32 @@ class SearchCell: UITableViewCell {
     ])
   }
   
-  
   private func setupLoadIndicator() {
-    // TODO: -
+    loadIndicator.startAnimating()
+    loadIndicator.hidesWhenStopped = true
+    loadIndicator.style = .large
+    loadIndicator.translatesAutoresizingMaskIntoConstraints = false
+    
+    addSubview(loadIndicator)
+    
+    NSLayoutConstraint.activate([
+      loadIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+      loadIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
+    ])
   }
   
   private func configureSearchCell() {
-    mediaTitle.text = viewModel.mediaTitleWithReleaseYear
-    mediaImageView.sd_setImage(with: viewModel.mediaBackdropURL)
     
-    mediaVoteLabel.text = viewModel.mediaVoteAverage
-    mediaVoteLabel.backgroundColor = viewModel.mediaVoteCount <= 6 ?
-    #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0.8031870861): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 0.8018936258)
+    mediaImageView.sd_setImage(with: viewModel.mediaBackdropURL) {_,_,_,_ in
+      self.loadIndicator.stopAnimating()
+      
+      self.mediaTitle.text = self.viewModel.mediaTitleWithReleaseYear
+      self.mediaVoteLabel.text = self.viewModel.mediaVoteAverage
+      self.mediaVoteLabel.backgroundColor = self.viewModel.mediaVoteCount <= 6 ?
+      #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0.8031870861): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 0.8018936258)
+    }
+    
+    
   }
   
 }
