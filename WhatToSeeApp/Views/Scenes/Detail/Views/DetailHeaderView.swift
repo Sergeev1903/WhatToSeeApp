@@ -92,7 +92,6 @@ class DetailHeaderView: UIView {
   }
   
   @objc private func watchTrailerButtonAction() {
-    print("watchTrailerButtonAction")
     delegate?.didTabWatchTrailerButton(self)
   }
   

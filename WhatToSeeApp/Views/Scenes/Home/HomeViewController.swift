@@ -12,8 +12,8 @@ import SDWebImage
 class HomeViewController: UIViewController {
   
   // MARK: - Properties
-  private let tabMenu = TabMenuControl()
   private let tableView = UITableView(frame: .zero, style: .grouped)
+  private let tabMenu = TabMenuControl()
   private let slider = SliderView()
   
   // MARK: - Coordinator

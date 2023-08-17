@@ -79,7 +79,8 @@ class FavoriteViewController: UIViewController {
   
   private func trackingFavoriteState() {
     NotificationCenter.default.addObserver(
-      self, selector: #selector(handleNotification), name: Notification.Name("UpdateFavorite"), object: nil)
+      self, selector: #selector(handleNotification),
+      name: Notification.Name("UpdateFavorite"), object: nil)
   }
   
 }
@@ -98,7 +99,9 @@ extension FavoriteViewController: UICollectionViewDataSource {
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
       
-      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCellItem.reuseId, for: indexPath) as! CategoryCellItem
+      let cell = collectionView.dequeueReusableCell(
+        withReuseIdentifier: CategoryCellItem.reuseId,
+        for: indexPath) as! CategoryCellItem
       cell.viewModel = viewModel.cellForItemAt(indexPath: indexPath)
       return cell
     }

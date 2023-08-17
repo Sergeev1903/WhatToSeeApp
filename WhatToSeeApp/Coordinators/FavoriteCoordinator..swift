@@ -10,14 +10,19 @@ import UIKit
 
 class FavoriteCoordinator: Coordinator {
   
+  // MARK: - Properties
   private let service: MoviesServiceable
   let navigationController: UINavigationController
   
+  
+  // MARK: - Init
   init(service: MoviesServiceable) {
     self.service = service
     self.navigationController = UINavigationController()
   }
   
+  
+  // MARK: - FavoriteCoordinator start
   func start() {
     let favoriteViewModel = FavoriteViewModel(service: service)
     let favoriteViewController = FavoriteViewController(favoriteViewModel)
@@ -33,8 +38,7 @@ extension FavoriteCoordinator {
   
   // DetailViewController
   func showDetail(_ viewModel: DetailViewModelProtocol) {
-    let vc = DetailViewController()
-    vc.viewModel = viewModel as? DetailViewModel
+    let vc = DetailViewController(viewModel)
     navigationController.pushViewController(vc, animated: true)
   }
   

@@ -59,8 +59,7 @@ class SearchViewController: UIViewController {
     searchController.searchResultsUpdater = self
     searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.placeholder = "Search Movies"
-    // plug start text
-    searchController.searchBar.text = "Terminator"
+    searchController.searchBar.text = "Terminator" // plug start text
     navigationItem.searchController = searchController
     definesPresentationContext = true
   }
@@ -115,7 +114,6 @@ extension SearchViewController: UITableViewDelegate {
     didSelectRowAt indexPath: IndexPath) {
       
       let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
-      
       coordinator?.showDetail(detailViewModel)
       
       tableView.deselectRow(at: indexPath, animated: true)
@@ -135,9 +133,11 @@ extension SearchViewController: UISearchResultsUpdating {
     timer.invalidate()
     timer = Timer.scheduledTimer(withTimeInterval: 0.5,
                                  repeats: false, block: { [weak self] _ in
-      guard let self else { return }
-      viewModel.searchMovies(searchText: searchText, page: 1) {
-        self.tableView.reloadData()
+      
+      guard let strongSelf = self else { return }
+      
+      strongSelf.viewModel.searchMovies(searchText: searchText, page: 1) {
+        strongSelf.tableView.reloadData()
       }
     })
   }

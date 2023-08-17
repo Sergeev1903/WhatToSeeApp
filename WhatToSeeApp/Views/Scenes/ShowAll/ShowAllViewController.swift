@@ -13,8 +13,22 @@ class ShowAllViewController: UIViewController {
   // MARK: - Properties
   private var collectionView: UICollectionView!
   
+  // MARK: - Coordinator
+  var coordinator: ShowAllCoordinator?
+  
   // MARK: - ViewModel
   var viewModel: ShowAllViewModelProtocol!
+  
+  // MARK: - Init
+  init(_ viewModel: ShowAllViewModelProtocol) {
+    self.viewModel = viewModel
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder: NSCoder) {
+    print("Sorry! only code, no storyboards")
+    return nil
+  }
   
   
   // MARK: - Lifecycle
@@ -67,7 +81,6 @@ extension ShowAllViewController: UICollectionViewDataSource {
       return viewModel.numberOfItemsInSection()
     }
   
-  
   func collectionView(
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -89,9 +102,7 @@ extension ShowAllViewController: UICollectionViewDelegate {
     didSelectItemAt indexPath: IndexPath) {
       
       let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
-      let vc = DetailViewController()
-      vc.viewModel = detailViewModel
-      navigationController?.pushViewController(vc, animated: true)
+      coordinator?.showDetail(detailViewModel)
     }
   
   

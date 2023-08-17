@@ -50,8 +50,7 @@ extension HomeCoordinator {
   
   // DetailViewController
   func showDetail(_ viewModel: DetailViewModelProtocol) {
-    let vc = DetailViewController()
-    vc.viewModel = viewModel as? DetailViewModel
+    let vc = DetailViewController(viewModel)
     navigationController.pushViewController(vc, animated: true)
   }
   
@@ -59,34 +58,36 @@ extension HomeCoordinator {
   func showAll(
     from categoryHeader: CategoryHeader, with viewModel: HomeViewModelProtocol) {
       
-      let vc = ShowAllViewController()
+      var showAllViewModel: ShowAllViewModelProtocol!
       
       switch categoryHeader.titleLabel.text {
         
       case MovieCategory.nowPlaying.rawValue:
-        vc.viewModel = viewModel.didTapSeeAllButton(
+        showAllViewModel = viewModel.didTapSeeAllButton(
           mediaItems: viewModel.nowPlayingMovies,
           category: MovieCategory.nowPlaying)
         
       case MovieCategory.popular.rawValue:
-        vc.viewModel = viewModel.didTapSeeAllButton(
+        showAllViewModel = viewModel.didTapSeeAllButton(
           mediaItems: viewModel.popularMovies,
           category: MovieCategory.popular)
         
       case MovieCategory.topRated.rawValue:
-        vc.viewModel = viewModel.didTapSeeAllButton(
+        showAllViewModel = viewModel.didTapSeeAllButton(
           mediaItems: viewModel.topRatedMovies,
           category: MovieCategory.topRated)
         
       case MovieCategory.trending.rawValue:
-        vc.viewModel = viewModel.didTapSeeAllButton(
+        showAllViewModel = viewModel.didTapSeeAllButton(
           mediaItems: viewModel.trendingMovies,
           category: MovieCategory.trending)
         
       default: break
       }
       
-      navigationController.pushViewController(vc, animated: true)
+      let showAllCoordinator = ShowAllCoordinator(
+        navigationController: navigationController, viewModel: showAllViewModel)
+      showAllCoordinator.start()
     }
   
 }

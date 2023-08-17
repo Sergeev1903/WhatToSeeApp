@@ -18,14 +18,19 @@ class DetailViewController: UIViewController {
   
   
   // MARK: - ViewModel
-  var viewModel: DetailViewModelProtocol! {
-    didSet {
-      viewModel.getMovieDetails {
-        self.tableView.reloadData()
-      }
-      
-      configureHeaderView()
-    }
+  var viewModel: DetailViewModelProtocol!
+  
+  
+  // MARK: - Init
+  init(_ viewModel: DetailViewModelProtocol) {
+    self.viewModel = viewModel
+    super.init(nibName: nil, bundle: nil)
+    self.configureViewModel()
+  }
+  
+  required init?(coder: NSCoder) {
+    print("Sorry! only code, no storyboards")
+    return nil
   }
   
   
@@ -156,6 +161,14 @@ class DetailViewController: UIViewController {
     }
   }
   
+  private func configureViewModel() {
+    viewModel.getMovieDetails {
+      self.tableView.reloadData()
+    }
+
+    configureHeaderView()
+  }
+  
 }
 
 
@@ -214,7 +227,7 @@ extension DetailViewController: WatchTrailerButtonDelegate {
   func didTabWatchTrailerButton(_ detailHeaderView: DetailHeaderView) {
     
     guard let trailerUrl = viewModel.detailTrailerUrl else {
-     
+      
       // FIXME: -
       detailHeaderView.watchTrailerButton.isEnabled = false
       showHUDView(with: "Sorry! \n No trailers")

@@ -15,7 +15,6 @@ class SliderCell: UICollectionViewCell {
   static let reuseId = String(describing: SliderCell.self)
   
   public let imageView = UIImageView()
-  private let sliderGradient = CAGradientLayer()
   private let loadIndicator = UIActivityIndicatorView()
   
   // MARK: - ViewModel
@@ -44,19 +43,13 @@ class SliderCell: UICollectionViewCell {
     super.prepareForReuse()
     imageView.image = nil
   }
-
-  override func draw(_ rect: CGRect) {
-    super.draw(rect)
-    setupSliderGradient()
-  }
-  
   
   private func setupImageView() {
     imageView.contentMode = .scaleAspectFill
     imageView.translatesAutoresizingMaskIntoConstraints = false
+    layer.masksToBounds = true
     
     addSubview(imageView)
-    layer.masksToBounds = true
     
     NSLayoutConstraint.activate([
       imageView.topAnchor.constraint(equalTo: topAnchor),
@@ -78,15 +71,6 @@ class SliderCell: UICollectionViewCell {
       loadIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
       loadIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
     ])
-  }
-  
-  private func setupSliderGradient() {
-    // create & add gradient from UIView extension
-    self.addGradientAddSublayer(
-      sliderGradient, colors: [.systemBackground, .clear, .clear, .clear,
-                               .systemBackground],
-      startPoint: .top, endPoint: .bottom,
-      locations: [0.0, 0.2, 0.5, 0.8, 1.0])
   }
   
   private func configureSliderCell() {

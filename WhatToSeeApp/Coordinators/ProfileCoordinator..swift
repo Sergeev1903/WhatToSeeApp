@@ -10,12 +10,17 @@ import UIKit
 
 class ProfileCoordinator: Coordinator {
   
+  // MARK: - Properties
   let navigationController: UINavigationController
   
+  
+  // MARK: - Init
   init() {
     self.navigationController = UINavigationController()
   }
   
+  
+  // MARK: - ProfileCoordinator start
   func start() {
     let profileViewController = ProfileViewController()
     

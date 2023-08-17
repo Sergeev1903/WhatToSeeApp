@@ -21,6 +21,7 @@ class SliderView: UIView {
   private let pageControl = UIPageControl()
   private var currentPageIndex = 0
   private var titleLabel = UILabel()
+  private let sliderGradient = CAGradientLayer()
   
   // MARK: - Delegate
   weak var delegate: SliderViewDelegate?
@@ -49,6 +50,20 @@ class SliderView: UIView {
   
   
   // MARK: - Methods
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    setupSliderGradient()
+  }
+  
+  private func setupSliderGradient() {
+    // create & add gradient from UIView extension
+    self.addGradientInsertSublayer(
+      sliderGradient, at: 1,
+      colors: [.systemBackground, .clear, .clear, .clear, .systemBackground],
+      startPoint: .top, endPoint: .bottom,
+      locations: [0.0, 0.2, 0.5, 0.8, 1.0])
+  }
+  
   private func setupCollectionView() {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
