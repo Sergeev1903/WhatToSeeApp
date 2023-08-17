@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 class MovieFavoritesManager {
   
     static let shared = MovieFavoritesManager()

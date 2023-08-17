@@ -297,8 +297,7 @@ extension HomeViewController: UITableViewDelegate {
     _ tableView: UITableView,
     didSelectRowAt indexPath: IndexPath) {
       if indexPath.section == 1 {
-        let vc = GenresViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        coordinator?.showGenres()
       }
     }
   
@@ -317,9 +316,7 @@ extension HomeViewController: CategoryCellDelegate {
   
   func didTapCategoryCell(
     _ categoryCell: CategoryCell, viewModel: DetailViewModelProtocol) {
-      let vc = DetailViewController()
-      vc.viewModel = viewModel as? DetailViewModel
-      navigationController?.pushViewController(vc, animated: true)
+      coordinator?.showDetail(viewModel)
     }
   
 }
@@ -330,9 +327,7 @@ extension HomeViewController: SliderViewDelegate {
   
   func didTapSliderView(
     _ sliderView: SliderView, viewModel: DetailViewModelProtocol) {
-      let vc = DetailViewController()
-      vc.viewModel = viewModel as? DetailViewModel
-      navigationController?.pushViewController(vc, animated: true)
+      coordinator?.showDetail(viewModel)
     }
   
 }
@@ -342,35 +337,7 @@ extension HomeViewController: SliderViewDelegate {
 extension HomeViewController: CategoryHeaderButtonDelegate {
   
   func didTabCategoryHeaderButton(_ categoryHeader: CategoryHeader) {
-    
-    let vc = ShowAllViewController()
-    
-    switch categoryHeader.titleLabel.text {
-      
-    case MovieCategory.nowPlaying.rawValue:
-      vc.viewModel = viewModel.didTapSeeAllButton(
-        mediaItems: viewModel.nowPlayingMovies,
-        category: MovieCategory.nowPlaying)
-      
-    case MovieCategory.popular.rawValue:
-      vc.viewModel = viewModel.didTapSeeAllButton(
-        mediaItems: viewModel.popularMovies,
-        category: MovieCategory.popular)
-      
-    case MovieCategory.topRated.rawValue:
-      vc.viewModel = viewModel.didTapSeeAllButton(
-        mediaItems: viewModel.topRatedMovies,
-        category: MovieCategory.topRated)
-      
-    case MovieCategory.trending.rawValue:
-      vc.viewModel = viewModel.didTapSeeAllButton(
-        mediaItems: viewModel.trendingMovies,
-        category: MovieCategory.trending)
-      
-    default: break
-    }
-    
-    navigationController?.pushViewController(vc, animated: true)
+    coordinator?.showAll(from: categoryHeader, with: viewModel)
   }
   
 }
