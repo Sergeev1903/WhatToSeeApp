@@ -101,8 +101,11 @@ class SliderCell: UICollectionViewCell {
     imageView.sd_setImage(
       with: url,
       placeholderImage: UIImage(named: "load_placeholder"),
-      options: .delayPlaceholder) { _,_,_,_ in
-        self.loadIndicator.stopAnimating()
+      options: .delayPlaceholder) {[weak self] _,_,_,_ in
+        
+        guard let strongSelf = self else { return }
+        
+        strongSelf.loadIndicator.stopAnimating()
       }
   }
   

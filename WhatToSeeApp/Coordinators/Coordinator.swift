@@ -8,18 +8,16 @@
 import UIKit
 
 protocol Coordinator: AnyObject {
-  
   var navigationController: UINavigationController { get }
-  
   func start()
 }
 
 
 extension Coordinator {
-
+  
   var navigationController: UINavigationController {
     return  UINavigationController()
   }
-
+  
 }
 

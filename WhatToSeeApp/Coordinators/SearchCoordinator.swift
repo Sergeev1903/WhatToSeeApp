@@ -21,10 +21,21 @@ class SearchCoordinator: Coordinator {
   func start() {
     let searchViewModel = SearchViewModel(service: service)
     let searchViewController = SearchViewController(searchViewModel)
+    searchViewController.coordinator = self
     
     navigationController.viewControllers = [searchViewController]
   }
+
+}
+
+
+extension SearchCoordinator {
   
-  func showDetail() {}
+  // DetailViewController
+  func showDetail(_ viewModel: DetailViewModelProtocol) {
+    let vc = DetailViewController()
+    vc.viewModel = viewModel as? DetailViewModel
+    navigationController.pushViewController(vc, animated: true)
+  }
   
 }

@@ -21,8 +21,21 @@ class FavoriteCoordinator: Coordinator {
   func start() {
     let favoriteViewModel = FavoriteViewModel(service: service)
     let favoriteViewController = FavoriteViewController(favoriteViewModel)
+    favoriteViewController.coordinator = self
     
     navigationController.viewControllers = [favoriteViewController]
+  }
+  
+}
+
+
+extension FavoriteCoordinator {
+  
+  // DetailViewController
+  func showDetail(_ viewModel: DetailViewModelProtocol) {
+    let vc = DetailViewController()
+    vc.viewModel = viewModel as? DetailViewModel
+    navigationController.pushViewController(vc, animated: true)
   }
   
 }

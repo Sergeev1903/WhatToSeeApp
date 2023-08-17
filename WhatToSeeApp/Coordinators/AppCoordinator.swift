@@ -24,13 +24,15 @@ class AppCoordinator: Coordinator {
   }
   
   
-  // MARK: - Methods
+  // MARK: - AppCoordinator start
   func start() {
     configureTabBar()
     window.rootViewController = tabBarController
     window.makeKeyAndVisible()
   }
   
+  
+  // MARK: - Methods
   private func configureTabBar() {
     
     // Home

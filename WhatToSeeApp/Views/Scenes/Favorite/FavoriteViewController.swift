@@ -13,6 +13,9 @@ class FavoriteViewController: UIViewController {
   // MARK: - Properties
   private var collectionView: UICollectionView!
   
+  // MARK: - Coordinator
+  var coordinator: FavoriteCoordinator?
+  
   // MARK: - ViewModel
   var viewModel: FavoriteViewModelProtocol
   
@@ -70,7 +73,7 @@ class FavoriteViewController: UIViewController {
   
   private func configureViewModel() {
     viewModel.getFavoriteMovies {
-        self.collectionView.reloadData()
+      self.collectionView.reloadData()
     }
   }
   
@@ -111,9 +114,7 @@ extension FavoriteViewController: UICollectionViewDelegate {
     didSelectItemAt indexPath: IndexPath) {
       
       let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
-      let vc = DetailViewController()
-      vc.viewModel = detailViewModel
-      navigationController?.pushViewController(vc, animated: true)
+      coordinator?.showDetail(detailViewModel)
     }
   
 }

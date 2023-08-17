@@ -107,17 +107,20 @@ class CategoryCellItem: UICollectionViewCell {
   }
   
   private func configureCategoryCellItem() {
+    
     imageView.sd_setImage(
       with: viewModel.mediaPosterURL,
       placeholderImage: UIImage(named: "load_placeholder"),
-      options: .delayPlaceholder) {_,_,_,_ in
+      options: .delayPlaceholder) {[weak self] _,_,_,_ in
         
-        self.loadIndicator.stopAnimating()
-        guard self.loadIndicator.isHidden == true else { return }
-        self.voteLabel.isHidden = false
-        self.voteLabel.text = self.viewModel.mediaVoteAverage
-        self.voteLabel.backgroundColor =
-        self.viewModel.mediaVoteCount <= 6 ?
+        guard let strongSelf = self else { return }
+        
+        strongSelf.loadIndicator.stopAnimating()
+        guard strongSelf.loadIndicator.isHidden == true else { return }
+        strongSelf.voteLabel.isHidden = false
+        strongSelf.voteLabel.text = strongSelf.viewModel.mediaVoteAverage
+        strongSelf.voteLabel.backgroundColor =
+        strongSelf.viewModel.mediaVoteCount <= 6 ?
         #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0.8031870861): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 0.8018936258)
       }
   }

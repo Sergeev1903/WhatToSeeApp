@@ -120,6 +120,7 @@ class SearchCell: UITableViewCell {
     mediaVoteLabel.textAlignment = .center
     mediaVoteLabel.numberOfLines = 0
     mediaVoteLabel.font = .systemFont(ofSize: 12)
+    mediaVoteLabel.isHidden = true
     mediaVoteLabel.translatesAutoresizingMaskIntoConstraints = false
     
     containerView.addSubview(mediaVoteLabel)
@@ -157,16 +158,20 @@ class SearchCell: UITableViewCell {
   
   private func configureSearchCell() {
     
-    mediaImageView.sd_setImage(with: viewModel.mediaBackdropURL) {_,_,_,_ in
-      self.loadIndicator.stopAnimating()
+    mediaImageView.sd_setImage(with: viewModel.mediaBackdropURL) {[weak self] _,_,_,_ in
       
-      self.mediaTitle.text = self.viewModel.mediaTitleWithReleaseYear
-      self.mediaVoteLabel.text = self.viewModel.mediaVoteAverage
-      self.mediaVoteLabel.backgroundColor = self.viewModel.mediaVoteCount <= 6 ?
+      guard let strongSelf = self else { return }
+      
+      strongSelf.loadIndicator.stopAnimating()
+      
+      guard strongSelf.loadIndicator.isHidden == true else { return }
+      
+      strongSelf.mediaTitle.text = strongSelf.viewModel.mediaTitleWithReleaseYear
+      strongSelf.mediaVoteLabel.isHidden = false
+      strongSelf.mediaVoteLabel.text = strongSelf.viewModel.mediaVoteAverage
+      strongSelf.mediaVoteLabel.backgroundColor = strongSelf.viewModel.mediaVoteCount <= 6 ?
       #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0.8031870861): #colorLiteral(red: 0.1960784314, green: 0.8431372549, blue: 0.2941176471, alpha: 0.8018936258)
     }
-    
-    
   }
   
 }

@@ -15,6 +15,9 @@ class SearchViewController: UIViewController {
   private let tableView = UITableView()
   private var timer = Timer()
   
+  // MARK: - Coordinator
+  var coordinator: SearchCoordinator?
+  
   // MARK: - ViewModel
   private var viewModel: SearchViewModelProtocol
   
@@ -112,9 +115,9 @@ extension SearchViewController: UITableViewDelegate {
     didSelectRowAt indexPath: IndexPath) {
       
       let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
-      let vc = DetailViewController()
-      vc.viewModel = detailViewModel
-      navigationController?.pushViewController(vc, animated: true)
+      
+      coordinator?.showDetail(detailViewModel)
+      
       tableView.deselectRow(at: indexPath, animated: true)
     }
   

@@ -16,6 +16,9 @@ class HomeViewController: UIViewController {
   private let tableView = UITableView(frame: .zero, style: .grouped)
   private let slider = SliderView()
   
+  // MARK: - Coordinator
+  var coordinator: HomeCoordinator?
+  
   // MARK: - ViewModel
   private var viewModel: HomeViewModelProtocol
   
@@ -80,8 +83,7 @@ class HomeViewController: UIViewController {
   
   // Action for profile right button
   @objc private func profileRightButtonTapped() {
-    let vc = ProfileViewController()
-    present(vc, animated: true)
+    coordinator?.showProfile()
   }
   
   private func setupTabMenu() {
@@ -143,7 +145,7 @@ class HomeViewController: UIViewController {
   }
   
   // Called in willDisplayHeaderView method
-  private func setupSlider() {
+   func setupSlider() {
     slider.frame = CGRect(
       x: 0, y: 0, width: tableView.bounds.width, height: 600)
     slider.delegate = self
