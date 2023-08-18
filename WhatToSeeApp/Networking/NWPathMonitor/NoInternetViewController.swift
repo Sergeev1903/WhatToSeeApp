@@ -45,7 +45,7 @@ class NoInternetViewController: UIViewController {
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitle("Try Again", for: .normal)
     button.addTarget(
-      NoInternetViewController.self, action: #selector(tryAgainButtonTapped), for: .touchUpInside)
+      self, action: #selector(tryAgainButtonTapped), for: .touchUpInside)
     return button
   }()
   

@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "movie_genre_cell 1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "movie_genre_cell 1.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
