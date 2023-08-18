@@ -47,7 +47,7 @@ class ShowAllViewController: UIViewController {
   // MARK: - Methods
   private func setupNavigationBar() {
     navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-    navigationController?.navigationBar.shadowImage = nil
+    navigationController?.navigationBar.shadowImage = UIImage()
     navigationController?.navigationBar.tintColor = nil
     navigationController?.navigationBar.prefersLargeTitles = true
   }

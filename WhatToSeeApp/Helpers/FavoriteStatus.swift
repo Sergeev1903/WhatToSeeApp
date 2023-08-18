@@ -15,9 +15,9 @@ enum FavoriteStatus {
   var message: String {
     switch self {
     case .added:
-      return "Added favorite"
+      return "Favorite Added "
     case .removed:
-      return "Removed favorite"
+      return "Favorite Removed"
     case .error(let errorMessage):
       return "An error occurred: \(errorMessage)"
     }

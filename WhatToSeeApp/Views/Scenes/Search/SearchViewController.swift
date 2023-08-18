@@ -51,7 +51,7 @@ class SearchViewController: UIViewController {
   // MARK: - Methods
   private func setupNavigationBar() {
     navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-    navigationController?.navigationBar.shadowImage = nil
+    navigationController?.navigationBar.shadowImage = UIImage()
     navigationController?.navigationBar.prefersLargeTitles = true
   }
   
