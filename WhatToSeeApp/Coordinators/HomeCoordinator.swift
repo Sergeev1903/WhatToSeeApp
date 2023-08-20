@@ -14,6 +14,8 @@ class HomeCoordinator: Coordinator {
   private let service: MoviesServiceable
   let navigationController: UINavigationController
   
+  var showAllCoordinator: ShowAllCoordinator!
+  
   
   // MARK: - Init
   init(service: MoviesServiceable) {
@@ -85,7 +87,7 @@ extension HomeCoordinator {
       default: break
       }
       
-      let showAllCoordinator = ShowAllCoordinator(
+      showAllCoordinator = ShowAllCoordinator(
         navigationController: navigationController, viewModel: showAllViewModel)
       showAllCoordinator.start()
     }
