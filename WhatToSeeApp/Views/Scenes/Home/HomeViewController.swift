@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
   private let slider = SliderView()
   
   // MARK: - Coordinator
-  var coordinator: HomeCoordinator?
+  weak var coordinator: HomeCoordinator?
   
   // MARK: - ViewModel
   private var viewModel: HomeViewModelProtocol
@@ -145,7 +145,7 @@ class HomeViewController: UIViewController {
   }
   
   // Called in willDisplayHeaderView method
-   func setupSlider() {
+  func setupSlider() {
     slider.frame = CGRect(
       x: 0, y: 0, width: tableView.bounds.width, height: 600)
     slider.delegate = self

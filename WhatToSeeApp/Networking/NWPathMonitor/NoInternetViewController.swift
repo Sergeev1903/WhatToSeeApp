@@ -16,7 +16,7 @@ protocol NoInternetViewControllerDelegate: AnyObject {
 }
 
 
-class NoInternetViewController: UIViewController {
+final class NoInternetViewController: UIViewController {
   
   // MARK: - Delegate
   weak var delegate: NoInternetViewControllerDelegate?

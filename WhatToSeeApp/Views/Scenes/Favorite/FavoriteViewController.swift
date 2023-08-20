@@ -14,7 +14,7 @@ class FavoriteViewController: UIViewController {
   private var collectionView: UICollectionView!
   
   // MARK: - Coordinator
-  var coordinator: FavoriteCoordinator?
+  weak var coordinator: FavoriteCoordinator?
   
   // MARK: - ViewModel
   var viewModel: FavoriteViewModelProtocol

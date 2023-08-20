@@ -16,7 +16,7 @@ class SearchViewController: UIViewController {
   private var timer = Timer()
   
   // MARK: - Coordinator
-  var coordinator: SearchCoordinator?
+  weak var coordinator: SearchCoordinator?
   
   // MARK: - ViewModel
   private var viewModel: SearchViewModelProtocol

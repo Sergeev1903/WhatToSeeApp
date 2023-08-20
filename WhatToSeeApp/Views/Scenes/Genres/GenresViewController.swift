@@ -16,4 +16,8 @@ class GenresViewController: UIViewController {
     navigationController?.navigationBar.prefersLargeTitles = true
   }
   
+  deinit {
+    print("GenresViewController deinit")
+  }
+  
 }

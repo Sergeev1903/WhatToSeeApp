@@ -9,7 +9,7 @@ import UIKit
 import Network
 
 
-class InternetNWPathMonitorManager {
+final class InternetNWPathMonitorManager {
   
   // MARK: - Properties
   static let shared = InternetNWPathMonitorManager()

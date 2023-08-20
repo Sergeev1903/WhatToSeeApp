@@ -14,7 +14,7 @@ class ShowAllViewController: UIViewController {
   private var collectionView: UICollectionView!
   
   // MARK: - Coordinator
-  var coordinator: ShowAllCoordinator?
+  weak var coordinator: ShowAllCoordinator?
   
   // MARK: - ViewModel
   var viewModel: ShowAllViewModelProtocol!
@@ -30,6 +30,9 @@ class ShowAllViewController: UIViewController {
     return nil
   }
   
+  deinit {
+    print("ShowAllViewController deinit")
+  }
   
   // MARK: - Lifecycle
   override func viewDidLoad() {

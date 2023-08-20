@@ -15,6 +15,11 @@ class AppCoordinator: Coordinator {
   private let tabBarController: UITabBarController
   private let service: MoviesServiceable
   
+  private var homeCoordinator: HomeCoordinator!
+  private var searchCoordinator: SearchCoordinator!
+  private var favoriteCoordinator: FavoriteCoordinator!
+  private var profileCoordinator: ProfileCoordinator!
+  
   
   // MARK: - Init
   init(window: UIWindow) {
@@ -36,22 +41,22 @@ class AppCoordinator: Coordinator {
   private func configureTabBar() {
     
     // Home
-    let homeCoordinator = HomeCoordinator(service: service)
+    homeCoordinator = HomeCoordinator(service: service)
     let homeItem = createTabBarItem(
-      homeCoordinator, titleName: "Home", imageName: "house")
+      homeCoordinator!, titleName: "Home", imageName: "house")
     
     // Search
-    let searchCoordinator = SearchCoordinator(service: service)
+    searchCoordinator = SearchCoordinator(service: service)
     let searchItem = createTabBarItem(
       searchCoordinator, titleName: "Search", imageName: "magnifyingglass")
     
     // Favorite
-    let favoriteCoordinator = FavoriteCoordinator(service: service)
+    favoriteCoordinator = FavoriteCoordinator(service: service)
     let favoriteItem = createTabBarItem(
       favoriteCoordinator, titleName: "Favorite", imageName: "heart")
     
     // Profile
-    let profileCoordinator = ProfileCoordinator()
+    profileCoordinator = ProfileCoordinator()
     let profileItem = createTabBarItem(
       profileCoordinator, titleName: "Profile", imageName: "person.crop.circle")
     

@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 enum FavoriteStatus {
   case added
   case removed

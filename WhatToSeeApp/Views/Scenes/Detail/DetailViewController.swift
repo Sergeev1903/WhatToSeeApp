@@ -33,6 +33,9 @@ class DetailViewController: UIViewController {
     return nil
   }
   
+  deinit {
+    print("DetailViewController deinit")
+  }
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
