@@ -11,15 +11,13 @@ import UIKit
 class SearchViewController: UIViewController {
   
   // MARK: - Properties
-  private let searchController = UISearchController()
-  private let tableView = UITableView()
-  private var timer = Timer()
+  private(set) var searchView: SearchView!
   
   // MARK: - Coordinator
   weak var coordinator: SearchCoordinator?
   
   // MARK: - ViewModel
-  private var viewModel: SearchViewModelProtocol
+  private let viewModel: SearchViewModelProtocol
   
   
   // MARK: - Init
@@ -35,111 +33,36 @@ class SearchViewController: UIViewController {
   
   
   // MARK: - Lifecycle
+  override func loadView() {
+    super.loadView()
+    setupSearchView()
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     title = "Search"
-    setupSearchbar()
-    setupTableView()
+    configureNavigationBar()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    setupNavigationBar()
+    setupNavigationBar(withLargeTitles: true)
   }
   
   
   // MARK: - Methods
-  private func setupNavigationBar() {
-    navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-    navigationController?.navigationBar.shadowImage = UIImage()
-    navigationController?.navigationBar.prefersLargeTitles = true
-  }
-  
-  private func setupSearchbar() {
-    searchController.searchResultsUpdater = self
-    searchController.obscuresBackgroundDuringPresentation = false
-    searchController.searchBar.placeholder = "Search Movies"
-    searchController.searchBar.text = "Terminator" // plug start text
-    navigationItem.searchController = searchController
+  private func configureNavigationBar() {
+    navigationItem.searchController = searchView.searchController
     definesPresentationContext = true
   }
   
-  private func setupTableView() {
-    tableView.frame = view.bounds
-    tableView.dataSource = self
-    tableView.delegate = self
-    tableView.separatorStyle = .none
-    tableView.register(
-      SearchCell.self, forCellReuseIdentifier: SearchCell.reuseId)
-    
-    view.addSubview(tableView)
-  }
-  
-}
-
-
-// MARK: - UITableViewDataSource
-extension SearchViewController: UITableViewDataSource {
-  
-  func tableView(
-    _ tableView: UITableView,
-    numberOfRowsInSection section: Int) -> Int {
-      return viewModel.numberOfRowsInSection()
-    }
-  
-  func tableView(
-    _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      
-      let cell = tableView.dequeueReusableCell(
-        withIdentifier: SearchCell.reuseId, for: indexPath) as! SearchCell
-      cell.viewModel = viewModel.cellForRowAt(indexPath: indexPath)
-      return cell
-    }
-  
-}
-
-
-// MARK: - UITableViewDelegate
-extension SearchViewController: UITableViewDelegate {
-  
-  func tableView(
-    _ tableView: UITableView,
-    heightForRowAt indexPath: IndexPath) -> CGFloat {
-      return 200
-    }
-  
-  func tableView(
-    _ tableView: UITableView,
-    didSelectRowAt indexPath: IndexPath) {
-      
-      let detailViewModel = viewModel.didSelectItemAt(indexPath: indexPath)
-      coordinator?.showDetail(detailViewModel)
-      
-      tableView.deselectRow(at: indexPath, animated: true)
-    }
-  
-}
-
-
-// MARK: - UISearchResultsUpdating
-extension SearchViewController: UISearchResultsUpdating {
-  
-  func updateSearchResults(for searchController: UISearchController) {
-    guard let searchText = searchController.searchBar.text,
-          !searchText.isEmpty else {
+  private func setupSearchView() {
+    guard let coordinator = coordinator else {
       return
     }
-    timer.invalidate()
-    timer = Timer.scheduledTimer(withTimeInterval: 0.5,
-                                 repeats: false, block: { [weak self] _ in
-      
-      guard let strongSelf = self else { return }
-      
-      strongSelf.viewModel.searchMovies(searchText: searchText, page: 1) {
-        strongSelf.tableView.reloadData()
-      }
-    })
+    searchView = SearchView(coordinator: coordinator, viewModel: viewModel)
+    view = searchView
   }
   
 }
+
