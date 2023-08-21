@@ -8,13 +8,13 @@
 import Foundation
 
 
-protocol SliderCellViewModelProtocol: AnyObject {
+protocol SliderCellViewModelProtocol {
   var mediaPosterURL: URL? { get }
   var mediaBackdropURL: URL? { get }
 }
 
 
-class SliderCellViewModel: SliderCellViewModelProtocol {
+struct SliderCellViewModel: SliderCellViewModelProtocol {
   
   // MARK: - Properties
   private var mediaItem: TMDBMovieResult

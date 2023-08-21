@@ -15,7 +15,7 @@ protocol CategoryCellViewModelProtocol {
 }
 
 
-class CategoryCellViewModel: CategoryCellViewModelProtocol {
+struct CategoryCellViewModel: CategoryCellViewModelProtocol {
   
   // MARK: - Properties
   private let mediaItems: [TMDBMovieResult]

@@ -15,7 +15,7 @@ protocol CategoryCellItemViewModelProtocol {
 }
 
 
-class CategoryCellItemViewModel: CategoryCellItemViewModelProtocol {
+struct CategoryCellItemViewModel: CategoryCellItemViewModelProtocol {
   
   // MARK: - Properties
   private let mediaItem: TMDBMovieResult
@@ -35,7 +35,7 @@ class CategoryCellItemViewModel: CategoryCellItemViewModelProtocol {
   
   
   // MARK: - Init
-  required init(mediaItem: TMDBMovieResult) {
+  init(mediaItem: TMDBMovieResult) {
     self.mediaItem = mediaItem
   }
   

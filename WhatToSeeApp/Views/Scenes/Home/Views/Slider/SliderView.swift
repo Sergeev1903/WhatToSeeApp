@@ -93,7 +93,7 @@ class SliderView: UIView {
   
   private func setupTitleLabel() {
     titleLabel.text = "Upcoming"
-    titleLabel.font = UIFont.boldSystemFont(ofSize: 36)
+    titleLabel.font = UIFont.boldSystemFont(ofSize: 34)
     titleLabel.textAlignment = .left
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     

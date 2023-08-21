@@ -8,14 +8,14 @@
 import Foundation
 
 
-protocol SliderViewModelProtocol: AnyObject {
+protocol SliderViewModelProtocol {
   func numberOfItemsInSection() -> Int
   func cellForItemAt(indexPath: IndexPath) -> SliderCellViewModelProtocol
   func didSelectItemAt(indexPath: IndexPath) -> DetailViewModelProtocol
 }
 
 
-class SliderViewModel: SliderViewModelProtocol {
+struct SliderViewModel: SliderViewModelProtocol {
   
   // MARK: - Properties
   private var mediaItems: [TMDBMovieResult]

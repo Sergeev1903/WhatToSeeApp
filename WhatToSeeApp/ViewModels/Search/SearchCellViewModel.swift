@@ -8,7 +8,7 @@
 import Foundation
 
 
-protocol SearchCellViewModelProtocol: AnyObject {
+protocol SearchCellViewModelProtocol {
   var mediaBackdropURL: URL? { get }
   var mediaTitleWithReleaseYear: String { get }
   var mediaTitle: String { get }
@@ -18,7 +18,7 @@ protocol SearchCellViewModelProtocol: AnyObject {
 }
 
 
-class SearchCellViewModel: SearchCellViewModelProtocol {
+struct SearchCellViewModel: SearchCellViewModelProtocol {
   
   // MARK: - Properties
   private let mediaItem: TMDBMovieResult
