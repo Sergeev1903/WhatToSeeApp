@@ -11,7 +11,7 @@ import UIKit
 class ProfileViewController: UIViewController {
   
   // MARK: - Properties
-  let profileImageView = UIImageView()
+  private let profileImageView = UIImageView()
   
   
   // MARK: - Lifecycle
@@ -20,16 +20,12 @@ class ProfileViewController: UIViewController {
     title = "Profile"
     view.backgroundColor = .systemBackground
     
-    setupNavigationBar()
+    setupNavigationBar(withLargeTitles: true)
     setupProfileImageView()
   }
   
   
   // MARK: - Methods
-  private func setupNavigationBar() {
-    navigationController?.navigationBar.prefersLargeTitles = true
-  }
-  
   private func setupProfileImageView() {
     profileImageView.image = UIImage(named: "user")
     profileImageView.translatesAutoresizingMaskIntoConstraints = false

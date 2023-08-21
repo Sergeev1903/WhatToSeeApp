@@ -7,6 +7,7 @@
 
 import UIKit
 import Network
+import SDWebImage
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -31,7 +32,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
   }
   
-  func sceneDidDisconnect(_ scene: UIScene) {}
+  func sceneDidDisconnect(_ scene: UIScene) {
+    SDImageCache.shared.clearMemory()
+    SDImageCache.shared.clearDisk()
+  }
   
   func sceneDidBecomeActive(_ scene: UIScene) {}
   

@@ -37,7 +37,6 @@ class DetailHeaderView: UIView {
     setViewConstraints()
     setupWatchTrailerButton()
     setupTitleLabel()
-    
   }
   
   required init?(coder aDecoder: NSCoder) {

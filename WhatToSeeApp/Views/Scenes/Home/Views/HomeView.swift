@@ -11,32 +11,33 @@ import UIKit
 class HomeView: UIView {
   
   // MARK: - Properties
-  private(set) var tableView = UITableView(frame: .zero, style: .grouped)
-  private(set) var tabMenu = TabMenuControl()
-  private(set) var slider = SliderView()
-  private(set) var profileButton = UIButton(type: .custom)
-
+  private let tableView = UITableView(frame: .zero, style: .grouped)
+  private let slider = SliderView()
+  
   // MARK: - Coordinator
-  private var coordinator: HomeCoordinator
+  private let coordinator: HomeCoordinator
   
   // MARK: - ViewModel
-  private var viewModel: HomeViewModelProtocol
+  private let viewModel: HomeViewModelProtocol
   
   
-  init(frame: CGRect = .zero, coordinator: HomeCoordinator, viewModel: HomeViewModelProtocol) {
+  // MARK: - Init
+  init(frame: CGRect = .zero,
+       coordinator: HomeCoordinator,
+       viewModel: HomeViewModelProtocol) {
     self.coordinator = coordinator
     self.viewModel = viewModel
     super.init(frame: frame)
-    backgroundColor = .systemBackground
-    configureNavigationBar()
-    setupTabMenu()
-    setupTableView()
     configureViewModel()
+    setupHomeView()
+    setupTableView()
   }
   
   required init?(coder: NSCoder) {
+    print("Sorry! only code, no storyboards")
     return nil
   }
+  
   
   // MARK: - Methods
   private func configureViewModel() {
@@ -45,66 +46,9 @@ class HomeView: UIView {
     }
   }
   
-  
-  private func configureNavigationBar() {
-    coordinator.navigationController.navigationItem.titleView = tabMenu
-    
-    // Custom favorite button
-    coordinator.navigationController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileButton)
+  private func setupHomeView() {
+    backgroundColor = .systemBackground
   }
-  
-  
-  private func setupProfileButton() {
-    profileButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
-    let image = UIImage(named: "user")!
-    profileButton.setImage(image, for: .normal)
-    profileButton.backgroundColor = .white.withAlphaComponent(0.7)
-    profileButton.tintColor = .darkGray.withAlphaComponent(0.7)
-    profileButton.layer.cornerRadius = profileButton.frame.height / 2
-    profileButton.addTarget(
-      self, action: #selector(profileRightButtonTapped), for: .touchUpInside)
-  }
-
-  
-  // Action for profile right button
-  @objc private func profileRightButtonTapped() {
-    coordinator.showProfile()
-  }
-  
-  
-  private func setupTabMenu() {
-    tabMenu.frame = CGRect(x: 0, y: 0, width: frame.width, height: 40)
-    tabMenu.segments = ["Movies", "TV Shows"]
-    tabMenu.segmentTintColor = .clear
-    tabMenu.underlineColor = .systemBlue
-    tabMenu.underlineHeight = 4.0
-    tabMenu.addTarget(
-      self, action: #selector(tabMenuValueChanged(_:)), for: .valueChanged)
-  }
-  
-  // Action for tabMenu
-  @objc private func tabMenuValueChanged(_ sender: TabMenuControl) {
-    if sender.selectedSegmentIndex == 1 {
-      alert {
-        sender.selectedSegmentIndex = 0
-      }
-    }
-  }
-  
-  // Plug alert
-  private func alert(completion: @escaping () -> Void) {
-    let alert = UIAlertController(
-      title: "Coming Soon",
-      message: "Sorry! This section is under development",
-      preferredStyle: .alert)
-    let action = UIAlertAction(
-      title: "Cancel", style: .destructive) {_ in
-        completion()
-      }
-    alert.addAction(action)
-    coordinator.navigationController.present(alert, animated: true)
-  }
-
   
   private func setupTableView() {
     tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -132,7 +76,7 @@ class HomeView: UIView {
   }
   
   // Called in willDisplayHeaderView method
-  func setupSlider() {
+  private func setupSlider() {
     slider.frame = CGRect(
       x: 0, y: 0, width: tableView.bounds.width, height: 600)
     slider.delegate = self
@@ -142,6 +86,7 @@ class HomeView: UIView {
     
     tableView.tableHeaderView = slider
   }
+  
 }
 
 // MARK: - UITableViewDataSource
@@ -256,7 +201,8 @@ extension HomeView: UITableViewDataSource {
         headerView.delegate = self
         return headerView
         
-      default:  return UIView()
+      default:
+        return UIView()
       }
     }
   

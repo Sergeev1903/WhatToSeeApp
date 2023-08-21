@@ -8,6 +8,28 @@
 import UIKit
 
 
+// Setup navigation bar
+extension UIViewController {
+  
+  func setupNavigationBar(withLargeTitles isLargeTitles: Bool) {
+    navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+    navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.prefersLargeTitles = isLargeTitles
+    navigationController?.navigationBar.tintColor = nil
+  }
+  
+  func setupNavigationBar(withTransparent: Bool) {
+    // Make the Navigation Bar background transparent
+    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.isTranslucent = withTransparent
+    navigationController?.navigationBar.tintColor = .white
+  }
+  
+}
+
+
+// Create custom bar button
 extension UIViewController {
   
   func createBarButton(
