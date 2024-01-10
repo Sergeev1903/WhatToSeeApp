@@ -124,7 +124,7 @@ class DetailView: UIView {
     
     NSLayoutConstraint.activate([
       hud.centerXAnchor.constraint(equalTo: centerXAnchor),
-      hud.topAnchor.constraint(equalTo: topAnchor, constant: 48)
+      hud.topAnchor.constraint(equalTo: topAnchor, constant: 54)
     ])
   }
   

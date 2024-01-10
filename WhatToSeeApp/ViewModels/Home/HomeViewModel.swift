@@ -10,7 +10,7 @@ import Foundation
 
 protocol HomeViewModelProtocol: AnyObject {
   var upcomingMovies: [TMDBMovieResult] { get }
-  var nowPlayingMovies: [TMDBMovieResult] { get }
+  var nowPlayingMovies: [TMDBMovieResult] { get } 
   var popularMovies: [TMDBMovieResult] { get }
   var topRatedMovies: [TMDBMovieResult] { get }
   var trendingMovies: [TMDBMovieResult] { get }

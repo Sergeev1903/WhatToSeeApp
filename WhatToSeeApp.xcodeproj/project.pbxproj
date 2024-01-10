@@ -50,8 +50,6 @@
 		1D93FEBE2A5D8D3200314762 /* TabMenuControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D93FEBD2A5D8D3200314762 /* TabMenuControl.swift */; };
 		1D93FEC02A5DA64300314762 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D93FEBF2A5DA64300314762 /* UIColor+Extension.swift */; };
 		1D96EBD52A7A51800057C048 /* UiView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D96EBD42A7A51800057C048 /* UiView+Extension.swift */; };
-		1D9909412A8B9C5700194413 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 1D9909402A8B9C5700194413 /* Lottie */; };
-		1D9909442A8B9C6700194413 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 1D9909432A8B9C6700194413 /* SDWebImage */; };
 		1DA20DF72A7E391B005B434A /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA20DF62A7E391B005B434A /* HUDView.swift */; };
 		1DA20DF92A7E5163005B434A /* NoInternetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA20DF82A7E5163005B434A /* NoInternetViewController.swift */; };
 		1DA20DFB2A7F8069005B434A /* InternetNWPathMonitorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA20DFA2A7F8069005B434A /* InternetNWPathMonitorManager.swift */; };
@@ -65,6 +63,9 @@
 		1DC8C7BB2A803587004D6A61 /* SearchCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC8C7BA2A803587004D6A61 /* SearchCellViewModel.swift */; };
 		1DD550922A5F1C6900DD5383 /* TMDBMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD550912A5F1C6900DD5383 /* TMDBMovie.swift */; };
 		1DD550942A5F1DFD00DD5383 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD550932A5F1DFD00DD5383 /* HomeViewModel.swift */; };
+		1DE138322ACF2D61002D8ACD /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 1DE138312ACF2D61002D8ACD /* Lottie */; };
+		1DE138352ACF2DDF002D8ACD /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 1DE138342ACF2DDF002D8ACD /* SDWebImage */; };
+		1DE138372ACF2DDF002D8ACD /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1DE138362ACF2DDF002D8ACD /* SDWebImageMapKit */; };
 		1DE4E68C2A6FFADA009CDB27 /* CategoryCellItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE4E68B2A6FFADA009CDB27 /* CategoryCellItemViewModel.swift */; };
 		1DE4E68E2A700131009CDB27 /* CategoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE4E68D2A700131009CDB27 /* CategoryCellViewModel.swift */; };
 		1DF0C3D62A726A8500BF60A9 /* DetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF0C3D52A726A8500BF60A9 /* DetailHeaderView.swift */; };
@@ -145,8 +146,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D9909442A8B9C6700194413 /* SDWebImage in Frameworks */,
-				1D9909412A8B9C5700194413 /* Lottie in Frameworks */,
+				1DE138352ACF2DDF002D8ACD /* SDWebImage in Frameworks */,
+				1DE138372ACF2DDF002D8ACD /* SDWebImageMapKit in Frameworks */,
+				1DE138322ACF2D61002D8ACD /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -560,8 +562,9 @@
 			);
 			name = WhatToSeeApp;
 			packageProductDependencies = (
-				1D9909402A8B9C5700194413 /* Lottie */,
-				1D9909432A8B9C6700194413 /* SDWebImage */,
+				1DE138312ACF2D61002D8ACD /* Lottie */,
+				1DE138342ACF2DDF002D8ACD /* SDWebImage */,
+				1DE138362ACF2DDF002D8ACD /* SDWebImageMapKit */,
 			);
 			productName = WhatToSeeApp;
 			productReference = 1D93FE912A5D56BB00314762 /* WhatToSeeApp.app */;
@@ -592,8 +595,8 @@
 			);
 			mainGroup = 1D93FE882A5D56BB00314762;
 			packageReferences = (
-				1D99093F2A8B9C5700194413 /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				1D9909422A8B9C6700194413 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				1DE138302ACF2D61002D8ACD /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				1DE138332ACF2DDF002D8ACD /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = 1D93FE922A5D56BB00314762 /* Products */;
 			projectDirPath = "";
@@ -900,34 +903,39 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1D99093F2A8B9C5700194413 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		1DE138302ACF2D61002D8ACD /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
+				minimumVersion = 4.3.3;
 			};
 		};
-		1D9909422A8B9C6700194413 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+		1DE138332ACF2DDF002D8ACD /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				minimumVersion = 5.18.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1D9909402A8B9C5700194413 /* Lottie */ = {
+		1DE138312ACF2D61002D8ACD /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1D99093F2A8B9C5700194413 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = 1DE138302ACF2D61002D8ACD /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
 		};
-		1D9909432A8B9C6700194413 /* SDWebImage */ = {
+		1DE138342ACF2DDF002D8ACD /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1D9909422A8B9C6700194413 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			package = 1DE138332ACF2DDF002D8ACD /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
+		};
+		1DE138362ACF2DDF002D8ACD /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1DE138332ACF2DDF002D8ACD /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
