@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="8D9-5S-TEx">
-                                <rect key="frame" x="112.66666666666669" y="331" width="150" height="150"/>
+                                <rect key="frame" x="123" y="331" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="NlC-OB-T5D"/>
                                     <constraint firstAttribute="width" constant="150" id="vOs-wa-x0e"/>
@@ -28,7 +28,7 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="8D9-5S-TEx" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="dkV-aK-Yyg"/>
-                            <constraint firstItem="8D9-5S-TEx" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="gEt-BY-AQ0"/>
+                            <constraint firstItem="8D9-5S-TEx" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" constant="10.5" id="gEt-BY-AQ0"/>
                         </constraints>
                     </view>
                 </viewController>

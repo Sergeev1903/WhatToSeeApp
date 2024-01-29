@@ -22,7 +22,7 @@ struct MoviesService: HTTPClient, MoviesServiceable {
                    completion: @escaping (Result<T, RequestError>) -> Void)
   where T : Decodable, T : Encodable {
     
-    DispatchQueue.global(qos: .utility).async {
+    DispatchQueue.global(qos: .userInitiated ).async {
       sendRequest(endpoint: endpoint,
                   responseModel: responseModel.self) { result in
         DispatchQueue.main.async {
